@@ -274,7 +274,7 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges (الصورة القديمة الأصلية لكرة القدم) -->
+    <!-- 4. Profile & Badges (كرة القدم الكلاسيكية الأصلية المضمنة بالكامل) -->
     <section id="section-profile" class="space-y-6 hidden">
       <div class="relative profile-animated-card rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/50">
         <div class="card-orb w-64 h-64 bg-amber-500/25 top-[-20%] right-[-10%]"></div>
@@ -282,14 +282,50 @@
         <div class="card-orb w-48 h-48 bg-blue-500/20 top-[40%] left-[35%]"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
-          <!-- الصورة القديمة الأصلية لكرة القدم -->
           <div class="relative group">
             <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
               👑
             </div>
-            <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300">
-              <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop" alt="Football Classic Owner" class="w-full h-full object-cover">
+            
+            <!-- كرة القدم المضمّنة والمضمونة 100% -->
+            <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300 p-2">
+              <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                <defs>
+                  <radialGradient id="ballShading" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="70%" stop-color="#e2e8f0"/>
+                    <stop offset="100%" stop-color="#64748b"/>
+                  </radialGradient>
+                </defs>
+                <!-- جسم الكرة الأساسي -->
+                <circle cx="50" cy="50" r="46" fill="url(#ballShading)" stroke="#0f172a" stroke-width="2.5"/>
+                <!-- مضلع خماسي مركزي أسود -->
+                <polygon points="50,34 62,43 57,57 43,57 38,43" fill="#0f172a"/>
+                <!-- أضلاع الكرة الكلاسيكية المرتبطة -->
+                <line x1="50" y1="34" x2="50" y2="18" stroke="#0f172a" stroke-width="2.5"/>
+                <polygon points="41,6 59,6 50,18" fill="#0f172a"/>
+                
+                <line x1="62" y1="43" x2="76" y2="38" stroke="#0f172a" stroke-width="2.5"/>
+                <polygon points="88,24 95,38 76,38" fill="#0f172a"/>
+
+                <line x1="57" y1="57" x2="68" y2="69" stroke="#0f172a" stroke-width="2.5"/>
+                <polygon points="84,72 73,85 68,69" fill="#0f172a"/>
+
+                <line x1="43" y1="57" x2="32" y2="69" stroke="#0f172a" stroke-width="2.5"/>
+                <polygon points="16,72 27,85 32,69" fill="#0f172a"/>
+
+                <line x1="38" y1="43" x2="24" y2="38" stroke="#0f172a" stroke-width="2.5"/>
+                <polygon points="12,24 5,38 24,38" fill="#0f172a"/>
+
+                <line x1="41" y1="6" x2="24" y2="24" stroke="#0f172a" stroke-width="2"/>
+                <line x1="59" y1="6" x2="76" y2="24" stroke="#0f172a" stroke-width="2"/>
+                <line x1="95" y1="38" x2="84" y2="72" stroke="#0f172a" stroke-width="2"/>
+                <line x1="73" y1="85" x2="50" y2="95" stroke="#0f172a" stroke-width="2"/>
+                <line x1="27" y1="85" x2="50" y2="95" stroke="#0f172a" stroke-width="2"/>
+                <line x1="5" y1="38" x2="16" y2="72" stroke="#0f172a" stroke-width="2"/>
+              </svg>
             </div>
+            
             <span class="absolute bottom-1 right-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
               OWNER ⚡
             </span>
