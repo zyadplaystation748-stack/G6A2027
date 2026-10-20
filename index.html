@@ -28,23 +28,41 @@
         <div id="admin-status-area">
           <button onclick="openLoginModal()" id="main-login-btn" class="text-xs bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1">
             🔒 بوابة الدخول
-          </button>
-          <div id="logged-badge-container" class="hidden flex items-center gap-2">
-            <span id="logged-badge" class="text-xs text-white font-bold px-3 py-1.5 rounded-xl shadow"></span>
-            <button onclick="logoutUser()" id="logout-btn" class="text-xs bg-red-500 hover:bg-red-600 text-white px-2.5 py-1 rounded-lg font-bold">خروج</button>
-          </div>
-        </div>
-      </div>
+          function closeLoginModal() {
+      // إخفاء فوري وإجباري للنافذة
+      const modal = document.getElementById('login-modal') || document.getElementById('teacher-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
+    }
 
-      <div class="text-center pb-2">
-        <h1 class="text-4xl md:text-5xl font-black tracking-wide drop-shadow-md">6A 2027</h1>
-        <p id="site-subtitle" class="text-blue-100 mt-1 text-sm font-medium">المنصة الرسمية الموحدة للفصل • المعلمون • الطلاب • الإدارة</p>
-      </div>
-    </div>
-    
-    <!-- Tabbed Navigation -->
-    <div class="max-w-5xl mx-auto px-4 flex overflow-x-auto gap-1 border-b border-blue-500/30">
-      <button onclick="switchTab('homework')" id="tab-homework" class="tab-btn active px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
+    function handleLogin() {
+      const pass = document.getElementById('passcode-input') ? document.getElementById('passcode-input').value.trim() : document.getElementById('teacher-pass-input').value.trim();
+      const selectElem = document.getElementById('user-role-select') || document.getElementById('teacher-select');
+      const val = selectElem.value.split('|');
+      
+      const roleType = val[0];  // owner, admin, teacher
+      const name = val[1];      
+      const extra = val[2];     
+      const lang = val[3] || 'ar';      
+
+      // التحقق من الرمز
+      if (PASSWORDS[roleType] && pass !== PASSWORDS[roleType]) {
+        alert(lang === 'en' ? 'Incorrect passcode!' : 'الرمز السري غير صحيح!');
+        return;
+      } else if (!PASSWORDS[roleType] && pass !== '2027') {
+        alert('الرمز السري غير صحيح!');
+        return;
+      }
+
+      // 1. أول حاجة: اقفل النافذة فوراً قبل أي عملية تانية!
+      closeLoginModal();
+
+      // 2. تفعيل الحساب
+      currentUser = { roleType, name, extra, lang };
+      applyUserDashboard();
+    }
         📚 الواجبات
       </button>
       <button onclick="switchTab('quizzes')" id="tab-quizzes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
