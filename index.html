@@ -28,41 +28,23 @@
         <div id="admin-status-area">
           <button onclick="openLoginModal()" id="main-login-btn" class="text-xs bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1">
             🔒 بوابة الدخول
-          function closeLoginModal() {
-      // إخفاء فوري وإجباري للنافذة
-      const modal = document.getElementById('login-modal') || document.getElementById('teacher-modal');
-      if (modal) {
-        modal.style.display = 'none';
-        modal.classList.add('hidden');
-      }
-    }
+          </button>
+          <div id="logged-badge-container" style="display: none;" class="flex items-center gap-2">
+            <span id="logged-badge" class="text-xs text-white font-bold px-3 py-1.5 rounded-xl shadow"></span>
+            <button onclick="logoutUser()" id="logout-btn" class="text-xs bg-red-500 hover:bg-red-600 text-white px-2.5 py-1 rounded-lg font-bold">خروج</button>
+          </div>
+        </div>
+      </div>
 
-    function handleLogin() {
-      const pass = document.getElementById('passcode-input') ? document.getElementById('passcode-input').value.trim() : document.getElementById('teacher-pass-input').value.trim();
-      const selectElem = document.getElementById('user-role-select') || document.getElementById('teacher-select');
-      const val = selectElem.value.split('|');
-      
-      const roleType = val[0];  // owner, admin, teacher
-      const name = val[1];      
-      const extra = val[2];     
-      const lang = val[3] || 'ar';      
-
-      // التحقق من الرمز
-      if (PASSWORDS[roleType] && pass !== PASSWORDS[roleType]) {
-        alert(lang === 'en' ? 'Incorrect passcode!' : 'الرمز السري غير صحيح!');
-        return;
-      } else if (!PASSWORDS[roleType] && pass !== '2027') {
-        alert('الرمز السري غير صحيح!');
-        return;
-      }
-
-      // 1. أول حاجة: اقفل النافذة فوراً قبل أي عملية تانية!
-      closeLoginModal();
-
-      // 2. تفعيل الحساب
-      currentUser = { roleType, name, extra, lang };
-      applyUserDashboard();
-    }
+      <div class="text-center pb-2">
+        <h1 class="text-4xl md:text-5xl font-black tracking-wide drop-shadow-md">6A 2027</h1>
+        <p id="site-subtitle" class="text-blue-100 mt-1 text-sm font-medium">المنصة الرسمية الموحدة للفصل • المعلمون • الطلاب • الإدارة</p>
+      </div>
+    </div>
+    
+    <!-- Tabbed Navigation -->
+    <div class="max-w-5xl mx-auto px-4 flex overflow-x-auto gap-1 border-b border-blue-500/30">
+      <button onclick="switchTab('homework')" id="tab-homework" class="tab-btn active px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
         📚 الواجبات
       </button>
       <button onclick="switchTab('quizzes')" id="tab-quizzes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
@@ -81,26 +63,26 @@
   </header>
 
   <!-- Login Modal -->
-  <div id="login-modal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div id="login-modal" style="display: none;" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white p-6 rounded-2xl max-w-sm w-full shadow-2xl border text-center">
       <h3 id="modal-title" class="text-lg font-bold text-slate-800 mb-2">🔐 تسجيل الدخول</h3>
       <p id="modal-desc" class="text-xs text-slate-500 mb-3">اختر الحساب واكتب الرمز السري:</p>
       
       <select id="user-role-select" class="w-full p-2.5 border rounded-lg text-sm bg-white mb-3">
-        <!-- 1. مالك المنصة لوحده تماماً بدون إدارة -->
+        <!-- 1. المالك -->
         <option value="owner|زياد محمد فتوح|عام|ar">👑 مالك المنصة (زياد محمد فتوح)</option>
         
-        <!-- 2. الإدارة لوحدها تماماً -->
+        <!-- 2. الإدارة -->
         <option value="admin|إدارة المدرسة|إدارة|ar">🏛️ إدارة المدرسة والناظر</option>
         
-        <!-- 3. المعلمين بالإنجليزية -->
+        <!-- 3. معلمين لغات (إنجليزي) -->
         <option value="teacher|مس نورهان|Science|en">مس نورهان (Science)</option>
         <option value="teacher|مس أسماء ياسر|English|en">مس أسماء ياسر (English)</option>
         <option value="teacher|مس دينا|Math|en">مس دينا (Math)</option>
         <option value="teacher|مس سماح|ICT|en">مس سماح (ICT)</option>
         <option value="teacher|مس ياسمينا|French|en">مس ياسمينا (French)</option>
         
-        <!-- 4. المعلمين بالعربية -->
+        <!-- 4. معلمين عربي -->
         <option value="teacher|مستر أسامة|سوشيال|ar">مستر أسامة (الدراسات / سوشيال)</option>
         <option value="teacher|مس فاطمة رمضان|عربي|ar">مس فاطمة رمضان (لغة عربية)</option>
         <option value="teacher|مس فاطمة رمضان|دين|ar">مس فاطمة رمضان (تربية دينية)</option>
@@ -120,7 +102,7 @@
 
     <!-- 1. Homework -->
     <section id="section-homework" class="space-y-6">
-      <div id="hw-input-card" class="hidden bg-white p-6 rounded-2xl shadow-sm border border-blue-200">
+      <div id="hw-input-card" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-blue-200">
         <h2 id="hw-form-heading" class="text-xl font-bold text-slate-800 mb-2"></h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-blue-50 p-4 rounded-xl border border-blue-100">
           <input type="text" id="hw-title" placeholder="عنوان الواجب" class="p-2.5 rounded-lg border text-sm">
@@ -160,7 +142,7 @@
               🚨 جدول الكويزات والاختبارات القصيرة
             </h3>
             
-            <div id="quiz-input-card" class="hidden flex-wrap gap-2 mb-4 bg-red-50 p-3 rounded-xl border border-red-100">
+            <div id="quiz-input-card" style="display: none;" class="flex-wrap gap-2 mb-4 bg-red-50 p-3 rounded-xl border border-red-100">
               <input type="text" id="quiz-title" placeholder="موضوع الكويز" class="p-2 border rounded-lg text-sm flex-1">
               <input type="text" id="quiz-subject" readonly class="p-2 border rounded-lg text-sm w-32 bg-slate-100 text-slate-600 font-bold">
               <input type="date" id="quiz-date" class="p-2 border rounded-lg text-sm">
@@ -281,7 +263,7 @@
     let currentUser = null;
 
     window.onload = () => {
-      // تفريغ أي ذاكرة قديمة نهائياً
+      // تفريغ أي جلسة متخزنة نهائياً
       try { localStorage.clear(); } catch(e){}
       setArabicUI();
       loadHomework();
@@ -289,65 +271,64 @@
 
     function openLoginModal() {
       document.getElementById('passcode-input').value = '';
-      document.getElementById('login-modal').classList.remove('hidden');
+      document.getElementById('login-modal').style.display = 'flex';
     }
 
-    // الدالة المسؤولة عن إغلاق النافذة بنجاح
     function closeLoginModal() {
-      const modal = document.getElementById('login-modal');
-      if (modal) {
-        modal.classList.add('hidden');
-      }
+      document.getElementById('login-modal').style.display = 'none';
     }
 
     function handleLogin() {
       const pass = document.getElementById('passcode-input').value.trim();
-      const val = document.getElementById('user-role-select').value.split('|');
+      const selectElem = document.getElementById('user-role-select');
+      const val = selectElem.value.split('|');
       
       const roleType = val[0];  // owner, admin, teacher
       const name = val[1];      
       const extra = val[2];     
-      const lang = val[3];      
+      const lang = val[3] || 'ar';      
 
       if (pass !== PASSWORDS[roleType]) {
         alert(lang === 'en' ? 'Incorrect passcode!' : 'الرمز السري غير صحيح!');
         return;
       }
 
-      currentUser = { roleType, name, extra, lang };
-      
-      // إغلاق النافذة أولاً فوراً بدون أي تأخير!
+      // إخفاء فوري للنافذة
       closeLoginModal();
-      
-      // تطبيق لوحة التحكم
+
+      // تعيين المستخدم النشط
+      currentUser = { roleType, name, extra, lang };
       applyUserDashboard();
     }
 
     function logoutUser() {
       currentUser = null;
-      document.getElementById('logged-badge-container').classList.add('hidden');
-      document.getElementById('main-login-btn').classList.remove('hidden');
-      document.getElementById('hw-input-card').classList.add('hidden');
-      document.getElementById('quiz-input-card').classList.add('hidden');
-      document.getElementById('quiz-input-card').classList.remove('flex');
+      document.getElementById('logged-badge-container').style.display = 'none';
+      document.getElementById('main-login-btn').style.display = 'inline-flex';
+      document.getElementById('hw-input-card').style.display = 'none';
+      document.getElementById('quiz-input-card').style.display = 'none';
       
+      // تفريغ المدخلات
+      document.getElementById('passcode-input').value = '';
+      document.getElementById('hw-title').value = '';
+      document.getElementById('quiz-title').value = '';
+
       setArabicUI();
       loadHomework();
     }
 
     function applyUserDashboard() {
       if (!currentUser) return;
-      document.getElementById('main-login-btn').classList.add('hidden');
+      document.getElementById('main-login-btn').style.display = 'none';
       
       const badgeBox = document.getElementById('logged-badge-container');
       const badge = document.getElementById('logged-badge');
-      badgeBox.classList.remove('hidden');
+      badgeBox.style.display = 'flex';
 
       const hwCard = document.getElementById('hw-input-card');
       const quizCard = document.getElementById('quiz-input-card');
-      hwCard.classList.remove('hidden');
-      quizCard.classList.remove('hidden');
-      quizCard.classList.add('flex');
+      hwCard.style.display = 'block';
+      quizCard.style.display = 'flex';
 
       if (currentUser.roleType === 'owner') {
         badge.className = "text-xs bg-purple-600 text-white font-bold px-3 py-1.5 rounded-xl shadow";
