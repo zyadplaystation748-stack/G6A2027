@@ -141,7 +141,7 @@
         💡 الآراء والتحسينات
       </button>
       <button onclick="switchTab('arcade')" id="tab-arcade" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        🔥 الألغاز والتصويت
+        🎮 الألعاب والتصويت
       </button>
     </div>
   </header>
@@ -534,25 +534,24 @@
       </div>
     </section>
 
-    <!-- 6. قسم الألغاز الصعبة والتصويت المباشر المخصص للمالك والإدارة -->
+    <!-- 6. قسم الألعاب المحسن، لعبة الألوان السريعة، وأسئلة الذكاء غير المكررة -->
     <section id="section-arcade" class="hidden space-y-6">
       
-      <!-- بنر القسم الجديد -->
-      <div class="bg-gradient-to-r from-amber-500 via-orange-600 to-purple-700 text-white p-6 rounded-3xl shadow-xl relative overflow-hidden">
+      <div class="bg-gradient-to-r from-emerald-600 via-indigo-600 to-purple-700 text-white p-6 rounded-3xl shadow-xl relative overflow-hidden">
         <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h2 class="text-2xl md:text-3xl font-black mb-1 flex items-center gap-2">
-              <span>🔥 مجلس التصويت وتحديات العباقرة</span>
+              <span>🎮 ساحة الألعاب وتحدي الألوان السريع</span>
             </h2>
-            <p class="text-amber-100 text-sm">استطلاعات رأي رسمية يتحكم بها المالك والإدارة، وألغاز منطقية حقيقية لأذكى عقول 6A!</p>
+            <p class="text-emerald-100 text-sm">لعبة الثعبان الكلاسيكية، لعبة خدعة الألوان السريعة، ومسابقة ذكاء بأسئلة متجددة دائماً!</p>
           </div>
           <span class="bg-white/20 border border-white/30 text-white text-xs font-black px-4 py-2 rounded-xl backdrop-blur">
-            النسخة المعتمدة 2026/2027
+            VIP Arcade 2026/2027
           </span>
         </div>
       </div>
 
-      <!-- كارت خاص بالأدمن والمالك فقط لإنشاء وتغيير سؤال التصويت -->
+      <!-- كارت خاص بالأدمن والمالك فقط لنشر التصويت -->
       <div id="admin-poll-card" style="display: none;" class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-6 rounded-3xl shadow-lg border border-amber-400/40 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
           <span class="font-black text-amber-400 text-sm flex items-center gap-2">
@@ -562,7 +561,7 @@
         </div>
 
         <div class="space-y-3 text-xs">
-          <input type="text" id="admin-poll-q" placeholder="اكتب سؤال التصويت هنا (مثال: ما رأيك في جدول الامتحانات؟)..." class="w-full p-3 rounded-xl border border-slate-700 bg-slate-950/80 text-white focus:ring-2 focus:ring-amber-400 outline-none text-sm">
+          <input type="text" id="admin-poll-q" placeholder="اكتب سؤال التصويت هنا..." class="w-full p-3 rounded-xl border border-slate-700 bg-slate-950/80 text-white focus:ring-2 focus:ring-amber-400 outline-none text-sm">
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <input type="text" id="admin-poll-opt1" placeholder="الخيار الأول..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
@@ -579,27 +578,112 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <!-- 1. استطلاع رأي الفصل الرسمي -->
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+        <!-- 1. لعبة الثعبان النيون الكلاسيكية -->
+        <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-xl border border-emerald-500/30 flex flex-col items-center">
+          <div class="w-full flex justify-between items-center mb-3">
+            <span class="font-black text-emerald-400 text-sm flex items-center gap-1.5">🐍 لعبة الثعبان النيون</span>
+            <span id="snake-score-display" class="text-xs bg-emerald-950 text-emerald-300 px-3 py-1 rounded-full font-black border border-emerald-700/50">النقاط: 0</span>
+          </div>
+
+          <canvas id="snake-canvas" width="280" height="280" class="bg-slate-950 rounded-2xl border border-slate-800 shadow-inner mb-3"></canvas>
+
+          <div class="flex flex-col items-center gap-1.5 mb-3">
+            <button onclick="changeSnakeDir('UP')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition shadow">▲</button>
+            <div class="flex gap-2">
+              <button onclick="changeSnakeDir('LEFT')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition shadow">◀</button>
+              <button onclick="changeSnakeDir('DOWN')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition shadow">▼</button>
+              <button onclick="changeSnakeDir('RIGHT')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition shadow">▶</button>
+            </div>
+          </div>
+
+          <button onclick="startSnakeGame()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs transition shadow-lg">
+            ▶️ ابدأ لعبة الثعبان
+          </button>
+        </div>
+
+        <!-- 2. لعبة خدعة الألوان والسرعة الفائقة (Color Rush Challenge) -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-black text-slate-800 text-base flex items-center gap-1.5">🎨 تحدي خدعة الألوان وسرعة الانتباه</h3>
+              <span id="color-score-badge" class="text-xs bg-purple-100 text-purple-900 px-3 py-1 rounded-full font-black">النقاط: 0</span>
+            </div>
+            
+            <p class="text-xs text-slate-500 mb-3">
+              ركز كويس! اللعبة هتطلب منك تختار <span class="font-black text-slate-800">"لون الحبر الحقيقي"</span> أو <span class="font-black text-slate-800">"الاسم المكتوب"</span> بسرعة قبل الوقت!
+            </p>
+
+            <!-- شاشة الكلمة الملونة -->
+            <div class="bg-slate-950 p-6 rounded-2xl text-center shadow-inner mb-4 relative overflow-hidden border border-slate-800">
+              <span id="color-rule-instruction" class="text-xs font-bold text-amber-400 block mb-2">اختر: لون الخط الفعلي!</span>
+              <div id="color-display-word" class="text-4xl md:text-5xl font-black tracking-wider transition-all duration-150 drop-shadow">
+                اضغط ابدأ!
+              </div>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+                <div id="color-timer-bar" class="bg-emerald-400 h-full w-full transition-all linear"></div>
+              </div>
+            </div>
+
+            <!-- أزرار الاختيارات الأربعة السريعة -->
+            <div id="color-buttons-grid" class="grid grid-cols-2 gap-2.5">
+              <button onclick="startColorGame()" class="col-span-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black py-3 rounded-xl text-sm transition shadow">
+                ⚡ ابدأ تحدي الألوان الآن!
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+            <span id="color-best-streak" class="font-bold">أعلى سكور: 0</span>
+            <span id="color-game-status" class="font-bold text-indigo-600">جاهز للتحدي</span>
+          </div>
+        </div>
+
+        <!-- 3. بنك أسئلة الذكاء غير المكررة -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="font-black text-slate-800 text-base flex items-center gap-1.5">🧠 مسابقة العباقرة (أسئلة متجددة)</h3>
+              <span id="trivia-points" class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-black">النقاط: 0</span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs md:text-sm font-black text-slate-800 leading-relaxed" id="dynamic-trivia-q">
+                جاري سحب سؤال ذكاء جديد...
+              </div>
+
+              <div id="dynamic-trivia-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <!-- الخيارات تتولد تلقائياً -->
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
+            <span id="dynamic-trivia-feedback" class="text-xs font-bold text-slate-500">اختر الإجابة الصحيحة!</span>
+            <button onclick="loadNextRandomTrivia()" class="text-xs bg-slate-900 hover:bg-black text-white font-bold px-3.5 py-1.5 rounded-xl transition">
+              سؤال غير مكرر ⏭️
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. استطلاع رأي الفصل الرسمي المباشر -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>📊 استطلاع رأي الفصل الرسمي</span>
+                <span>📊 استطلاع رأي الفصل المعتمد</span>
               </span>
-              <span id="poll-live-indicator" class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-black flex items-center gap-1.5">
+              <span class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-black flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                 مباشر
               </span>
             </div>
 
-            <!-- نص السؤال المنشور -->
             <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-4">
               <h4 id="display-poll-q" class="text-sm font-black text-slate-800 leading-relaxed">
-                سؤال الاستطلاع المعتمد
+                سؤال الاستطلاع
               </h4>
             </div>
 
-            <!-- خيارات التصويت التفاعلية بنسب مئوية -->
             <div id="display-poll-options" class="space-y-3">
               <!-- تتولد ديناميكياً -->
             </div>
@@ -608,46 +692,6 @@
           <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
             <span id="poll-total-votes" class="font-bold">إجمالي الأصوات: 0</span>
             <span id="poll-user-status" class="font-bold text-indigo-600">اختر خيارك للتصويت!</span>
-          </div>
-        </div>
-
-        <!-- 2. قسم الألغاز الصعبة والتحديات الفكرية -->
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>🧠 لغز العباقرة والتفكير المنطقي</span>
-              </span>
-              <span id="riddle-level-badge" class="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-black">مستوى: عبقري 🔥</span>
-            </div>
-
-            <!-- كارت اللغز الصعب -->
-            <div class="bg-gradient-to-br from-purple-50 via-slate-50 to-indigo-50 p-5 rounded-2xl border border-purple-100 mb-4 space-y-2">
-              <span class="text-[11px] font-black text-purple-700 block" id="riddle-number-tag">اللغز رقم #1</span>
-              <p id="riddle-question-text" class="text-sm font-black text-slate-800 leading-relaxed">
-                جاري تحميل اللغز الصعب...
-              </p>
-            </div>
-
-            <!-- حقل الإجابة والتأكيد -->
-            <div class="space-y-2">
-              <div class="flex gap-2">
-                <input type="text" id="riddle-user-answer" placeholder="اكتب إجابتك هنا بدقة..." class="flex-1 p-3 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-purple-600 outline-none font-bold">
-                <button onclick="verifyHardRiddle()" class="bg-purple-600 hover:bg-purple-700 text-white font-black px-5 rounded-xl text-xs transition shadow-md">
-                  تحقق ✨
-                </button>
-              </div>
-              <p id="riddle-feedback-text" class="text-xs font-bold min-h-[18px]"></p>
-            </div>
-          </div>
-
-          <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
-            <button onclick="showRiddleHint()" class="text-xs text-amber-600 hover:text-amber-700 font-bold flex items-center gap-1">
-              💡 إظهار تلميح
-            </button>
-            <button onclick="nextHardRiddle()" class="text-xs bg-slate-900 hover:bg-black text-white px-3.5 py-1.5 rounded-xl font-bold transition">
-              اللغز التالي ⏭️
-            </button>
           </div>
         </div>
 
@@ -672,7 +716,243 @@
     let currentFeedbackFilter = 'all';
 
     // -------------------------------------------------------------
-    // نظام التصويت الذكي (الذي يتحكم فيه المالك والإدارة فقط)
+    // 1. محرك لعبة الثعبان النيون الكلاسيكية
+    // -------------------------------------------------------------
+    let sCanvas, sCtx;
+    let snakeInterval = null;
+    let snake = [{x: 140, y: 140}];
+    let snakeDir = 'RIGHT';
+    let food = {x: 70, y: 70};
+    let snakeScore = 0;
+    const sBox = 14;
+
+    function initSnakeEngine() {
+      sCanvas = document.getElementById('snake-canvas');
+      if (!sCanvas) return;
+      sCtx = sCanvas.getContext('2d');
+    }
+
+    function startSnakeGame() {
+      clearInterval(snakeInterval);
+      snake = [{x: 140, y: 140}, {x: 126, y: 140}];
+      snakeDir = 'RIGHT';
+      snakeScore = 0;
+      document.getElementById('snake-score-display').textContent = `النقاط: 0`;
+      spawnFood();
+      snakeInterval = setInterval(gameLoopSnake, 110);
+    }
+
+    function spawnFood() {
+      food = {
+        x: Math.floor(Math.random() * (280 / sBox)) * sBox,
+        y: Math.floor(Math.random() * (280 / sBox)) * sBox
+      };
+    }
+
+    function changeSnakeDir(dir) {
+      if (dir === 'UP' && snakeDir !== 'DOWN') snakeDir = 'UP';
+      if (dir === 'DOWN' && snakeDir !== 'UP') snakeDir = 'DOWN';
+      if (dir === 'LEFT' && snakeDir !== 'RIGHT') snakeDir = 'LEFT';
+      if (dir === 'RIGHT' && snakeDir !== 'LEFT') snakeDir = 'RIGHT';
+    }
+
+    function gameLoopSnake() {
+      let headX = snake[0].x;
+      let headY = snake[0].y;
+
+      if (snakeDir === 'UP') headY -= sBox;
+      if (snakeDir === 'DOWN') headY += sBox;
+      if (snakeDir === 'LEFT') headX -= sBox;
+      if (snakeDir === 'RIGHT') headX += sBox;
+
+      if (headX < 0 || headX >= 280 || headY < 0 || headY >= 280) {
+        clearInterval(snakeInterval);
+        alert(`💥 Game Over! سكورك: ${snakeScore}`);
+        return;
+      }
+
+      for (let i = 0; i < snake.length; i++) {
+        if (headX === snake[i].x && headY === snake[i].y) {
+          clearInterval(snakeInterval);
+          alert(`💥 Game Over! سكورك: ${snakeScore}`);
+          return;
+        }
+      }
+
+      const newHead = {x: headX, y: headY};
+
+      if (headX === food.x && headY === food.y) {
+        snakeScore += 10;
+        document.getElementById('snake-score-display').textContent = `النقاط: ${snakeScore}`;
+        spawnFood();
+      } else {
+        snake.pop();
+      }
+
+      snake.unshift(newHead);
+
+      sCtx.fillStyle = '#020617';
+      sCtx.fillRect(0, 0, 280, 280);
+
+      sCtx.fillStyle = '#fbbf24';
+      sCtx.shadowBlur = 10;
+      sCtx.shadowColor = '#fbbf24';
+      sCtx.fillRect(food.x, food.y, sBox - 1, sBox - 1);
+
+      snake.forEach((part, index) => {
+        sCtx.fillStyle = index === 0 ? '#34d399' : '#10b981';
+        sCtx.shadowBlur = 8;
+        sCtx.shadowColor = '#34d399';
+        sCtx.fillRect(part.x, part.y, sBox - 1, sBox - 1);
+      });
+    }
+
+    // -------------------------------------------------------------
+    // 2. محرك لعبة خدعة الألوان والسرعة الحقيقية (Stroop Color Rush)
+    // -------------------------------------------------------------
+    const colorPalette = [
+      { name: "أحمر", hex: "#ef4444" },
+      { name: "أزرق", hex: "#3b82f6" },
+      { name: "أخضر فستقي", hex: "#10b981" },
+      { name: "أصفر ذهبي", hex: "#eab308" },
+      { name: "بنفسجي", hex: "#a855f7" },
+      { name: "برتقالي", hex: "#f97316" },
+      { name: "وردي نيون", hex: "#ec4899" },
+      { name: "كحلي داكن", hex: "#1e3a8a" },
+      { name: "سماوي ساطع", hex: "#06b6d4" },
+      { name: "عنابي", hex: "#881337" }
+    ];
+
+    let colorScore = 0;
+    let colorBest = 0;
+    let colorTimer = null;
+    let colorTargetAnswer = "";
+
+    function startColorGame() {
+      colorScore = 0;
+      document.getElementById('color-score-badge').textContent = `النقاط: 0`;
+      document.getElementById('color-game-status').textContent = 'ركز في لون الخط!';
+      nextColorRound();
+    }
+
+    function nextColorRound() {
+      clearTimeout(colorTimer);
+      const wordObj = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      let inkObj = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+
+      while (inkObj.name === wordObj.name) {
+        inkObj = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      }
+
+      colorTargetAnswer = inkObj.name;
+
+      const wordElem = document.getElementById('color-display-word');
+      wordElem.textContent = wordObj.name;
+      wordElem.style.color = inkObj.hex;
+
+      let options = [inkObj.name];
+      while (options.length < 4) {
+        let randName = colorPalette[Math.floor(Math.random() * colorPalette.length)].name;
+        if (!options.includes(randName)) options.push(randName);
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      const grid = document.getElementById('color-buttons-grid');
+      grid.innerHTML = options.map(opt => `
+        <button onclick="handleColorChoice('${opt}')" class="p-3 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl font-black text-xs md:text-sm border border-slate-200 transition shadow-sm">
+          ${opt}
+        </button>
+      `).join('');
+
+      const bar = document.getElementById('color-timer-bar');
+      bar.style.width = '100%';
+      setTimeout(() => { bar.style.width = '0%'; }, 50);
+
+      colorTimer = setTimeout(() => {
+        endColorGame('انتهى الوقت! ⏳ السرعة مطلوبة.');
+      }, 2500);
+    }
+
+    function handleColorChoice(choice) {
+      if (choice === colorTargetAnswer) {
+        colorScore++;
+        if (colorScore > colorBest) {
+          colorBest = colorScore;
+          document.getElementById('color-best-streak').textContent = `أعلى سكور: ${colorBest}`;
+        }
+        document.getElementById('color-score-badge').textContent = `النقاط: ${colorScore}`;
+        nextColorRound();
+      } else {
+        endColorGame(`خطأ! ❌ لون الخط كان: ${colorTargetAnswer}`);
+      }
+    }
+
+    function endColorGame(msg) {
+      clearTimeout(colorTimer);
+      alert(`${msg}\nنقاطك النهائية: ${colorScore}`);
+      document.getElementById('color-display-word').textContent = "اضغط ابدأ!";
+      document.getElementById('color-display-word').style.color = "#ffffff";
+      document.getElementById('color-buttons-grid').innerHTML = `
+        <button onclick="startColorGame()" class="col-span-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black py-3 rounded-xl text-sm transition shadow">
+          ⚡ إعادة التحدي
+        </button>
+      `;
+      document.getElementById('color-game-status').textContent = 'انتهت الجولة';
+    }
+
+    // -------------------------------------------------------------
+    // 3. بنك أسئلة الذكاء غير المكررة (10+ أسئلة متجددة)
+    // -------------------------------------------------------------
+    const triviaPool = [
+      { q: "ما هو الشيء الذي يمشي بأربع أرجل في الصباح، ورجلين في الظهيرة، وثلاث أرجل في المساء؟", opts: ["الإنسان", "الحصان", "الظل", "الساعة"], ans: 0 },
+      { q: "ما هو الكوكب الأكثر سخونة في المجموعة الشمسية؟", opts: ["عطارد", "الزهرة", "المريخ", "المشتري"], ans: 1 },
+      { q: "ما هو الشيء الذي يملك عيناً واحدة ولكنه لا يستطيع الرؤية بها؟", opts: ["الإبرة", "الإعصار", "البطاطس", "الشارع"], ans: 0 },
+      { q: "كم عدد فقرات عنق الزرافة؟", opts: ["7 فقرات", "14 فقرة", "21 فقرة", "28 فقرة"], ans: 0 },
+      { q: "ما هو أسرع كائن بحري في العالم؟", opts: ["سمكة الشراع", "الدلفين", "القرش الأبيض", "الحوت الأزرق"], ans: 0 },
+      { q: "ما هو العنصر الكيميائي الأكثر وفرة في الغلاف الجوي للأرض؟", opts: ["الأكسجين", "النيتروجين", "الهيدروجين", "الكربون"], ans: 1 },
+      { q: "إذا ضربت جميع الأرقام الموجودة في لوحة مفاتيح الهاتف، فما الناتج؟", opts: ["0", "362880", "1000", "لا شيء"], ans: 0 },
+      { q: "ما هي عاصمة أستراليا الرسمية؟", opts: ["سيدني", "ملبورن", "كانبرا", "بيرث"], ans: 2 }
+    ];
+
+    let unusedTrivia = [...triviaPool];
+    let dynamicTriviaScore = 0;
+
+    function loadNextRandomTrivia() {
+      if (unusedTrivia.length === 0) {
+        unusedTrivia = [...triviaPool];
+      }
+
+      const randIndex = Math.floor(Math.random() * unusedTrivia.length);
+      const selected = unusedTrivia.splice(randIndex, 1)[0];
+
+      document.getElementById('dynamic-trivia-q').textContent = `سؤال: ${selected.q}`;
+      const optsBox = document.getElementById('dynamic-trivia-options');
+      
+      optsBox.innerHTML = selected.opts.map((opt, i) => `
+        <button onclick="checkDynamicAnswer(${i}, ${selected.ans}, '${selected.opts[selected.ans]}')" class="p-2.5 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300 rounded-xl border border-slate-200 text-xs font-bold transition text-right">
+          ${i + 1}. ${opt}
+        </button>
+      `).join('');
+
+      document.getElementById('dynamic-trivia-feedback').textContent = "اختر الإجابة الصحيحة!";
+    }
+
+    function checkDynamicAnswer(chosen, correct, correctText) {
+      const fb = document.getElementById('dynamic-trivia-feedback');
+      if (chosen === correct) {
+        dynamicTriviaScore++;
+        fb.className = "text-xs font-black text-emerald-600";
+        fb.textContent = "✅ عبقري! إجابة صحيحة وممتازة!";
+      } else {
+        fb.className = "text-xs font-black text-rose-500";
+        fb.textContent = `❌ خطأ! الإجابة الصحيحة: ${correctText}`;
+      }
+      document.getElementById('trivia-points').textContent = `النقاط: ${dynamicTriviaScore}`;
+      setTimeout(loadNextRandomTrivia, 1500);
+    }
+
+    // -------------------------------------------------------------
+    // 4. نظام التصويت التفاعلي (المالك والإدارة فقط)
     // -------------------------------------------------------------
     let currentPoll = {
       question: "ما هي المادة التي تحتاج إلى وقت أطول للمراجعة هذا الأسبوع؟",
@@ -774,72 +1054,6 @@
     }
 
     // -------------------------------------------------------------
-    // بنك الألغاز الصعبة الحقيقية
-    // -------------------------------------------------------------
-    const hardRiddles = [
-      {
-        id: 1,
-        question: "رجل يقف أمام لوحة لشخص، فقال: 'لا إخوة لي ولا أخوات، ولكن والد هذا الرجل هو ابن والدي'. من يكون الرجل الذي في اللوحة؟",
-        answers: ["ابنه", "ابن", "ابني", "ولده"],
-        hint: "ركز في عبارة 'ابن والدي' وأنت لا إخوة لك، إذن من هو ابن والدك؟"
-      },
-      {
-        id: 2,
-        question: "قطار كهربائي يسير من الشمال إلى الجنوب بسرعة 100 كم/س، والرياح تهب من الشرق إلى الغرب، ففي أي اتجاه يتجه دخان القطار؟",
-        answers: ["لا يوجد دخان", "مافيش دخان", "مفيش دخان", "ليس له دخان", "لا دخان"],
-        hint: "اقرأ نوع القطار جيداً في بداية السؤال!"
-      },
-      {
-        id: 3,
-        question: "إذا كانت 5 قطط تستغرق 5 دقائق للإمساك بـ 5 فئران، فكم دقيقة تستغرق 100 قطة للإمساك بـ 100 فأر؟",
-        answers: ["5", "5 دقائق", "خمس", "خمسة"],
-        hint: "كل قطة تحتاج وقتاً محدداً للإمساك بفأرها، احسبها لكل قطة على حدة!"
-      }
-    ];
-
-    let currentRiddleIndex = 0;
-
-    function renderCurrentRiddle() {
-      const r = hardRiddles[currentRiddleIndex];
-      document.getElementById('riddle-number-tag').textContent = `اللغز الذكي #${r.id} من ${hardRiddles.length}`;
-      document.getElementById('riddle-question-text').textContent = r.question;
-      document.getElementById('riddle-user-answer').value = '';
-      document.getElementById('riddle-feedback-text').textContent = '';
-    }
-
-    function verifyHardRiddle() {
-      const input = document.getElementById('riddle-user-answer').value.trim().toLowerCase();
-      const fb = document.getElementById('riddle-feedback-text');
-      const r = hardRiddles[currentRiddleIndex];
-
-      if (!input) {
-        fb.className = "text-xs font-bold text-amber-600";
-        fb.textContent = "اكتب إجابتك أولاً!";
-        return;
-      }
-
-      const isCorrect = r.answers.some(ans => input.includes(ans.toLowerCase()));
-
-      if (isCorrect) {
-        fb.className = "text-xs font-black text-emerald-600";
-        fb.textContent = "🎉 إجابة عبقرية وصحيحة 100%! أنت بطل التفكير المنطقي!";
-      } else {
-        fb.className = "text-xs font-black text-rose-500";
-        fb.textContent = "❌ إجابة غير صحيحة، فكر بعمق أو اطلب تلميحاً!";
-      }
-    }
-
-    function showRiddleHint() {
-      const r = hardRiddles[currentRiddleIndex];
-      alert(`💡 تلميح الذكاء:\n${r.hint}`);
-    }
-
-    function nextHardRiddle() {
-      currentRiddleIndex = (currentRiddleIndex + 1) % hardRiddles.length;
-      renderCurrentRiddle();
-    }
-
-    // -------------------------------------------------------------
     // المحرك العام وأنيميشن الجزيئات
     // -------------------------------------------------------------
     function initDynamicBackground() {
@@ -904,10 +1118,11 @@
     window.onload = () => {
       try { localStorage.clear(); } catch(e){}
       initDynamicBackground();
+      initSnakeEngine();
+      loadNextRandomTrivia();
       setArabicUI();
       loadHomework();
       loadSavedPoll();
-      renderCurrentRiddle();
     };
 
     function openLoginModal() {
@@ -1045,7 +1260,7 @@
       document.getElementById('tab-quotes').innerHTML = "💬 Quotes Wall";
       document.getElementById('tab-profile').innerHTML = "👑 Owner Profile & Ranks";
       document.getElementById('tab-feedback').innerHTML = "💡 Feedback";
-      document.getElementById('tab-arcade').innerHTML = "🔥 Riddles & Polls";
+      document.getElementById('tab-arcade').innerHTML = "🎮 Games & Polls";
 
       document.getElementById('hw-list-heading').textContent = "Class Assignments:";
       document.getElementById('hw-form-heading').textContent = `📚 Add Homework (${currentUser ? currentUser.extra : ''})`;
@@ -1091,7 +1306,7 @@
       document.getElementById('tab-quotes').innerHTML = "💬 جملة من كل واحد";
       document.getElementById('tab-profile').innerHTML = "👑 بروفايل المالك والرتب";
       document.getElementById('tab-feedback').innerHTML = "💡 الآراء والتحسينات";
-      document.getElementById('tab-arcade').innerHTML = "🔥 الألغاز والتصويت";
+      document.getElementById('tab-arcade').innerHTML = "🎮 الألعاب والتصويت";
 
       document.getElementById('hw-list-heading').textContent = "قائمة واجبات الفصل:";
       document.getElementById('hw-form-heading').textContent = currentUser ? `📚 إضافة واجب مدرسي (${currentUser.extra || ''})` : "";
