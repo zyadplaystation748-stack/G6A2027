@@ -8,9 +8,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+    body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
     
-    /* متحرڪ اينيميشن بئڪ گرائونڊ */
+    /* كانفاس الجزيئات المتحركة في الخلفية العامة */
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -21,7 +21,32 @@
       pointer-events: none;
     }
 
-    /* رائل موڊ */
+    /* خلفية كارت البروفايل المتحركة الفخمة */
+    .profile-animated-card {
+      background: linear-gradient(125deg, #090d16, #1e1b4b, #311042, #0f172a, #1e1b4b);
+      background-size: 300% 300%;
+      animation: cardGradient 8s ease infinite;
+    }
+    @keyframes cardGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* كرات ضوئية متحركة داخل كارت البروفايل */
+    .card-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
+      animation: pulseOrb 6s alternate infinite ease-in-out;
+    }
+    @keyframes pulseOrb {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+      100% { transform: scale(1.3) translate(20px, -20px); opacity: 0.7; }
+    }
+
+    /* الثيم الملوكي عند تفعيل رمز المالك */
     body.royal-mode {
       background: #020617 !important;
       color: #f8fafc !important;
@@ -73,10 +98,10 @@
 </head>
 <body id="body-root" class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-500">
 
-  <!-- متحرڪ چمڪندڙ بئڪ گرائونڊ ڪينواس -->
+  <!-- كانفاس الأنيميشن التفاعلي -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- بئنر -->
+  <!-- بنر ترحيب المالك -->
   <div id="owner-welcome-bar" style="display: none;" class="bg-gradient-to-r from-amber-500 via-purple-700 to-amber-500 text-white py-2 px-4 text-center font-black text-xs md:text-sm tracking-wide shadow-2xl items-center justify-center gap-2">
     <span class="text-xl crown-float">👑</span>
     <span>تم تفعيل النمط الملوكي الحصري: مرحباً بك يا فخامة المالك زياد محمد فتوح!</span>
@@ -259,38 +284,42 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges (مڪمل هاءِ ڪوالٽي وڪٽر اينيمي اوتار جيڪو ڪڏهن به لاڪ نه ٿيندو) -->
+    <!-- 4. Profile & Badges (بروفايل المالك مع أنيميشن مخصص داخل الكارت وشعار ملكي فخم) -->
     <section id="section-profile" class="space-y-6 hidden">
-      <div class="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/40">
-        <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-purple-500/30 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="relative profile-animated-card rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/50">
+        
+        <!-- كرات نيون متحركة داخل خلفية الكارت -->
+        <div class="card-orb w-64 h-64 bg-amber-500/25 top-[-20%] right-[-10%]"></div>
+        <div class="card-orb w-72 h-72 bg-purple-600/35 bottom-[-30%] left-[-15%]"></div>
+        <div class="card-orb w-48 h-48 bg-blue-500/20 top-[40%] left-[35%]"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
-          <!-- هاءِ-ريزولوشن وڪٽر اينيمي باد-آس فيس -->
+          <!-- صورة الشعار الملكي الأسطوري المدمج -->
           <div class="relative group">
             <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
               👑
             </div>
-            <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300">
-              <svg viewBox="0 0 100 100" class="w-full h-full">
+            <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300 p-2">
+              <svg viewBox="0 0 120 120" class="w-full h-full">
                 <defs>
-                  <radialGradient id="neonGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#38bdf8"/>
-                    <stop offset="100%" stop-color="#0f172a"/>
-                  </radialGradient>
+                  <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fbbf24"/>
+                    <stop offset="50%" stop-color="#b45309"/>
+                    <stop offset="100%" stop-color="#1e1b4b"/>
+                  </linearGradient>
+                  <linearGradient id="goldFlame" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#ef4444"/>
+                    <stop offset="60%" stop-color="#f59e0b"/>
+                    <stop offset="100%" stop-color="#fef08a"/>
+                  </linearGradient>
                 </defs>
-                <circle cx="50" cy="50" r="50" fill="url(#neonGlow)"/>
-                <!-- شال / هوڊ -->
-                <path d="M15 95 C 20 55, 80 55, 85 95 Z" fill="#090d16" stroke="#fbbf24" stroke-width="1.5"/>
-                <!-- چهرو -->
-                <polygon points="35,42 65,42 58,72 50,78 42,72" fill="#fed7aa"/>
-                <!-- وار (Badass Anime Spikes) -->
-                <path d="M25 45 L35 20 L45 32 L52 12 L60 30 L72 18 L75 45 L68 38 L50 40 L32 38 Z" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
-                <!-- ماسڪ يا ڊارڪ فيچرز -->
-                <path d="M38 58 L50 68 L62 58 L58 72 L50 78 L42 72 Z" fill="#1e1b4b"/>
-                <!-- تيز نيلي چمڪندڙ اکيون -->
-                <polygon points="40,50 46,49 44,53" fill="#38bdf8"/>
-                <polygon points="60,50 54,49 56,53" fill="#38bdf8"/>
+                <!-- درع المالك الفخم -->
+                <polygon points="60,10 100,28 88,85 60,110 32,85 20,28" fill="url(#shieldGrad)" stroke="#fef08a" stroke-width="2"/>
+                <!-- شعلة الطاقة المركزية -->
+                <path d="M60,30 Q75,55 60,78 Q45,55 60,30 Z" fill="url(#goldFlame)"/>
+                <circle cx="60" cy="55" r="7" fill="#ffffff" filter="drop-shadow(0 0 8px #fef08a)"/>
+                <!-- التاج الصغير الداخلي -->
+                <polygon points="48,70 54,64 60,70 66,64 72,70 70,75 50,75" fill="#fef08a"/>
               </svg>
             </div>
             <span class="absolute bottom-1 right-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
@@ -398,7 +427,7 @@
 
     let currentUser = null;
 
-    // متحرڪ بئڪ گرائونڊ انجڻ
+    // محرك الأنيميشن الحي للخلفية المتحركة
     function initDynamicBackground() {
       const canvas = document.getElementById('bg-canvas');
       const ctx = canvas.getContext('2d');
@@ -660,7 +689,7 @@
       if (tabName === 'feedback') loadFeedback();
     }
 
-    // 1. الواجبات + ڊليٽ بٽڻ
+    // 1. الواجبات + سلة حذف
     async function loadHomework() {
       const filter = document.getElementById('hw-filter').value;
       const container = document.getElementById('homework-list');
@@ -735,7 +764,7 @@
       alert(currentUser.lang === 'en' ? 'Assignment published successfully!' : 'تم نشر الواجب بنجاح!');
     }
 
-    // 2. ڪوئز + ڊليٽ بٽڻ
+    // 2. الكويزات + سلة حذف
     async function loadQuizzes() {
       const container = document.getElementById('quizzes-list');
       const { data, error } = await client.from('quizzes').select('*').order('quiz_date', { ascending: true });
@@ -877,7 +906,7 @@
       alert('✨ تم نشر جملتك التذكارية بنجاح!');
     }
 
-    // 4. فيڊبيڪ
+    // 4. التحسينات والآراء
     async function loadFeedback() {
       const container = document.getElementById('feedback-list');
       const { data, error } = await client.from('feedback').select('*').order('id', { ascending: false });
@@ -931,7 +960,7 @@
       alert(currentUser && currentUser.lang === 'en' ? 'Feedback submitted successfully!' : 'تم إرسال الملاحظة بنجاح!');
     }
 
-    // سڀني لاءِ ڊليٽ ڪرڻ جو فنڪشن
+    // دالة الحذف العامة
     async function deleteItem(table, id) {
       if (!confirm('هل أنت متأكد من رغبتك في حذف هذا العنصر نهائياً؟')) return;
 
