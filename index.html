@@ -10,50 +10,74 @@
   <style>
     body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; }
     
-    /* خلفية المالك المتحركة */
-    body.royal-mode {
-      background: linear-gradient(-45deg, #05050f, #1a0826, #0a1128, #18051e) !important;
-      background-size: 400% 400% !important;
-      animation: crazyGlow 10s ease infinite !important;
-      color: #f8fafc !important;
+    /* أنيميشن الخلفية الحي */
+    .bg-animation-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
     }
-    @keyframes crazyGlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(65px);
+      opacity: 0.45;
+      animation: floatOrbs 12s infinite alternate ease-in-out;
+    }
+    .orb-1 { width: 360px; height: 360px; background: #6366f1; top: 10%; left: 15%; animation-duration: 9s; }
+    .orb-2 { width: 450px; height: 450px; background: #a855f7; bottom: 10%; right: 10%; animation-duration: 14s; }
+    .orb-3 { width: 320px; height: 320px; background: #ec4899; top: 50%; left: 45%; animation-duration: 11s; }
+
+    @keyframes floatOrbs {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, -50px) scale(1.15); }
+      100% { transform: translate(-50px, 40px) scale(0.9); }
     }
 
+    /* الثيم الملوكي */
+    body.royal-mode {
+      background: #060814 !important;
+      color: #f8fafc !important;
+    }
+    body.royal-mode .orb-1 { background: #7c3aed !important; opacity: 0.65; }
+    body.royal-mode .orb-2 { background: #d97706 !important; opacity: 0.55; }
+    body.royal-mode .orb-3 { background: #4338ca !important; opacity: 0.7; }
+    
     body.royal-mode .bg-white {
-      background: rgba(22, 19, 43, 0.75) !important;
-      border: 1px solid rgba(251, 191, 36, 0.35) !important;
+      background: rgba(17, 24, 39, 0.8) !important;
+      border: 1px solid rgba(251, 191, 36, 0.45) !important;
       color: #f8fafc !important;
       backdrop-filter: blur(16px);
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(251, 191, 36, 0.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
     body.royal-mode input, body.royal-mode select, body.royal-mode textarea {
-      background: rgba(11, 15, 29, 0.9) !important;
-      color: #fde047 !important;
-      border-color: rgba(251, 191, 36, 0.45) !important;
+      background: rgba(15, 23, 42, 0.9) !important;
+      color: #fef08a !important;
+      border-color: rgba(251, 191, 36, 0.5) !important;
     }
     body.royal-mode h2, body.royal-mode h3 {
-      color: #fde047 !important;
+      color: #fef08a !important;
     }
     body.royal-mode #main-header {
-      background: linear-gradient(135deg, #180928, #3b0764, #172554) !important;
+      background: linear-gradient(135deg, #111827, #311042, #1e1b4b) !important;
       border-bottom: 2px solid #fbbf24;
-      box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.4);
     }
 
     .neon-gold-border {
       border: 3px solid #fbbf24;
-      box-shadow: 0 0 25px rgba(251, 191, 36, 0.8), inset 0 0 15px rgba(251, 191, 36, 0.4);
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.85), inset 0 0 12px rgba(251, 191, 36, 0.4);
     }
     .crown-float {
       animation: floatCrown 2.5s ease-in-out infinite;
     }
     @keyframes floatCrown {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-7px) rotate(5deg); }
+      50% { transform: translateY(-7px) rotate(4deg); }
     }
 
     .tab-btn.active {
@@ -62,13 +86,20 @@
       border-bottom: 3px solid #1e3a8a;
     }
     body.royal-mode .tab-btn.active {
-      background-color: #8b5cf6 !important;
+      background-color: #7c3aed !important;
       border-bottom: 3px solid #fbbf24 !important;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
     }
   </style>
 </head>
 <body id="body-root" class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-500">
+
+  <!-- الخلفية الحية المتحركة -->
+  <div class="bg-animation-container">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
 
   <!-- بنر المالك -->
   <div id="owner-welcome-bar" style="display: none;" class="bg-gradient-to-r from-amber-500 via-purple-700 to-amber-500 text-white py-2 px-4 text-center font-black text-xs md:text-sm tracking-wide shadow-2xl items-center justify-center gap-2">
@@ -224,24 +255,25 @@
       </div>
     </section>
 
-    <!-- 3. Quotes Wall -->
+    <!-- 3. Quotes Wall (محمي ومحدد بجملة واحدة وباسوورد للمناصب + سلة) -->
     <section id="section-quotes" class="hidden space-y-6">
       <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-6 rounded-2xl shadow-md">
         <h2 id="quotes-banner-title" class="text-2xl font-black mb-1">🌟 حائط "جملة من كل واحد"</h2>
-        <p id="quotes-banner-desc" class="text-amber-100 text-sm">مساحة خاصة لكل عضو في الفصل، المدرسين، والمديرة لمشاركة كلماتهم التذكارية!</p>
+        <p id="quotes-banner-desc" class="text-amber-100 text-sm">مساحة خاصة لكل عضو في الفصل ليترك ذكرى واحدة فقط خالدة!</p>
       </div>
 
       <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
           <input type="text" id="quote-author" placeholder="اسمك الكريم..." class="p-2.5 rounded-lg border text-sm">
-          <select id="quote-role" class="p-2.5 rounded-lg border text-sm bg-white">
-            <option value="طالب">طالب في 6A / Student</option>
-            <option value="معلم">معلم / Teacher</option>
-            <option value="إدارة">إدارة المدرسة / Admin</option>
-            <option value="مالك المنصة">مالك المنصة / Owner</option>
+          <select id="quote-role" onchange="toggleQuotePasscode()" class="p-2.5 rounded-lg border text-sm bg-white">
+            <option value="طالب في 6A">طالب في 6A (بدون رمز)</option>
+            <option value="مالك المنصة">👑 مالك المنصة (يتطلب رمزك)</option>
+            <option value="إدارة المدرسة">🏛️ إدارة المدرسة (يتطلب رمز الإدارة)</option>
+            <option value="معلم">👨‍🏫 معلم (يتطلب رمز المعلمين)</option>
           </select>
+          <input type="password" id="quote-pass" placeholder="الرمز السري للمنصب..." style="display: none;" class="p-2.5 rounded-lg border text-sm bg-amber-50 border-amber-300">
         </div>
-        <textarea id="quote-text" rows="2" placeholder="اكتب جملتك الملهمة أو الذكرى هنا..." class="w-full p-3 rounded-lg border text-sm"></textarea>
+        <textarea id="quote-text" rows="2" placeholder="اكتب جملتك التذكارية الوحيدة هنا..." class="w-full p-3 rounded-lg border text-sm"></textarea>
         <button id="quote-submit-btn" onclick="addQuote()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 rounded-lg transition text-sm">
           شارك جملتك على الحائط ✨
         </button>
@@ -252,29 +284,20 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges -->
+    <!-- 4. Profile & Badges (بروفايل أنمي أسطوري نظيف وفخم) -->
     <section id="section-profile" class="space-y-6 hidden">
       <div class="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/40">
         <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-purple-500/30 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
-          <!-- بروفايل أنمي ملوكي نيون مدمج بدون روابط خارجية -->
+          <!-- صورة أنمي ولد باد-آس نظيفة ومضمونة 100% -->
           <div class="relative group">
             <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
               👑
             </div>
             <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300">
-              <svg class="w-full h-full p-2" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="100" cy="100" r="95" fill="#090d16" stroke="#fbbf24" stroke-width="4"/>
-                <path d="M40 180C40 140 70 125 100 125C130 125 160 140 160 180" fill="#4f46e5" stroke="#fbbf24" stroke-width="3"/>
-                <circle cx="100" cy="85" r="35" fill="#fde047" stroke="#fbbf24" stroke-width="3"/>
-                <!-- شعر أنمي حاد -->
-                <path d="M65 80L80 40L100 55L120 40L135 80L125 70L100 75L75 70Z" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2"/>
-                <circle cx="88" cy="85" r="5" fill="#0284c7"/>
-                <circle cx="112" cy="85" r="5" fill="#0284c7"/>
-                <path d="M92 102Q100 108 108 102" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-              </svg>
+              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Son_Gohan.png/440px-Son_Gohan.png" alt="Zyad Anime King" class="w-full h-full object-cover">
             </div>
             <span class="absolute bottom-1 right-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
               OWNER ⚡
@@ -342,7 +365,7 @@
       </div>
     </section>
 
-    <!-- 5. Feedback -->
+    <!-- 5. Feedback (التحسينات مع سلة الحذف) -->
     <section id="section-feedback" class="hidden space-y-6">
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
         <h2 id="feedback-heading" class="text-xl font-bold mb-2">💡 التحسينات والآراء</h2>
@@ -565,9 +588,9 @@
       document.getElementById('schedule-btn').textContent = "تحميل / فتح الجدول";
 
       document.getElementById('quotes-banner-title').textContent = "🌟 حائط \"جملة من كل واحد\"";
-      document.getElementById('quotes-banner-desc').textContent = "مساحة خاصة لكل عضو في الفصل، المدرسين، والمديرة لمشاركة كلماتهم التذكارية!";
+      document.getElementById('quotes-banner-desc').textContent = "مساحة خاصة لكل عضو في الفصل ليترك ذكرى واحدة فقط خالدة!";
       document.getElementById('quote-author').placeholder = "اسمك الكريم...";
-      document.getElementById('quote-text').placeholder = "اكتب جملتك الملهمة أو الذكرى هنا...";
+      document.getElementById('quote-text').placeholder = "اكتب جملتك التذكارية الوحيدة هنا...";
       document.getElementById('quote-submit-btn').textContent = "شارك جملتك على الحائط ✨";
 
       document.getElementById('feedback-heading').textContent = "💡 التحسينات والآراء";
@@ -596,6 +619,7 @@
       if (tabName === 'feedback') loadFeedback();
     }
 
+    // 1. الواجبات + سلة حذف للجميع
     async function loadHomework() {
       const filter = document.getElementById('hw-filter').value;
       const container = document.getElementById('homework-list');
@@ -618,13 +642,18 @@
         return;
       }
       container.innerHTML = data.map(hw => `
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-          <div class="flex justify-between items-start mb-2">
-            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-md">${hw.subject}</span>
-            <span class="text-xs text-red-500 font-bold">${isEn ? 'Due: ' : 'تسليم: '}${hw.due_date || (isEn ? 'N/A' : 'غير محدد')}</span>
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-start gap-3">
+          <div class="flex-1">
+            <div class="flex justify-between items-start mb-2">
+              <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-md">${hw.subject}</span>
+              <span class="text-xs text-red-500 font-bold">${isEn ? 'Due: ' : 'تسليم: '}${hw.due_date || (isEn ? 'N/A' : 'غير محدد')}</span>
+            </div>
+            <h3 class="font-bold text-slate-800 text-base mb-1">${hw.title}</h3>
+            ${hw.created_by ? `<div class="text-[11px] text-slate-400 mt-2 border-t pt-1">بواسطة: ${hw.created_by}</div>` : ''}
           </div>
-          <h3 class="font-bold text-slate-800 text-base mb-1">${hw.title}</h3>
-          ${hw.created_by ? `<div class="text-[11px] text-slate-400 mt-2 border-t pt-1">بواسطة: ${hw.created_by}</div>` : ''}
+          <button onclick="deleteItem('homework', ${hw.id})" title="حذف الواجب" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+            🗑️
+          </button>
         </div>
       `).join('');
     }
@@ -641,7 +670,6 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'جاري النشر...';
 
-      // تم إضافة created_by لحل الخطأ نهائياً
       const { data, error } = await client.from('homework').insert([{
         title: title,
         subject: subject,
@@ -666,10 +694,16 @@
       alert(currentUser.lang === 'en' ? 'Assignment published successfully!' : 'تم نشر الواجب بنجاح!');
     }
 
+    // 2. الكويزات + سلة حذف للجميع
     async function loadQuizzes() {
       const container = document.getElementById('quizzes-list');
-      const { data } = await client.from('quizzes').select('*').order('quiz_date', { ascending: true });
+      const { data, error } = await client.from('quizzes').select('*').order('quiz_date', { ascending: true });
       const isEn = currentUser && currentUser.lang === 'en';
+
+      if (error) {
+        container.innerHTML = `<div class="text-center text-red-400 py-4 text-sm">خطأ في التحميل: ${error.message}</div>`;
+        return;
+      }
 
       if (!data || data.length === 0) {
         container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No quizzes scheduled 🎉' : 'لا توجد كويزات مسجلة حالياً 🎉'}</div>`;
@@ -677,11 +711,16 @@
       }
       container.innerHTML = data.map(qz => `
         <div class="flex justify-between items-center p-3 bg-red-50 rounded-xl border border-red-100">
-          <div>
+          <div class="flex-1">
             <span class="font-bold text-slate-800 text-sm block">${qz.title} (${qz.subject})</span>
             <span class="text-xs text-red-600 font-semibold">${isEn ? 'Date: ' : 'الميعاد: '}${qz.quiz_date}</span>
           </div>
-          <span class="bg-red-200 text-red-800 text-xs px-2 py-1 rounded font-bold">${isEn ? 'Quiz' : 'كويز'}</span>
+          <div class="flex items-center gap-2">
+            <span class="bg-red-200 text-red-800 text-xs px-2 py-1 rounded font-bold">${isEn ? 'Quiz' : 'كويز'}</span>
+            <button onclick="deleteItem('quizzes', ${qz.id})" title="حذف الكويز" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-lg transition text-base">
+              🗑️
+            </button>
+          </div>
         </div>
       `).join('');
     }
@@ -712,21 +751,43 @@
       alert(currentUser.lang === 'en' ? 'Quiz added successfully!' : 'تمت إضافة الكويز بنجاح!');
     }
 
+    // 3. جملة من كل واحد (مع حماية الباسوورد + جملة واحدة فقط + سلة)
+    function toggleQuotePasscode() {
+      const role = document.getElementById('quote-role').value;
+      const passInput = document.getElementById('quote-pass');
+      if (role === 'طالب في 6A') {
+        passInput.style.display = 'none';
+        passInput.value = '';
+      } else {
+        passInput.style.display = 'block';
+      }
+    }
+
     async function loadQuotes() {
       const container = document.getElementById('quotes-list');
-      const { data } = await client.from('quotes').select('*').order('id', { ascending: false });
+      const { data, error } = await client.from('quotes').select('*').order('id', { ascending: false });
       const isEn = currentUser && currentUser.lang === 'en';
+
+      if (error) {
+        container.innerHTML = `<div class="col-span-full text-center text-red-500 py-6">خطأ في التحميل: ${error.message}</div>`;
+        return;
+      }
 
       if (!data || data.length === 0) {
         container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'Be the first to post a quote!' : 'كن أول من يترك جملة تذكارية!'}</div>`;
         return;
       }
       container.innerHTML = data.map(q => `
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden flex flex-col justify-between">
           <p class="text-slate-700 text-sm font-semibold mb-3 relative z-10 leading-relaxed">“${q.quote_text}”</p>
           <div class="flex justify-between items-center text-xs border-t pt-2 text-slate-500">
             <span class="font-bold text-slate-800">${q.author_name}</span>
-            <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">${q.role}</span>
+            <div class="flex items-center gap-2">
+              <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">${q.role}</span>
+              <button onclick="deleteItem('quotes', ${q.id})" title="حذف الجملة" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+                🗑️
+              </button>
+            </div>
           </div>
         </div>
       `).join('');
@@ -736,35 +797,75 @@
       const author = document.getElementById('quote-author').value.trim();
       const role = document.getElementById('quote-role').value;
       const text = document.getElementById('quote-text').value.trim();
+      const enteredPass = document.getElementById('quote-pass').value.trim();
 
-      if (!author || !text) return alert(currentUser && currentUser.lang === 'en' ? 'Please fill your name and quote' : 'يرجى كتابة اسمك وجملتك أولاً');
+      if (!author || !text) return alert('يرجى كتابة اسمك وجملتك أولاً');
 
-      await client.from('quotes').insert([{
+      // حماية المناصب برمز سري يمنع انتحال شخصيتك
+      if (role === 'مالك المنصة' && enteredPass !== PASSWORDS.owner) {
+        return alert('⛔ رمز مالك المنصة غير صحيح! لا يمكن النشر بهذه الصفة.');
+      }
+      if (role === 'إدارة المدرسة' && enteredPass !== PASSWORDS.admin) {
+        return alert('⛔ رمز إدارة المدرسة غير صحيح!');
+      }
+      if (role === 'معلم' && enteredPass !== PASSWORDS.teacher) {
+        return alert('⛔ رمز المعلمين غير صحيح!');
+      }
+
+      // شرط جملة واحدة فقط لكل حساب/جهاز
+      const hasPosted = localStorage.getItem('has_posted_quote_account');
+      if (hasPosted && role === 'طالب في 6A') {
+        return alert('⚠️ لقد قمت بمشاركة جملتك التذكارية بالفعل! مسموح بجملة واحدة فقط لكل عضو.');
+      }
+
+      const { error } = await client.from('quotes').insert([{
         author_name: author,
         role: role,
         quote_text: text
       }]);
 
+      if (error) {
+        return alert('حدث خطأ أثناء نشر الجملة: ' + error.message);
+      }
+
+      if (role === 'طالب في 6A') {
+        localStorage.setItem('has_posted_quote_account', 'true');
+      }
+
       document.getElementById('quote-text').value = '';
+      document.getElementById('quote-pass').value = '';
       loadQuotes();
+      alert('✨ تم نشر جملتك التذكارية بنجاح!');
     }
 
+    // 4. التحسينات والآراء + سلة حذف
     async function loadFeedback() {
       const container = document.getElementById('feedback-list');
-      const { data } = await client.from('feedback').select('*').order('id', { ascending: false });
+      const { data, error } = await client.from('feedback').select('*').order('id', { ascending: false });
       const isEn = currentUser && currentUser.lang === 'en';
+
+      if (error) {
+        container.innerHTML = `<div class="text-center text-red-400 py-4 text-sm">خطأ في التحميل: ${error.message}</div>`;
+        return;
+      }
 
       if (!data || data.length === 0) {
         container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No feedback yet.' : 'لا توجد ملاحظات بعد.'}</div>`;
         return;
       }
+
       container.innerHTML = data.map(f => `
-        <div class="bg-white p-4 rounded-xl border border-slate-200">
-          <div class="flex justify-between text-xs mb-1">
-            <span class="font-bold text-slate-700">${f.user_name}</span>
-            <span class="text-indigo-600 font-semibold">${f.type}</span>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-start gap-3 transition">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 text-xs mb-1">
+              <span class="font-bold text-slate-700">${f.user_name}</span>
+              <span class="text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded">${f.type}</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">${f.message}</p>
           </div>
-          <p class="text-xs text-slate-600">${f.message}</p>
+          <button onclick="deleteItem('feedback', ${f.id})" title="حذف الرسالة" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+            🗑️
+          </button>
         </div>
       `).join('');
     }
@@ -776,15 +877,36 @@
 
       if (!text) return alert(currentUser && currentUser.lang === 'en' ? 'Please enter your note' : 'يرجى كتابة الملاحظة');
 
-      await client.from('feedback').insert([{
+      const { error } = await client.from('feedback').insert([{
         user_name: user,
         type: type,
         message: text
       }]);
 
+      if (error) {
+        return alert('حدث خطأ أثناء الإرسال: ' + error.message);
+      }
+
       document.getElementById('fb-text').value = '';
       loadFeedback();
       alert(currentUser && currentUser.lang === 'en' ? 'Feedback submitted successfully!' : 'تم إرسال الملاحظة بنجاح!');
+    }
+
+    // دالة الحذف العامة الشاملة لكل الأقسام
+    async function deleteItem(table, id) {
+      if (!confirm('هل أنت متأكد من رغبتك في حذف هذا العنصر نهائياً؟')) return;
+
+      const { error } = await client.from(table).delete().eq('id', id);
+
+      if (error) {
+        alert('حدث خطأ أثناء الحذف: ' + error.message);
+        return;
+      }
+
+      if (table === 'homework') loadHomework();
+      if (table === 'quizzes') loadQuizzes();
+      if (table === 'quotes') loadQuotes();
+      if (table === 'feedback') loadFeedback();
     }
   </script>
 </body>
