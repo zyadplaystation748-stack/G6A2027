@@ -274,7 +274,7 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges (مع الأسهم التفاعلية والقوائم المنسدلة للرتب) -->
+    <!-- 4. Profile & Badges -->
     <section id="section-profile" class="space-y-6 hidden">
       <div class="relative profile-animated-card rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/50">
         <div class="card-orb w-64 h-64 bg-amber-500/25 top-[-20%] right-[-10%]"></div>
@@ -348,135 +348,135 @@
         </div>
       </div>
 
-      <!-- دليل الرتب التفاعلي المطور مع القوائم والأسهم -->
+      <!-- دليل الرتب التفاعلي بالأسهم والأسماء المحددة -->
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
         <h3 id="roles-title" class="text-base font-black text-slate-800 mb-3 flex items-center justify-between">
           <span class="flex items-center gap-2">🎖️ الهيكل الرسمي للرتب وقوائم الأعضاء:</span>
-          <span class="text-xs text-slate-400 font-normal">اضغط على السهم لعرض الأسماء 🔻</span>
+          <span class="text-xs text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg font-bold">اضغط على أي كارت لعرض الأسماء ▼</span>
         </h3>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
           
           <!-- 1. المالك -->
-          <div class="p-3 bg-purple-50 rounded-xl border border-purple-200 transition hover:shadow-sm">
-            <div onclick="toggleRankList('rank-owner')" class="flex justify-between items-center cursor-pointer select-none">
+          <div onclick="toggleRankList('rank-owner')" class="p-3.5 bg-purple-50 hover:bg-purple-100/70 rounded-xl border border-purple-200 transition cursor-pointer select-none">
+            <div class="flex justify-between items-center">
               <div>
                 <span class="font-black text-purple-900 block text-sm mb-0.5">👑 مالك ومطور المنصة</span>
-                <span class="text-purple-700">صلاحيات النظام المطلقة</span>
+                <span class="text-purple-700">صلاحيات النظام الكاملة</span>
               </div>
-              <span id="arrow-rank-owner" class="text-sm text-purple-600 transition duration-300">🔻</span>
+              <span id="arrow-rank-owner" class="text-base font-black text-purple-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
             </div>
-            <div id="list-rank-owner" class="hidden mt-2 pt-2 border-t border-purple-200/60 space-y-1">
-              <span class="block font-bold text-purple-900 bg-white/80 p-1.5 rounded-lg border border-purple-100">🌟 زياد محمد فتوح (المالك)</span>
+            <div id="list-rank-owner" class="hidden mt-3 pt-2.5 border-t border-purple-200 space-y-1">
+              <span class="block font-black text-purple-950 bg-white p-2 rounded-lg border border-purple-200 shadow-sm">👑 زياد محمد فتوح</span>
             </div>
           </div>
 
-          <!-- 2. إدارة المدرسة -->
-          <div class="p-3 bg-red-50 rounded-xl border border-red-200 transition hover:shadow-sm">
-            <div onclick="toggleRankList('rank-admin')" class="flex justify-between items-center cursor-pointer select-none">
+          <!-- 2. إدارة المدرسة والناظر -->
+          <div onclick="toggleRankList('rank-admin')" class="p-3.5 bg-red-50 hover:bg-red-100/70 rounded-xl border border-red-200 transition cursor-pointer select-none">
+            <div class="flex justify-between items-center">
               <div>
                 <span class="font-black text-red-900 block text-sm mb-0.5">🏛️ إدارة المدرسة والناظر</span>
                 <span class="text-red-700">الإشراف الإداري والأكاديمي</span>
               </div>
-              <span id="arrow-rank-admin" class="text-sm text-red-600 transition duration-300">🔻</span>
+              <span id="arrow-rank-admin" class="text-base font-black text-red-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
             </div>
-            <div id="list-rank-admin" class="hidden mt-2 pt-2 border-t border-red-200/60 space-y-1">
-              <span class="block font-bold text-red-900 bg-white/80 p-1 rounded border border-red-100">👩‍💼 مس رحاب (المديرة)</span>
-              <span class="block font-bold text-red-900 bg-white/80 p-1 rounded border border-red-100">👨‍💼 مستر سعد (الناظر)</span>
-              <span class="block font-bold text-red-900 bg-white/80 p-1 rounded border border-red-100">👩‍💼 مس إيمان (ناظر)</span>
-              <span class="block font-bold text-red-900 bg-white/80 p-1 rounded border border-red-100">🩺 مس نيرفانا الهليلي (أخصائي)</span>
-              <span class="block font-bold text-red-900 bg-white/80 p-1 rounded border border-red-100">🩺 مستر أحمد (أخصائي)</span>
+            <div id="list-rank-admin" class="hidden mt-3 pt-2.5 border-t border-red-200 space-y-1.5">
+              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">👩‍💼 مس رحاب (المديرة)</span>
+              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">👨‍💼 مستر سعد (الناظر)</span>
+              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">👩‍💼 مس إيمان (ناظر)</span>
+              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">🩺 مس نيرفانا الهليلي (أخصائي)</span>
+              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">🩺 مستر أحمد (أخصائي)</span>
             </div>
           </div>
 
-          <!-- 3. المعلمون -->
-          <div class="p-3 bg-blue-50 rounded-xl border border-blue-200 transition hover:shadow-sm">
-            <div onclick="toggleRankList('rank-teachers')" class="flex justify-between items-center cursor-pointer select-none">
+          <!-- 3. أعضاء هيئة التدريس -->
+          <div onclick="toggleRankList('rank-teachers')" class="p-3.5 bg-blue-50 hover:bg-blue-100/70 rounded-xl border border-blue-200 transition cursor-pointer select-none">
+            <div class="flex justify-between items-center">
               <div>
                 <span class="font-black text-blue-900 block text-sm mb-0.5">👨‍🏫 أعضاء هيئة التدريس</span>
                 <span class="text-blue-700">معلمو الـ 8 مواد المعتمدة</span>
               </div>
-              <span id="arrow-rank-teachers" class="text-sm text-blue-600 transition duration-300">🔻</span>
+              <span id="arrow-rank-teachers" class="text-base font-black text-blue-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
             </div>
-            <div id="list-rank-teachers" class="hidden mt-2 pt-2 border-t border-blue-200/60 space-y-1">
-              <span class="block font-bold text-blue-900 bg-white/80 p-1 rounded border border-blue-100">🔬 مس نورهان (Science)</span>
-              <span class="block font-bold text-blue-900 bg-white/80 p-1 rounded border border-blue-100">📖 مس أسماء ياسر (English)</span>
-              <span class="block font-bold text-blue-900 bg-white/80 p-1 rounded border border-blue-100">📐 مس دينا (Math)</span>
-              <span class="block font-bold text-blue-900 bg-white/80 p-1 rounded border border-blue-100">💻 مس سماح (ICT)</span>
-              <span class="block font-bold text-blue-900 bg-white/80 p-1 rounded border border-blue-100">🗼 مس ياسمينا (French)</span>
-              <span class="block font-bold text-blue-900 bg-white/80 p-1 rounded border border-blue-100">🌍 مستر أسامة (الدراسات / سوشيال)</span>
-              <span class="block font-bold text-blue-900 bg-white/80 p-1 rounded border border-blue-100">📚 مس فاطمة رمضان (لغة عربية)</span>
-              <span class="block font-bold text-blue-900 bg-white/80 p-1 rounded border border-blue-100">🌙 مس فاطمة رمضان (تربية دينية)</span>
+            <div id="list-rank-teachers" class="hidden mt-3 pt-2.5 border-t border-blue-200 space-y-1.5">
+              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">🔬 مس نورهان (Science)</span>
+              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">📖 مس أسماء ياسر (English)</span>
+              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">📐 مس دينا (Math)</span>
+              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">💻 مس سماح (ICT)</span>
+              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">🗼 مس ياسمينا (French)</span>
+              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">🌍 مستر أسامة (الدراسات / سوشيال)</span>
+              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">📚 مس فاطمة رمضان (لغة عربية)</span>
+              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">🌙 مس فاطمة رمضان (تربية دينية)</span>
             </div>
           </div>
 
           <!-- 4. التوب (The Top) - بديل المميزون -->
-          <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 transition hover:shadow-sm">
-            <div onclick="toggleRankList('rank-top')" class="flex justify-between items-center cursor-pointer select-none">
+          <div onclick="toggleRankList('rank-top')" class="p-3.5 bg-amber-50 hover:bg-amber-100/70 rounded-xl border border-amber-200 transition cursor-pointer select-none">
+            <div class="flex justify-between items-center">
               <div>
                 <span class="font-black text-amber-900 block text-sm mb-0.5">🏆 التوب (The Top)</span>
                 <span class="text-amber-700">صدارة الفصل وأعلى أداء</span>
               </div>
-              <span id="arrow-rank-top" class="text-sm text-amber-600 transition duration-300">🔻</span>
+              <span id="arrow-rank-top" class="text-base font-black text-amber-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
             </div>
-            <div id="list-rank-top" class="hidden mt-2 pt-2 border-t border-amber-200/60 space-y-1">
-              <span class="block font-bold text-amber-900 bg-white/80 p-1 rounded border border-amber-100">⭐ ديما</span>
-              <span class="block font-bold text-amber-900 bg-white/80 p-1 rounded border border-amber-100">⭐ كارما</span>
-              <span class="block font-bold text-amber-900 bg-white/80 p-1 rounded border border-amber-100">⭐ آدم</span>
-              <span class="block font-bold text-amber-900 bg-white/80 p-1 rounded border border-amber-100">⭐ علوش</span>
-              <span class="block font-bold text-amber-900 bg-white/80 p-1 rounded border border-amber-100">⭐ آسر</span>
+            <div id="list-rank-top" class="hidden mt-3 pt-2.5 border-t border-amber-200 space-y-1.5">
+              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 ديما</span>
+              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 كارما</span>
+              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 آدم</span>
+              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 علوش</span>
+              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 آسر</span>
             </div>
           </div>
 
           <!-- 5. الرتبة الذهبية -->
-          <div class="p-3 bg-yellow-50 rounded-xl border border-yellow-200 transition hover:shadow-sm">
-            <div onclick="toggleRankList('rank-gold')" class="flex justify-between items-center cursor-pointer select-none">
+          <div onclick="toggleRankList('rank-gold')" class="p-3.5 bg-yellow-50 hover:bg-yellow-100/70 rounded-xl border border-yellow-200 transition cursor-pointer select-none">
+            <div class="flex justify-between items-center">
               <div>
                 <span class="font-black text-yellow-900 block text-sm mb-0.5">🥇 الرتبة الذهبية</span>
-                <span class="text-yellow-700">نجوم التحديات والتميز</span>
+                <span class="text-yellow-700">نجوم التحديات والأنشطة</span>
               </div>
-              <span id="arrow-rank-gold" class="text-sm text-yellow-600 transition duration-300">🔻</span>
+              <span id="arrow-rank-gold" class="text-base font-black text-yellow-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
             </div>
-            <div id="list-rank-gold" class="hidden mt-2 pt-2 border-t border-yellow-200/60 space-y-1">
-              <span class="block font-bold text-yellow-900 bg-white/80 p-1 rounded border border-yellow-100">✨ زين</span>
-              <span class="block font-bold text-yellow-900 bg-white/80 p-1 rounded border border-yellow-100">✨ ملك</span>
-              <span class="block font-bold text-yellow-900 bg-white/80 p-1 rounded border border-yellow-100">✨ أروى</span>
-              <span class="block font-bold text-yellow-900 bg-white/80 p-1 rounded border border-yellow-100">✨ رؤى</span>
-              <span class="block font-bold text-yellow-900 bg-white/80 p-1 rounded border border-yellow-100">✨ أحمد عابد</span>
+            <div id="list-rank-gold" class="hidden mt-3 pt-2.5 border-t border-yellow-200 space-y-1.5">
+              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ زين</span>
+              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ ملك</span>
+              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ أروى</span>
+              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ رؤى</span>
+              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ أحمد عابد</span>
             </div>
           </div>
 
           <!-- 6. الرتبة الفضية -->
-          <div class="p-3 bg-cyan-50 rounded-xl border border-cyan-200 transition hover:shadow-sm">
-            <div onclick="toggleRankList('rank-silver')" class="flex justify-between items-center cursor-pointer select-none">
+          <div onclick="toggleRankList('rank-silver')" class="p-3.5 bg-cyan-50 hover:bg-cyan-100/70 rounded-xl border border-cyan-200 transition cursor-pointer select-none">
+            <div class="flex justify-between items-center">
               <div>
                 <span class="font-black text-cyan-900 block text-sm mb-0.5">🥈 الرتبة الفضية</span>
-                <span class="text-cyan-700">المشاركون المتألقون</span>
+                <span class="text-cyan-700">المشاركون المتميزون</span>
               </div>
-              <span id="arrow-rank-silver" class="text-sm text-cyan-600 transition duration-300">🔻</span>
+              <span id="arrow-rank-silver" class="text-base font-black text-cyan-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
             </div>
-            <div id="list-rank-silver" class="hidden mt-2 pt-2 border-t border-cyan-200/60 space-y-1">
-              <span class="block font-bold text-cyan-900 bg-white/80 p-1 rounded border border-cyan-100">🎖️ يوسف</span>
-              <span class="block font-bold text-cyan-900 bg-white/80 p-1 rounded border border-cyan-100">🎖️ لوجينا</span>
-              <span class="block font-bold text-cyan-900 bg-white/80 p-1 rounded border border-cyan-100">🎖️ مايا</span>
+            <div id="list-rank-silver" class="hidden mt-3 pt-2.5 border-t border-cyan-200 space-y-1.5">
+              <span class="block font-bold text-cyan-950 bg-white p-1.5 rounded-lg border border-cyan-200">🥈 يوسف</span>
+              <span class="block font-bold text-cyan-950 bg-white p-1.5 rounded-lg border border-cyan-200">🥈 لوجينا</span>
+              <span class="block font-bold text-cyan-950 bg-white p-1.5 rounded-lg border border-cyan-200">🥈 مايا</span>
             </div>
           </div>
 
           <!-- 7. طلاب 6A الأعزاء -->
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 transition hover:shadow-sm col-span-full sm:col-span-2 md:col-span-3">
-            <div onclick="toggleRankList('rank-students')" class="flex justify-between items-center cursor-pointer select-none">
+          <div onclick="toggleRankList('rank-students')" class="p-3.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition cursor-pointer select-none col-span-full sm:col-span-2 md:col-span-3">
+            <div class="flex justify-between items-center">
               <div>
-                <span class="font-black text-slate-800 block text-sm mb-0.5">🌱 طلاب وأعضاء 6A الأعزاء</span>
+                <span class="font-black text-slate-800 block text-sm mb-0.5">🌱 طلاب 6A الأعزاء</span>
                 <span class="text-slate-600">أبطال ونخبة دفعة 2027</span>
               </div>
-              <span id="arrow-rank-students" class="text-sm text-slate-600 transition duration-300">🔻</span>
+              <span id="arrow-rank-students" class="text-base font-black text-slate-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
             </div>
-            <div id="list-rank-students" class="hidden mt-2 pt-2 border-t border-slate-200 space-y-1">
+            <div id="list-rank-students" class="hidden mt-3 pt-2.5 border-t border-slate-200">
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <span class="block font-bold text-slate-700 bg-white p-1 rounded border border-slate-100 text-center">ليان</span>
-                <span class="block font-bold text-slate-700 bg-white p-1 rounded border border-slate-100 text-center">عليا</span>
-                <span class="block font-bold text-slate-700 bg-white p-1 rounded border border-slate-100 text-center">روفان</span>
-                <span class="block font-bold text-indigo-700 bg-indigo-50 p-1 rounded border border-indigo-100 text-center">+ باقي أبطال 6A</span>
+                <span class="block font-bold text-slate-800 bg-white p-2 rounded-lg border border-slate-200 text-center">ليان</span>
+                <span class="block font-bold text-slate-800 bg-white p-2 rounded-lg border border-slate-200 text-center">عليا</span>
+                <span class="block font-bold text-slate-800 bg-white p-2 rounded-lg border border-slate-200 text-center">روفان</span>
+                <span class="block font-bold text-indigo-700 bg-indigo-50 p-2 rounded-lg border border-indigo-200 text-center">+ باقي أبطال 6A</span>
               </div>
             </div>
           </div>
@@ -602,7 +602,7 @@
       render();
     }
 
-    // دالة إظهار وإخفاء القوائم المنسدلة للرتب
+    // دالة إظهار وإخفاء القوائم مع السهم
     function toggleRankList(rankId) {
       const list = document.getElementById(`list-${rankId}`);
       const arrow = document.getElementById(`arrow-${rankId}`);
@@ -610,10 +610,10 @@
 
       if (list.classList.contains('hidden')) {
         list.classList.remove('hidden');
-        if (arrow) arrow.textContent = '🔺';
+        if (arrow) arrow.textContent = '▲';
       } else {
         list.classList.add('hidden');
-        if (arrow) arrow.textContent = '🔻';
+        if (arrow) arrow.textContent = '▼';
       }
     }
 
