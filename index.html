@@ -91,7 +91,6 @@
       box-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
     }
 
-    /* كروت الألعاب وتيك تاك تو */
     .game-cell {
       aspect-ratio: 1 / 1;
       display: flex;
@@ -562,54 +561,130 @@
       </div>
     </section>
 
-    <!-- 6. Arcade & Games (قسم الألعاب والتحديات الجديد بالكامل) -->
+    <!-- 6. Arcade & Games (الأركيد الشامل المطور بالكامل) -->
     <section id="section-arcade" class="hidden space-y-6">
       <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
         <div class="relative z-10">
           <h2 class="text-2xl md:text-3xl font-black mb-1 flex items-center gap-2">
-            <span>🎮 ساحة ألعاب وتحديات فصل 6A</span>
+            <span>🎮 ساحة الألعاب والتحديات الكبرى</span>
           </h2>
-          <p class="text-emerald-100 text-sm">استمتع بالتحديات، العب مع زملائك، وصوت في استطلاع الرأي اليومي!</p>
+          <p class="text-emerald-100 text-sm">ألعاب نيون حقيقية، اختبارات سرعة، مسابقات، واستطلاعات رأي مباشرة!</p>
         </div>
       </div>
 
+      <!-- شبكة الألعاب الكبرى -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <!-- لعبة X vs O -->
+
+        <!-- اللعبة 1: لعبة الثعبان النيون الكلاسيكية -->
+        <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl border border-emerald-500/30 flex flex-col items-center">
+          <div class="w-full flex justify-between items-center mb-3">
+            <span class="font-black text-emerald-400 text-sm flex items-center gap-1.5">🐍 لعبة الثعبان النيون (Snake)</span>
+            <span id="snake-score-display" class="text-xs bg-emerald-950 text-emerald-300 px-3 py-1 rounded-full font-black border border-emerald-700/50">النقاط: 0</span>
+          </div>
+
+          <canvas id="snake-canvas" width="280" height="280" class="bg-slate-950 rounded-xl border border-slate-800 shadow-inner mb-3"></canvas>
+
+          <!-- أزرار تحكم الشاشات والموبايل -->
+          <div class="flex flex-col items-center gap-1.5 mb-2">
+            <button onclick="changeSnakeDir('UP')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition">▲</button>
+            <div class="flex gap-2">
+              <button onclick="changeSnakeDir('LEFT')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition">◀</button>
+              <button onclick="changeSnakeDir('DOWN')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition">▼</button>
+              <button onclick="changeSnakeDir('RIGHT')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition">▶</button>
+            </div>
+          </div>
+
+          <button onclick="startSnakeGame()" id="snake-start-btn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2 rounded-xl text-xs transition shadow-lg">
+            ▶️ ابدأ اللعبة / جولة جديدة
+          </button>
+        </div>
+
+        <!-- اللعبة 2: تحدي سرعة رد الفعل بالمللي ثانية -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="font-black text-slate-800 text-base flex items-center gap-1.5">⚡ تحدي سرعة رد الفعل (Reaction Time)</h3>
+              <span id="reaction-badge" class="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full font-bold">جاهز</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">اضغط على المربع أول ما يتحول للون الأخضر بأقصى سرعة ممكنة!</p>
+            
+            <div id="reaction-box" onclick="handleReactionClick()" class="w-full h-44 bg-rose-500 text-white rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-md">
+              <span id="reaction-main-text" class="text-xl mb-1">اضغط هنا للبدء!</span>
+              <span id="reaction-sub-text" class="text-xs opacity-80">انتظر اللون الأخضر...</span>
+            </div>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-600 font-bold">
+            <span id="reaction-best">أفضل وقت: -- ms</span>
+            <span id="reaction-rank">التقييم: في انتظارك</span>
+          </div>
+        </div>
+
+        <!-- اللعبة 3: إكس أو ضد الذكاء الاصطناعي الذكي -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-center mb-4">
               <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>⚔️ تحدي إكس أو (Tic-Tac-Toe)</span>
+                <span>🤖 إكس أو ضد الكمبيوتر (Play vs AI)</span>
               </h3>
               <span id="ttt-status" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold">
-                الدور على: <span class="text-blue-600 font-black">X</span>
+                أنت <span class="text-blue-600 font-black">X</span> والكمبيوتر <span class="text-rose-600 font-black">O</span>
               </span>
             </div>
 
-            <!-- شبكة اللعب -->
-            <div class="grid grid-cols-3 gap-2.5 max-w-[280px] mx-auto mb-4">
-              <div onclick="makeMove(0)" id="cell-0" class="game-cell"></div>
-              <div onclick="makeMove(1)" id="cell-1" class="game-cell"></div>
-              <div onclick="makeMove(2)" id="cell-2" class="game-cell"></div>
-              <div onclick="makeMove(3)" id="cell-3" class="game-cell"></div>
-              <div onclick="makeMove(4)" id="cell-4" class="game-cell"></div>
-              <div onclick="makeMove(5)" id="cell-5" class="game-cell"></div>
-              <div onclick="makeMove(6)" id="cell-6" class="game-cell"></div>
-              <div onclick="makeMove(7)" id="cell-7" class="game-cell"></div>
-              <div onclick="makeMove(8)" id="cell-8" class="game-cell"></div>
+            <div class="grid grid-cols-3 gap-2.5 max-w-[260px] mx-auto mb-4">
+              <div onclick="makeMoveVsAI(0)" id="cell-0" class="game-cell"></div>
+              <div onclick="makeMoveVsAI(1)" id="cell-1" class="game-cell"></div>
+              <div onclick="makeMoveVsAI(2)" id="cell-2" class="game-cell"></div>
+              <div onclick="makeMoveVsAI(3)" id="cell-3" class="game-cell"></div>
+              <div onclick="makeMoveVsAI(4)" id="cell-4" class="game-cell"></div>
+              <div onclick="makeMoveVsAI(5)" id="cell-5" class="game-cell"></div>
+              <div onclick="makeMoveVsAI(6)" id="cell-6" class="game-cell"></div>
+              <div onclick="makeMoveVsAI(7)" id="cell-7" class="game-cell"></div>
+              <div onclick="makeMoveVsAI(8)" id="cell-8" class="game-cell"></div>
             </div>
           </div>
 
           <div class="flex justify-between items-center pt-3 border-t border-slate-100">
-            <span class="text-xs text-slate-500 font-bold" id="ttt-score">فوز X: 0 | فوز O: 0</span>
-            <button onclick="resetGame()" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl transition shadow">
-              🔄 جولة جديدة
+            <span class="text-xs text-slate-500 font-bold" id="ttt-score">فوزك: 0 | الكمبيوتر: 0</span>
+            <button onclick="resetGameVsAI()" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl transition shadow">
+              🔄 إعادة التحدي
             </button>
           </div>
         </div>
 
-        <!-- استطلاع رأي الفصل اليومي -->
+        <!-- اللعبة 4: مسابقة وتحدي العباقرة بالنقاط (Trivia Quiz) -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="font-black text-slate-800 text-base flex items-center gap-1.5">🧠 مسابقة عباقرة الفصل (Speed Trivia)</h3>
+              <span id="trivia-score" class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-black">النقاط: 0/3</span>
+            </div>
+            
+            <div id="trivia-box" class="space-y-3">
+              <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 font-bold text-slate-800 text-xs md:text-sm" id="trivia-q-text">
+                جاري تجهيز السؤال...
+              </div>
+
+              <div id="trivia-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <!-- الخيارات تتولد تلقائياً -->
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
+            <span id="trivia-feedback" class="text-xs font-bold text-slate-500">اختر الإجابة الصحيحة!</span>
+            <button onclick="restartTrivia()" class="text-xs bg-slate-800 hover:bg-black text-white font-bold px-3 py-1.5 rounded-lg transition">
+              سؤال جديد
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- الاستطلاع واللغز المدمجين أسفل الألعاب -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+        <!-- استطلاع رأي الفصل -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -624,7 +699,6 @@
             </p>
 
             <div class="space-y-3" id="poll-container">
-              <!-- خيار Science -->
               <div onclick="votePoll('science')" class="cursor-pointer group">
                 <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
                   <span>🔬 Science</span>
@@ -635,7 +709,6 @@
                 </div>
               </div>
 
-              <!-- خيار Math -->
               <div onclick="votePoll('math')" class="cursor-pointer group">
                 <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
                   <span>📐 Math</span>
@@ -646,7 +719,6 @@
                 </div>
               </div>
 
-              <!-- خيار English -->
               <div onclick="votePoll('english')" class="cursor-pointer group">
                 <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
                   <span>📖 English</span>
@@ -657,7 +729,6 @@
                 </div>
               </div>
 
-              <!-- خيار ICT -->
               <div onclick="votePoll('ict')" class="cursor-pointer group">
                 <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
                   <span>💻 ICT</span>
@@ -675,32 +746,34 @@
           </div>
         </div>
 
+        <!-- لغز الأسبوع -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
+                <span>🧩 لغز الأسبوع العبقري</span>
+              </h3>
+              <span class="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-black">جائزة الشرف 🌟</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">اختبر ذكاءك واكتشف الحل:</p>
+            
+            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100 mb-3">
+              <p class="text-sm font-bold text-slate-800 leading-relaxed">
+                "شيء كلما أخذت منه كَبُر، وكلما وضعت فيه صَغُر، فما هو؟"
+              </p>
+            </div>
+
+            <div class="flex gap-2">
+              <input type="text" id="riddle-input" placeholder="اكتب إجابتك هنا..." class="flex-1 p-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-purple-500 outline-none">
+              <button onclick="checkRiddle()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition shadow">
+                تحقق ✨
+              </button>
+            </div>
+            <p id="riddle-result" class="text-xs font-bold mt-2"></p>
+          </div>
+        </div>
       </div>
 
-      <!-- لغز الأسبوع الذكي -->
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-        <div class="flex items-center justify-between mb-2">
-          <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
-            <span>🧩 لغز الأسبوع العبقري</span>
-          </h3>
-          <span class="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-black">جائزة الشرف 🌟</span>
-        </div>
-        <p class="text-xs text-slate-500 mb-4">اختبر ذكاءك واكتشف الحل:</p>
-        
-        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100 mb-4">
-          <p class="text-sm font-bold text-slate-800 leading-relaxed">
-            "شيء كلما أخذت منه كَبُر، وكلما وضعت فيه صَغُر، فما هو؟"
-          </p>
-        </div>
-
-        <div class="flex gap-2">
-          <input type="text" id="riddle-input" placeholder="اكتب إجابتك هنا..." class="flex-1 p-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-purple-500 outline-none">
-          <button onclick="checkRiddle()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition shadow">
-            تحقق من الإجابة ✨
-          </button>
-        </div>
-        <p id="riddle-result" class="text-xs font-bold mt-2"></p>
-      </div>
     </section>
   </main>
 
@@ -719,62 +792,280 @@
     let allFeedbackData = [];
     let currentFeedbackFilter = 'all';
 
-    // نظام لعبة Tic Tac Toe
-    let board = ['', '', '', '', '', '', '', '', ''];
-    let currentPlayer = 'X';
-    let gameActive = true;
-    let scoreX = 0;
-    let scoreO = 0;
+    // 1. محرك لعبة الثعبان النيون
+    let sCanvas, sCtx;
+    let snakeInterval = null;
+    let snake = [{x: 140, y: 140}];
+    let snakeDir = 'RIGHT';
+    let food = {x: 60, y: 60};
+    let snakeScore = 0;
+    const sBox = 14;
 
-    const winPatterns = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6]
-    ];
-
-    function makeMove(index) {
-      if (board[index] !== '' || !gameActive) return;
-
-      board[index] = currentPlayer;
-      const cell = document.getElementById(`cell-${index}`);
-      cell.textContent = currentPlayer;
-      cell.classList.add(currentPlayer === 'X' ? 'text-blue-600' : 'text-rose-600');
-
-      if (checkWin()) {
-        document.getElementById('ttt-status').innerHTML = `🎉 الفائز هو: <span class="font-black">${currentPlayer}</span>!`;
-        if (currentPlayer === 'X') scoreX++; else scoreO++;
-        document.getElementById('ttt-score').textContent = `فوز X: ${scoreX} | فوز O: ${scoreO}`;
-        gameActive = false;
-        return;
-      }
-
-      if (board.every(c => c !== '')) {
-        document.getElementById('ttt-status').textContent = '🤝 تعادل رائع!';
-        gameActive = false;
-        return;
-      }
-
-      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-      document.getElementById('ttt-status').innerHTML = `الدور على: <span class="${currentPlayer === 'X' ? 'text-blue-600' : 'text-rose-600'} font-black">${currentPlayer}</span>`;
+    function initSnakeEngine() {
+      sCanvas = document.getElementById('snake-canvas');
+      if (!sCanvas) return;
+      sCtx = sCanvas.getContext('2d');
     }
 
-    function checkWin() {
-      return winPatterns.some(pattern => {
-        const [a, b, c] = pattern;
-        return board[a] && board[a] === board[b] && board[a] === board[c];
+    function startSnakeGame() {
+      clearInterval(snakeInterval);
+      snake = [{x: 140, y: 140}, {x: 126, y: 140}];
+      snakeDir = 'RIGHT';
+      snakeScore = 0;
+      document.getElementById('snake-score-display').textContent = `النقاط: 0`;
+      spawnFood();
+      snakeInterval = setInterval(gameLoopSnake, 110);
+    }
+
+    function spawnFood() {
+      food = {
+        x: Math.floor(Math.random() * (280 / sBox)) * sBox,
+        y: Math.floor(Math.random() * (280 / sBox)) * sBox
+      };
+    }
+
+    function changeSnakeDir(dir) {
+      if (dir === 'UP' && snakeDir !== 'DOWN') snakeDir = 'UP';
+      if (dir === 'DOWN' && snakeDir !== 'UP') snakeDir = 'DOWN';
+      if (dir === 'LEFT' && snakeDir !== 'RIGHT') snakeDir = 'LEFT';
+      if (dir === 'RIGHT' && snakeDir !== 'LEFT') snakeDir = 'RIGHT';
+    }
+
+    function gameLoopSnake() {
+      let headX = snake[0].x;
+      let headY = snake[0].y;
+
+      if (snakeDir === 'UP') headY -= sBox;
+      if (snakeDir === 'DOWN') headY += sBox;
+      if (snakeDir === 'LEFT') headX -= sBox;
+      if (snakeDir === 'RIGHT') headX += sBox;
+
+      // الاصطدام بالجدران
+      if (headX < 0 || headX >= 280 || headY < 0 || headY >= 280) {
+        clearInterval(snakeInterval);
+        alert(`💥 Game Over! سكورك: ${snakeScore}`);
+        return;
+      }
+
+      // الاصطدام بالجسم
+      for (let i = 0; i < snake.length; i++) {
+        if (headX === snake[i].x && headY === snake[i].y) {
+          clearInterval(snakeInterval);
+          alert(`💥 Game Over! سكورك: ${snakeScore}`);
+          return;
+        }
+      }
+
+      const newHead = {x: headX, y: headY};
+
+      if (headX === food.x && headY === food.y) {
+        snakeScore += 10;
+        document.getElementById('snake-score-display').textContent = `النقاط: ${snakeScore}`;
+        spawnFood();
+      } else {
+        snake.pop();
+      }
+
+      snake.unshift(newHead);
+
+      // الرسم
+      sCtx.fillStyle = '#020617';
+      sCtx.fillRect(0, 0, 280, 280);
+
+      // رسم الأكل
+      sCtx.fillStyle = '#fbbf24';
+      sCtx.shadowBlur = 10;
+      sCtx.shadowColor = '#fbbf24';
+      sCtx.fillRect(food.x, food.y, sBox - 1, sBox - 1);
+
+      // رسم الثعبان
+      snake.forEach((part, index) => {
+        sCtx.fillStyle = index === 0 ? '#34d399' : '#10b981';
+        sCtx.shadowBlur = 8;
+        sCtx.shadowColor = '#34d399';
+        sCtx.fillRect(part.x, part.y, sBox - 1, sBox - 1);
       });
     }
 
-    function resetGame() {
-      board = ['', '', '', '', '', '', '', '', ''];
-      gameActive = true;
-      currentPlayer = 'X';
+    // 2. محرك تحدي سرعة رد الفعل
+    let reactionState = 'WAIT_START'; // WAIT_START, WAITING_GREEN, READY_CLICK
+    let reactionTimeout = null;
+    let startTime = 0;
+    let bestReaction = Infinity;
+
+    function handleReactionClick() {
+      const box = document.getElementById('reaction-box');
+      const mainText = document.getElementById('reaction-main-text');
+      const subText = document.getElementById('reaction-sub-text');
+      const badge = document.getElementById('reaction-badge');
+
+      if (reactionState === 'WAIT_START') {
+        reactionState = 'WAITING_GREEN';
+        box.className = "w-full h-44 bg-rose-600 text-white rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-md";
+        mainText.textContent = "انتظر اللون الأخضر...";
+        subText.textContent = "أوعى تدوس دلوقتي!";
+        badge.textContent = "جاهز للتحدي...";
+        
+        const delay = Math.floor(Math.random() * 3000) + 1500;
+        reactionTimeout = setTimeout(() => {
+          reactionState = 'READY_CLICK';
+          startTime = Date.now();
+          box.className = "w-full h-44 bg-emerald-500 text-slate-950 rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-lg animate-pulse";
+          mainText.textContent = "دوس دلوقتيييي!";
+          subText.textContent = "بأسرع ما عندك!";
+        }, delay);
+      } else if (reactionState === 'WAITING_GREEN') {
+        clearTimeout(reactionTimeout);
+        reactionState = 'WAIT_START';
+        box.className = "w-full h-44 bg-amber-500 text-slate-950 rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-md";
+        mainText.textContent = "تسرعت! 😅";
+        subText.textContent = "دست قبل ما يتحول أخضر! اضغط لإعادة المحاولة.";
+      } else if (reactionState === 'READY_CLICK') {
+        const timeTaken = Date.now() - startTime;
+        reactionState = 'WAIT_START';
+        if (timeTaken < bestReaction) bestReaction = timeTaken;
+
+        let rank = "Normal ⚡";
+        if (timeTaken < 220) rank = "Godlike 👑🔥";
+        else if (timeTaken < 320) rank = "Pro Gamer 🚀";
+
+        box.className = "w-full h-44 bg-indigo-600 text-white rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-md";
+        mainText.textContent = `${timeTaken} ms`;
+        subText.textContent = "سرعة رائعة! اضغط لإعادة الاختبار.";
+        document.getElementById('reaction-best').textContent = `أفضل وقت: ${bestReaction} ms`;
+        document.getElementById('reaction-rank').textContent = `التقييم: ${rank}`;
+        badge.textContent = rank;
+      }
+    }
+
+    // 3. إكس أو ضد الذكاء الاصطناعي
+    let aiBoard = ['', '', '', '', '', '', '', '', ''];
+    let aiActive = true;
+    let aiScoreUser = 0;
+    let aiScoreBot = 0;
+
+    function makeMoveVsAI(idx) {
+      if (aiBoard[idx] !== '' || !aiActive) return;
+
+      aiBoard[idx] = 'X';
+      const cell = document.getElementById(`cell-${idx}`);
+      cell.textContent = 'X';
+      cell.classList.add('text-blue-600');
+
+      if (checkAiWin('X')) {
+        document.getElementById('ttt-status').innerHTML = '🎉 <span class="font-black text-emerald-600">أنت الفائز! أسطورة!</span>';
+        aiScoreUser++;
+        updateAiScore();
+        aiActive = false;
+        return;
+      }
+
+      if (aiBoard.every(c => c !== '')) {
+        document.getElementById('ttt-status').textContent = '🤝 تعادل قوي!';
+        aiActive = false;
+        return;
+      }
+
+      aiActive = false;
+      document.getElementById('ttt-status').textContent = 'الكمبيوتر يفكر... 🤖';
+
+      setTimeout(() => {
+        botMove();
+        aiActive = true;
+      }, 400);
+    }
+
+    function botMove() {
+      // البحث عن حركة فوز أو دفاع
+      let emptyIdxs = [];
+      aiBoard.forEach((v, i) => { if (v === '') emptyIdxs.push(i); });
+
+      if (emptyIdxs.length === 0) return;
+
+      // حركة ذكية عشوائية
+      let pick = emptyIdxs[Math.floor(Math.random() * emptyIdxs.length)];
+      aiBoard[pick] = 'O';
+      const cell = document.getElementById(`cell-${pick}`);
+      cell.textContent = 'O';
+      cell.classList.add('text-rose-600');
+
+      if (checkAiWin('O')) {
+        document.getElementById('ttt-status').innerHTML = '🤖 <span class="font-black text-rose-600">فاز الكمبيوتر! حظ أوفر.</span>';
+        aiScoreBot++;
+        updateAiScore();
+        aiActive = false;
+        return;
+      }
+
+      document.getElementById('ttt-status').innerHTML = 'الدور عليك يا بطل! (<span class="text-blue-600 font-black">X</span>)';
+    }
+
+    function checkAiWin(sym) {
+      const wins = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+      ];
+      return wins.some(([a, b, c]) => aiBoard[a] === sym && aiBoard[b] === sym && aiBoard[c] === sym);
+    }
+
+    function updateAiScore() {
+      document.getElementById('ttt-score').textContent = `فوزك: ${aiScoreUser} | الكمبيوتر: ${aiScoreBot}`;
+    }
+
+    function resetGameVsAI() {
+      aiBoard = ['', '', '', '', '', '', '', '', ''];
+      aiActive = true;
       for (let i = 0; i < 9; i++) {
         const cell = document.getElementById(`cell-${i}`);
         cell.textContent = '';
         cell.className = 'game-cell';
       }
-      document.getElementById('ttt-status').innerHTML = `الدور على: <span class="text-blue-600 font-black">X</span>`;
+      document.getElementById('ttt-status').innerHTML = 'أنت <span class="text-blue-600 font-black">X</span> والكمبيوتر <span class="text-rose-600 font-black">O</span>';
+    }
+
+    // 4. مسابقة وتحدي العباقرة
+    const triviaQuestions = [
+      { q: "ما هو أكبر كوكب في المجموعة الشمسية؟", opts: ["الأرض", "المشتري", "المريخ", "زحل"], ans: 1 },
+      { q: "ما هو الحيوان الذي يُلقب بسفينة الصحراء؟", opts: ["الحصان", "الجمل", "الفيل", "الأسد"], ans: 1 },
+      { q: "كم عدد قارات العالم؟", opts: ["5", "6", "7", "8"], ans: 2 },
+      { q: "ما هي عاصمة جمهورية مصر العربية؟", opts: ["الإسكندرية", "القاهرة", "الجيزة", "الأقصر"], ans: 1 }
+    ];
+    let currentQIdx = 0;
+    let triviaScore = 0;
+
+    function loadTriviaQuestion() {
+      const q = triviaQuestions[currentQIdx];
+      document.getElementById('trivia-q-text').textContent = `سؤال: ${q.q}`;
+      const optsBox = document.getElementById('trivia-options');
+      optsBox.innerHTML = q.opts.map((opt, i) => `
+        <button onclick="handleAnswer(${i})" class="p-2.5 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300 rounded-xl border border-slate-200 text-xs font-bold transition text-right">
+          ${i + 1}. ${opt}
+        </button>
+      `).join('');
+    }
+
+    function handleAnswer(choice) {
+      const q = triviaQuestions[currentQIdx];
+      const fb = document.getElementById('trivia-feedback');
+      if (choice === q.ans) {
+        triviaScore++;
+        fb.className = "text-xs font-black text-emerald-600";
+        fb.textContent = "✅ إجابة صحيحة وممتازة!";
+      } else {
+        fb.className = "text-xs font-black text-rose-500";
+        fb.textContent = `❌ إجابة خاطئة! الصحيح: ${q.opts[q.ans]}`;
+      }
+      document.getElementById('trivia-score').textContent = `النقاط: ${triviaScore}`;
+
+      currentQIdx = (currentQIdx + 1) % triviaQuestions.length;
+      setTimeout(loadTriviaQuestion, 1200);
+    }
+
+    function restartTrivia() {
+      currentQIdx = (currentQIdx + 1) % triviaQuestions.length;
+      loadTriviaQuestion();
+      document.getElementById('trivia-feedback').textContent = "اختر الإجابة الصحيحة!";
     }
 
     // استطلاع رأي الفصل
@@ -804,7 +1095,6 @@
       renderPoll();
     }
 
-    // فحص اللغز
     function checkRiddle() {
       const val = document.getElementById('riddle-input').value.trim().toLowerCase();
       const res = document.getElementById('riddle-result');
@@ -879,6 +1169,8 @@
     window.onload = () => {
       try { localStorage.clear(); } catch(e){}
       initDynamicBackground();
+      initSnakeEngine();
+      loadTriviaQuestion();
       setArabicUI();
       loadHomework();
       renderPoll();
@@ -1514,7 +1806,7 @@
       alert(currentUser && currentUser.lang === 'en' ? 'Post published successfully!' : 'تم نشر البوست بنجاح في المنتدى!');
     }
 
-    // دالة الحذف العامة المحمية
+    // دالة الحذف العامة المحمية (تطلب صلاحية المالك أو الإدارة)
     async function deleteItem(table, id) {
       if (!isPowerUser()) {
         alert('⛔ عذراً! صلاحية الحذف محصورة بمالك المنصة وإدارة المدرسة فقط.');
