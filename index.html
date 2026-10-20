@@ -274,7 +274,7 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges -->
+    <!-- 4. Profile & Badges (صورة حقيقية HD + أنيميشن داخل الكارت) -->
     <section id="section-profile" class="space-y-6 hidden">
       <div class="relative profile-animated-card rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/50">
         <div class="card-orb w-64 h-64 bg-amber-500/25 top-[-20%] right-[-10%]"></div>
@@ -282,29 +282,13 @@
         <div class="card-orb w-48 h-48 bg-blue-500/20 top-[40%] left-[35%]"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
+          <!-- صورة فوتوغرافية حقيقية HD بدقة عالية ومضمونة 100% -->
           <div class="relative group">
             <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
               👑
             </div>
-            <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300 p-2">
-              <svg viewBox="0 0 120 120" class="w-full h-full">
-                <defs>
-                  <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#fbbf24"/>
-                    <stop offset="50%" stop-color="#b45309"/>
-                    <stop offset="100%" stop-color="#1e1b4b"/>
-                  </linearGradient>
-                  <linearGradient id="goldFlame" x1="0%" y1="100%" x2="0%" y2="0%">
-                    <stop offset="0%" stop-color="#ef4444"/>
-                    <stop offset="60%" stop-color="#f59e0b"/>
-                    <stop offset="100%" stop-color="#fef08a"/>
-                  </linearGradient>
-                </defs>
-                <polygon points="60,10 100,28 88,85 60,110 32,85 20,28" fill="url(#shieldGrad)" stroke="#fef08a" stroke-width="2"/>
-                <path d="M60,30 Q75,55 60,78 Q45,55 60,30 Z" fill="url(#goldFlame)"/>
-                <circle cx="60" cy="55" r="7" fill="#ffffff" filter="drop-shadow(0 0 8px #fef08a)"/>
-                <polygon points="48,70 54,64 60,70 66,64 72,70 70,75 50,75" fill="#fef08a"/>
-              </svg>
+            <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Cristiano_Ronaldo_playing_for_Al_Nassr_FC_against_Persepolis%2C_September_2023_%28cropped%29.jpg/640px-Cristiano_Ronaldo_playing_for_Al_Nassr_FC_against_Persepolis%2C_September_2023_%28cropped%29.jpg" alt="Zyad Profile" class="w-full h-full object-cover">
             </div>
             <span class="absolute bottom-1 right-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
               OWNER ⚡
@@ -370,7 +354,7 @@
       </div>
     </section>
 
-    <!-- 5. Feedback (نظام البوستات التفاعلية وتصويت المفيد) -->
+    <!-- 5. Feedback -->
     <section id="section-feedback" class="hidden space-y-6">
       <div class="bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
         <div class="relative z-10">
@@ -381,7 +365,6 @@
         </div>
       </div>
 
-      <!-- مربع إنشاء بوست جديد (Create Post Box) -->
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow">
@@ -411,7 +394,6 @@
         </div>
       </div>
 
-      <!-- فلاتر فرز البوستات -->
       <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 text-xs">
         <div class="flex items-center gap-2">
           <span class="font-bold text-slate-600">فرز المنشورات:</span>
@@ -423,7 +405,6 @@
         <span id="fb-count-badge" class="font-bold text-slate-400">جاري الحساب...</span>
       </div>
 
-      <!-- قائمة المنشورات التفاعلية (Feed List) -->
       <div id="feedback-list" class="space-y-4">
         <div class="text-center text-slate-400 py-6" id="fb-loading-text">جاري تحميل المنشورات...</div>
       </div>
@@ -923,7 +904,7 @@
       alert('✨ تم نشر جملتك التذكارية بنجاح!');
     }
 
-    // 4. نظام المنشورات التفاعلية وتصويت المفيد
+    // 4. نظام المنشورات والآراء التفاعلية وتصويت المفيد
     async function loadFeedback() {
       const container = document.getElementById('feedback-list');
       const { data, error } = await client.from('feedback').select('*').order('id', { ascending: false });
@@ -997,7 +978,6 @@
 
         return `
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition hover:shadow-md space-y-4">
-            <!-- رأس المنشور (Author Info & Delete) -->
             <div class="flex justify-between items-start gap-2">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-tr ${avatarBg} text-white font-black flex items-center justify-center text-sm shadow">
@@ -1017,12 +997,10 @@
               </button>
             </div>
             
-            <!-- نص المنشور -->
             <div class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50/70 p-4 rounded-xl border border-slate-100">
               ${f.message}
             </div>
 
-            <!-- أزرار تفاعل: مفيد ولا مش مفيد -->
             <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
               <div class="flex items-center gap-2">
                 <span class="font-bold text-slate-500">هل هذا المنشور مفيد؟</span>
