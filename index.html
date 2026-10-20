@@ -90,6 +90,25 @@
       border-bottom: 3px solid #fbbf24 !important;
       box-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
     }
+
+    /* كروت الألعاب وتيك تاك تو */
+    .game-cell {
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 900;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+    }
+    .game-cell:hover {
+      background: #e0e7ff;
+      transform: scale(1.03);
+    }
   </style>
 </head>
 <body id="body-root" class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-500">
@@ -125,20 +144,23 @@
     </div>
     
     <div class="max-w-5xl mx-auto px-4 flex overflow-x-auto gap-1 border-b border-blue-500/30">
-      <button onclick="switchTab('homework')" id="tab-homework" class="tab-btn active px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
+      <button onclick="switchTab('homework')" id="tab-homework" class="tab-btn active px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
         📚 الواجبات
       </button>
-      <button onclick="switchTab('quizzes')" id="tab-quizzes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
+      <button onclick="switchTab('quizzes')" id="tab-quizzes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
         📝 الكويزات والجدول
       </button>
-      <button onclick="switchTab('quotes')" id="tab-quotes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
+      <button onclick="switchTab('quotes')" id="tab-quotes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
         💬 جملة من كل واحد
       </button>
-      <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
+      <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
         👑 بروفايل المالك والرتب
       </button>
-      <button onclick="switchTab('feedback')" id="tab-feedback" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
+      <button onclick="switchTab('feedback')" id="tab-feedback" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
         💡 الآراء والتحسينات
+      </button>
+      <button onclick="switchTab('arcade')" id="tab-arcade" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
+        🎮 الألعاب والتحديات
       </button>
     </div>
   </header>
@@ -348,7 +370,7 @@
         </div>
       </div>
 
-      <!-- دليل الرتب التفاعلي بالأسهم والأسماء المحددة -->
+      <!-- دليل الرتب التفاعلي -->
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
         <h3 id="roles-title" class="text-base font-black text-slate-800 mb-3 flex items-center justify-between">
           <span class="flex items-center gap-2">🎖️ الهيكل الرسمي للرتب وقوائم الأعضاء:</span>
@@ -462,7 +484,7 @@
             </div>
           </div>
 
-          <!-- 7. طلاب 6A الأعزاء (تم حصر الأسماء فقط) -->
+          <!-- 7. طلاب 6A الأعزاء -->
           <div onclick="toggleRankList('rank-students')" class="p-3.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition cursor-pointer select-none col-span-full sm:col-span-2 md:col-span-3">
             <div class="flex justify-between items-center">
               <div>
@@ -539,6 +561,147 @@
         <div class="text-center text-slate-400 py-6" id="fb-loading-text">جاري تحميل المنشورات...</div>
       </div>
     </section>
+
+    <!-- 6. Arcade & Games (قسم الألعاب والتحديات الجديد بالكامل) -->
+    <section id="section-arcade" class="hidden space-y-6">
+      <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+        <div class="relative z-10">
+          <h2 class="text-2xl md:text-3xl font-black mb-1 flex items-center gap-2">
+            <span>🎮 ساحة ألعاب وتحديات فصل 6A</span>
+          </h2>
+          <p class="text-emerald-100 text-sm">استمتع بالتحديات، العب مع زملائك، وصوت في استطلاع الرأي اليومي!</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- لعبة X vs O -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
+                <span>⚔️ تحدي إكس أو (Tic-Tac-Toe)</span>
+              </h3>
+              <span id="ttt-status" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold">
+                الدور على: <span class="text-blue-600 font-black">X</span>
+              </span>
+            </div>
+
+            <!-- شبكة اللعب -->
+            <div class="grid grid-cols-3 gap-2.5 max-w-[280px] mx-auto mb-4">
+              <div onclick="makeMove(0)" id="cell-0" class="game-cell"></div>
+              <div onclick="makeMove(1)" id="cell-1" class="game-cell"></div>
+              <div onclick="makeMove(2)" id="cell-2" class="game-cell"></div>
+              <div onclick="makeMove(3)" id="cell-3" class="game-cell"></div>
+              <div onclick="makeMove(4)" id="cell-4" class="game-cell"></div>
+              <div onclick="makeMove(5)" id="cell-5" class="game-cell"></div>
+              <div onclick="makeMove(6)" id="cell-6" class="game-cell"></div>
+              <div onclick="makeMove(7)" id="cell-7" class="game-cell"></div>
+              <div onclick="makeMove(8)" id="cell-8" class="game-cell"></div>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center pt-3 border-t border-slate-100">
+            <span class="text-xs text-slate-500 font-bold" id="ttt-score">فوز X: 0 | فوز O: 0</span>
+            <button onclick="resetGame()" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl transition shadow">
+              🔄 جولة جديدة
+            </button>
+          </div>
+        </div>
+
+        <!-- استطلاع رأي الفصل اليومي -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
+                <span>📊 تصويت الفصل اليومي</span>
+              </h3>
+              <span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">مباشر ⚡</span>
+            </div>
+            
+            <p class="text-xs font-bold text-slate-600 mb-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
+              سؤال اليوم: "إيه أكتر مادة بتستمتعوا بيها في الفصل الأسبوع ده؟"
+            </p>
+
+            <div class="space-y-3" id="poll-container">
+              <!-- خيار Science -->
+              <div onclick="votePoll('science')" class="cursor-pointer group">
+                <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
+                  <span>🔬 Science</span>
+                  <span id="poll-pct-science">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                  <div id="poll-bar-science" class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- خيار Math -->
+              <div onclick="votePoll('math')" class="cursor-pointer group">
+                <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
+                  <span>📐 Math</span>
+                  <span id="poll-pct-math">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                  <div id="poll-bar-math" class="bg-purple-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- خيار English -->
+              <div onclick="votePoll('english')" class="cursor-pointer group">
+                <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
+                  <span>📖 English</span>
+                  <span id="poll-pct-english">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                  <div id="poll-bar-english" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- خيار ICT -->
+              <div onclick="votePoll('ict')" class="cursor-pointer group">
+                <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
+                  <span>💻 ICT</span>
+                  <span id="poll-pct-ict">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                  <div id="poll-bar-ict" class="bg-emerald-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 text-center">
+            <span id="poll-vote-msg" class="text-xs text-slate-400 font-bold">اضغط على المادة للتصويت فوراً!</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- لغز الأسبوع الذكي -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
+            <span>🧩 لغز الأسبوع العبقري</span>
+          </h3>
+          <span class="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-black">جائزة الشرف 🌟</span>
+        </div>
+        <p class="text-xs text-slate-500 mb-4">اختبر ذكاءك واكتشف الحل:</p>
+        
+        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100 mb-4">
+          <p class="text-sm font-bold text-slate-800 leading-relaxed">
+            "شيء كلما أخذت منه كَبُر، وكلما وضعت فيه صَغُر، فما هو؟"
+          </p>
+        </div>
+
+        <div class="flex gap-2">
+          <input type="text" id="riddle-input" placeholder="اكتب إجابتك هنا..." class="flex-1 p-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-purple-500 outline-none">
+          <button onclick="checkRiddle()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition shadow">
+            تحقق من الإجابة ✨
+          </button>
+        </div>
+        <p id="riddle-result" class="text-xs font-bold mt-2"></p>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -555,6 +718,104 @@
     let currentUser = null;
     let allFeedbackData = [];
     let currentFeedbackFilter = 'all';
+
+    // نظام لعبة Tic Tac Toe
+    let board = ['', '', '', '', '', '', '', '', ''];
+    let currentPlayer = 'X';
+    let gameActive = true;
+    let scoreX = 0;
+    let scoreO = 0;
+
+    const winPatterns = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+
+    function makeMove(index) {
+      if (board[index] !== '' || !gameActive) return;
+
+      board[index] = currentPlayer;
+      const cell = document.getElementById(`cell-${index}`);
+      cell.textContent = currentPlayer;
+      cell.classList.add(currentPlayer === 'X' ? 'text-blue-600' : 'text-rose-600');
+
+      if (checkWin()) {
+        document.getElementById('ttt-status').innerHTML = `🎉 الفائز هو: <span class="font-black">${currentPlayer}</span>!`;
+        if (currentPlayer === 'X') scoreX++; else scoreO++;
+        document.getElementById('ttt-score').textContent = `فوز X: ${scoreX} | فوز O: ${scoreO}`;
+        gameActive = false;
+        return;
+      }
+
+      if (board.every(c => c !== '')) {
+        document.getElementById('ttt-status').textContent = '🤝 تعادل رائع!';
+        gameActive = false;
+        return;
+      }
+
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      document.getElementById('ttt-status').innerHTML = `الدور على: <span class="${currentPlayer === 'X' ? 'text-blue-600' : 'text-rose-600'} font-black">${currentPlayer}</span>`;
+    }
+
+    function checkWin() {
+      return winPatterns.some(pattern => {
+        const [a, b, c] = pattern;
+        return board[a] && board[a] === board[b] && board[a] === board[c];
+      });
+    }
+
+    function resetGame() {
+      board = ['', '', '', '', '', '', '', '', ''];
+      gameActive = true;
+      currentPlayer = 'X';
+      for (let i = 0; i < 9; i++) {
+        const cell = document.getElementById(`cell-${i}`);
+        cell.textContent = '';
+        cell.className = 'game-cell';
+      }
+      document.getElementById('ttt-status').innerHTML = `الدور على: <span class="text-blue-600 font-black">X</span>`;
+    }
+
+    // استطلاع رأي الفصل
+    let pollVotes = { science: 14, math: 11, english: 8, ict: 18 };
+
+    function renderPoll() {
+      const saved = localStorage.getItem('class_poll_votes');
+      if (saved) pollVotes = JSON.parse(saved);
+
+      const total = Object.values(pollVotes).reduce((a, b) => a + b, 0) || 1;
+      ['science', 'math', 'english', 'ict'].forEach(sub => {
+        const pct = Math.round((pollVotes[sub] / total) * 100);
+        document.getElementById(`poll-pct-${sub}`).textContent = `${pct}% (${pollVotes[sub]})`;
+        document.getElementById(`poll-bar-${sub}`).style.width = `${pct}%`;
+      });
+    }
+
+    function votePoll(sub) {
+      if (localStorage.getItem('has_voted_poll_today')) {
+        alert('لقد قمت بالتصويت في استطلاع اليوم بالفعل! شكراً لمشاركتك.');
+        return;
+      }
+      pollVotes[sub]++;
+      localStorage.setItem('class_poll_votes', JSON.stringify(pollVotes));
+      localStorage.setItem('has_voted_poll_today', 'true');
+      document.getElementById('poll-vote-msg').textContent = '✅ تم تسجيل صوتك بنجاح!';
+      renderPoll();
+    }
+
+    // فحص اللغز
+    function checkRiddle() {
+      const val = document.getElementById('riddle-input').value.trim().toLowerCase();
+      const res = document.getElementById('riddle-result');
+      if (val.includes('حفره') || val.includes('حفرة') || val.includes('الحفرة') || val.includes('الحفره')) {
+        res.className = 'text-xs font-black text-emerald-600 mt-2';
+        res.textContent = '🎉 إجابة صحيحة 100%! العبقرية تتحدث (الحفرة).';
+      } else {
+        res.className = 'text-xs font-black text-red-500 mt-2';
+        res.textContent = '❌ إجابة غير صحيحة، فكر جيداً وحاول مرة أخرى!';
+      }
+    }
 
     function initDynamicBackground() {
       const canvas = document.getElementById('bg-canvas');
@@ -601,7 +862,6 @@
       render();
     }
 
-    // دالة إظهار وإخفاء القوائم مع السهم
     function toggleRankList(rankId) {
       const list = document.getElementById(`list-${rankId}`);
       const arrow = document.getElementById(`arrow-${rankId}`);
@@ -621,6 +881,7 @@
       initDynamicBackground();
       setArabicUI();
       loadHomework();
+      renderPoll();
     };
 
     function openLoginModal() {
@@ -750,6 +1011,7 @@
       document.getElementById('tab-quotes').innerHTML = "💬 Quotes Wall";
       document.getElementById('tab-profile').innerHTML = "👑 Owner Profile & Ranks";
       document.getElementById('tab-feedback').innerHTML = "💡 Feedback";
+      document.getElementById('tab-arcade').innerHTML = "🎮 Games & Arcade";
 
       document.getElementById('hw-list-heading').textContent = "Class Assignments:";
       document.getElementById('hw-form-heading').textContent = `📚 Add Homework (${currentUser ? currentUser.extra : ''})`;
@@ -795,6 +1057,7 @@
       document.getElementById('tab-quotes').innerHTML = "💬 جملة من كل واحد";
       document.getElementById('tab-profile').innerHTML = "👑 بروفايل المالك والرتب";
       document.getElementById('tab-feedback').innerHTML = "💡 الآراء والتحسينات";
+      document.getElementById('tab-arcade').innerHTML = "🎮 الألعاب والتحديات";
 
       document.getElementById('hw-list-heading').textContent = "قائمة واجبات الفصل:";
       document.getElementById('hw-form-heading').textContent = currentUser ? `📚 إضافة واجب مدرسي (${currentUser.extra || ''})` : "";
@@ -825,7 +1088,7 @@
     }
 
     function switchTab(tabName) {
-      const tabs = ['homework', 'quizzes', 'quotes', 'profile', 'feedback'];
+      const tabs = ['homework', 'quizzes', 'quotes', 'profile', 'feedback', 'arcade'];
       tabs.forEach(t => {
         document.getElementById(`section-${t}`).classList.add('hidden');
         document.getElementById(`tab-${t}`).classList.remove('active');
@@ -843,7 +1106,7 @@
       if (tabName === 'feedback') loadFeedback();
     }
 
-    // 1. الواجبات (الحذف للمالك والإدارة فقط)
+    // 1. الواجبات
     async function loadHomework() {
       const filter = document.getElementById('hw-filter').value;
       const container = document.getElementById('homework-list');
@@ -923,7 +1186,7 @@
       alert(currentUser.lang === 'en' ? 'Assignment published successfully!' : 'تم نشر الواجب بنجاح!');
     }
 
-    // 2. الكويزات (الحذف للمالك والإدارة فقط)
+    // 2. الكويزات
     async function loadQuizzes() {
       const container = document.getElementById('quizzes-list');
       const { data, error } = await client.from('quizzes').select('*').order('quiz_date', { ascending: true });
@@ -985,7 +1248,7 @@
       alert(currentUser.lang === 'en' ? 'Quiz added successfully!' : 'تمت إضافة الكويز بنجاح!');
     }
 
-    // 3. جملة من كل واحد (الحذف للمالك والإدارة فقط)
+    // 3. جملة من كل واحد
     function toggleQuotePasscode() {
       const role = document.getElementById('quote-role').value;
       const passInput = document.getElementById('quote-pass');
@@ -1075,7 +1338,7 @@
       alert('✨ تم نشر جملتك التذكارية بنجاح!');
     }
 
-    // 4. نظام المنشورات والآراء (الحذف للمالك والإدارة فقط)
+    // 4. نظام المنشورات والآراء
     async function loadFeedback() {
       const container = document.getElementById('feedback-list');
       const { data, error } = await client.from('feedback').select('*').order('id', { ascending: false });
@@ -1251,7 +1514,7 @@
       alert(currentUser && currentUser.lang === 'en' ? 'Post published successfully!' : 'تم نشر البوست بنجاح في المنتدى!');
     }
 
-    // دالة الحذف العامة المحمية (تطلب صلاحية المالك أو الإدارة)
+    // دالة الحذف العامة المحمية
     async function deleteItem(table, id) {
       if (!isPowerUser()) {
         alert('⛔ عذراً! صلاحية الحذف محصورة بمالك المنصة وإدارة المدرسة فقط.');
