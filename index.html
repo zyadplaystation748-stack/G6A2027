@@ -10,59 +10,69 @@
   <style>
     body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; }
     
-    /* الثيم الملوكي الخاص بزياد فقط */
+    /* خلفية المالك المتحركة المجنونة */
     body.royal-mode {
-      background: linear-gradient(135deg, #090d16 0%, #17112c 50%, #0b0f19 100%) !important;
+      background: linear-gradient(-45deg, #05050f, #1a0826, #0a1128, #18051e) !important;
+      background-size: 400% 400% !important;
+      animation: crazyGlow 10s ease infinite !important;
       color: #f8fafc !important;
     }
-    body.royal-mode .bg-white {
-      background: rgba(30, 27, 75, 0.65) !important;
-      border-color: rgba(245, 158, 11, 0.3) !important;
-      color: #f8fafc !important;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
-    body.royal-mode input, body.royal-mode select, body.royal-mode textarea {
-      background: rgba(15, 23, 42, 0.8) !important;
-      color: #fbbf24 !important;
-      border-color: rgba(245, 158, 11, 0.4) !important;
-    }
-    body.royal-mode h2, body.royal-mode h3 {
-      color: #fef08a !important;
-    }
-    body.royal-mode #main-header {
-      background: linear-gradient(-45deg, #1e1b4b, #4c1d95, #78350f, #0f172a) !important;
-      border-bottom: 2px solid #fbbf24;
-      box-shadow: 0 0 25px rgba(251, 191, 36, 0.3);
+    @keyframes crazyGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    /* أنيميشن التاج وتوهج الذهب */
+    /* كروت زجاجية مشعة للوضع الملكي */
+    body.royal-mode .bg-white {
+      background: rgba(22, 19, 43, 0.75) !important;
+      border: 1px solid rgba(251, 191, 36, 0.35) !important;
+      color: #f8fafc !important;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(251, 191, 36, 0.05);
+    }
+    body.royal-mode input, body.royal-mode select, body.royal-mode textarea {
+      background: rgba(11, 15, 29, 0.9) !important;
+      color: #fde047 !important;
+      border-color: rgba(251, 191, 36, 0.45) !important;
+    }
+    body.royal-mode h2, body.royal-mode h3 {
+      color: #fde047 !important;
+    }
+    body.royal-mode #main-header {
+      background: linear-gradient(135deg, #180928, #3b0764, #172554) !important;
+      border-bottom: 2px solid #fbbf24;
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+    }
+
+    /* إضاءة نيون ذهبية وتأثير أنمي */
+    .neon-gold-border {
+      border: 3px solid #fbbf24;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.8), inset 0 0 15px rgba(251, 191, 36, 0.4);
+    }
     .crown-float {
       animation: floatCrown 2.5s ease-in-out infinite;
     }
     @keyframes floatCrown {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-7px) rotate(4deg); }
+      50% { transform: translateY(-7px) rotate(5deg); }
     }
-    .neon-gold-border {
-      border: 3px solid #fbbf24;
-      box-shadow: 0 0 25px rgba(251, 191, 36, 0.6), inset 0 0 15px rgba(251, 191, 36, 0.3);
-    }
+
     .tab-btn.active {
       background-color: #2563eb;
       color: white;
       border-bottom: 3px solid #1e3a8a;
     }
     body.royal-mode .tab-btn.active {
-      background-color: #7c3aed !important;
+      background-color: #8b5cf6 !important;
       border-bottom: 3px solid #fbbf24 !important;
-      box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
     }
   </style>
 </head>
 <body id="body-root" class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-500">
 
-  <!-- بنر المالك الملوكي -->
+  <!-- بنر المالك المتحرك الترحيبي -->
   <div id="owner-welcome-bar" style="display: none;" class="bg-gradient-to-r from-amber-500 via-purple-700 to-amber-500 text-white py-2 px-4 text-center font-black text-xs md:text-sm tracking-wide shadow-2xl items-center justify-center gap-2">
     <span class="text-xl crown-float">👑</span>
     <span>تم تفعيل النمط الملوكي الحصري: مرحباً بك يا فخامة المالك زياد محمد فتوح!</span>
@@ -155,9 +165,9 @@
     <section id="section-homework" class="space-y-6">
       <div id="hw-input-card" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-blue-200">
         <h2 id="hw-form-heading" class="text-xl font-bold text-slate-800 mb-2"></h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-blue-50 p-4 rounded-xl border border-blue-100">
-          <input type="text" id="hw-title" placeholder="عنوان الواجب" class="p-2.5 rounded-lg border text-sm">
-          <input type="text" id="hw-subject" readonly class="p-2.5 rounded-lg border text-sm bg-slate-100 text-slate-600 font-bold">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+          <input type="text" id="hw-title" placeholder="عنوان وتفاصيل الواجب..." class="p-2.5 rounded-lg border text-sm">
+          <input type="text" id="hw-subject" readonly class="p-2.5 rounded-lg border text-sm bg-slate-100 text-slate-700 font-bold">
           <input type="date" id="hw-due" class="p-2.5 rounded-lg border text-sm">
           <button id="hw-submit-btn" onclick="addHomework()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition">
             + نشر الواجب
@@ -177,6 +187,7 @@
           <option value="سوشيال">سوشيال (دراسات)</option>
           <option value="عربي">لغة عربية</option>
           <option value="دين">تربية دينية</option>
+          <option value="عام">عام / المنصة</option>
         </select>
       </div>
       <div id="homework-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -193,9 +204,9 @@
               🚨 جدول الكويزات والاختبارات القصيرة
             </h3>
             
-            <div id="quiz-input-card" style="display: none;" class="flex-wrap gap-2 mb-4 bg-red-50 p-3 rounded-xl border border-red-100">
+            <div id="quiz-input-card" style="display: none;" class="flex-wrap gap-2 mb-4 bg-red-50/50 p-3 rounded-xl border border-red-100">
               <input type="text" id="quiz-title" placeholder="موضوع الكويز" class="p-2 border rounded-lg text-sm flex-1">
-              <input type="text" id="quiz-subject" readonly class="p-2 border rounded-lg text-sm w-32 bg-slate-100 text-slate-600 font-bold">
+              <input type="text" id="quiz-subject" readonly class="p-2 border rounded-lg text-sm w-32 bg-slate-100 text-slate-700 font-bold">
               <input type="date" id="quiz-date" class="p-2 border rounded-lg text-sm">
               <button id="quiz-submit-btn" onclick="addQuiz()" class="bg-red-600 hover:bg-red-700 text-white px-4 rounded-lg text-sm font-bold">إضافة</button>
             </div>
@@ -251,27 +262,28 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges (بروفايل المالك) -->
+    <!-- 4. Profile & Badges (بروفايل الأنمي الملوكي) -->
     <section id="section-profile" class="space-y-6 hidden">
-      <div class="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/30">
+      <div class="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/40">
         <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-purple-500/30 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
-          <!-- صورة البروفايل الملكية -->
+          <!-- صورة بروفايل أنمي أسطورية مع التاج والنيون -->
           <div class="relative group">
-            <div class="absolute -top-7 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
+            <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
               👑
             </div>
             <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-900 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300">
-              <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop" alt="Zyad Profile" class="w-full h-full object-cover">
+              <!-- صورة أنمي فخمة بجودة 4K -->
+              <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop" alt="Anime Royal Owner" class="w-full h-full object-cover">
             </div>
             <span class="absolute bottom-1 right-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
               OWNER ⚡
             </span>
           </div>
 
-          <!-- تفاصيل وهوية المالك (بدون إظهار الباسوورد نهائياً!) -->
+          <!-- تفاصيل وهوية المالك -->
           <div class="flex-1 space-y-2">
             <div class="inline-flex items-center gap-2 bg-amber-400/20 text-amber-300 px-3 py-1 rounded-full text-xs font-bold border border-amber-400/30">
               <span>🌟 مؤسس ومبرمج المنصة الرسمية</span>
@@ -283,7 +295,7 @@
               المطور والمالك الحصري لمنصة 6A 2027 • صاحب الصلاحيات المطلقة • "نلعب لنتصدر، ونبني لنبهر العالم!" ⚽🔥
             </p>
             
-            <!-- أوسمة وشارات أمنية (مشفرة) -->
+            <!-- أوسمة وشارات أمنية مشفرة -->
             <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
               <span class="bg-purple-900/60 border border-purple-400/40 text-purple-200 text-[11px] font-bold px-3 py-1 rounded-lg backdrop-blur">
                 🛡️ الرتبة: Platform Emperor
@@ -392,7 +404,7 @@
       const selectElem = document.getElementById('user-role-select');
       const val = selectElem.value.split('|');
       
-      const roleType = val[0];  // owner, admin, teacher
+      const roleType = val[0];
       const name = val[1];      
       const extra = val[2];     
       const lang = val[3] || 'ar';      
@@ -422,7 +434,6 @@
       document.getElementById('quiz-input-card').style.display = 'none';
       document.getElementById('owner-welcome-bar').style.display = 'none';
       
-      // إلغاء النمط الملوكي فوراً وإرجاع الموقع للشكل العادي
       document.body.classList.remove('royal-mode');
       document.getElementById('main-header').className = "bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg transition-all duration-500";
 
@@ -451,16 +462,16 @@
       if (currentUser.roleType === 'owner') {
         badge.className = "text-xs bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl shadow-lg border border-amber-300";
         badge.textContent = `👑 مالك المنصة: ${currentUser.name}`;
-        document.getElementById('hw-subject').value = "عام / المنصة";
+        document.getElementById('hw-subject').value = "عام";
         document.getElementById('quiz-subject').value = "عام";
         
-        // تفعيل النمط الملوكي للتطبيق كاملاً لزياد فقط
+        // تفعيل النمط الملوكي والخلفية المتحركة
         document.body.classList.add('royal-mode');
         document.getElementById('owner-welcome-bar').style.display = 'flex';
       } else if (currentUser.roleType === 'admin') {
         badge.className = "text-xs bg-red-600 text-white font-bold px-3 py-1.5 rounded-xl shadow";
         badge.textContent = `🏛️ ${currentUser.name}`;
-        document.getElementById('hw-subject').value = "إدارة المدرسة";
+        document.getElementById('hw-subject').value = "عام";
         document.getElementById('quiz-subject').value = "إدارة";
         document.body.classList.remove('royal-mode');
         document.getElementById('owner-welcome-bar').style.display = 'none';
@@ -544,7 +555,7 @@
 
       document.getElementById('hw-list-heading').textContent = "قائمة واجبات الفصل:";
       document.getElementById('hw-form-heading').textContent = currentUser ? `📚 إضافة واجب مدرسي (${currentUser.extra || ''})` : "";
-      document.getElementById('hw-title').placeholder = "عنوان وتفاصيل الواجب";
+      document.getElementById('hw-title').placeholder = "عنوان وتفاصيل الواجب...";
       document.getElementById('hw-submit-btn').textContent = "+ نشر الواجب";
 
       document.getElementById('quiz-section-heading').innerHTML = "🚨 جدول الكويزات والاختبارات القصيرة";
@@ -598,8 +609,13 @@
         query = query.eq('subject', filter);
       }
 
-      const { data } = await query;
+      const { data, error } = await query;
       const isEn = currentUser && currentUser.lang === 'en';
+
+      if (error) {
+        container.innerHTML = `<div class="col-span-full text-center text-red-500 py-6">حدث خطأ في تحميل الواجبات: ${error.message}</div>`;
+        return;
+      }
 
       if (!data || data.length === 0) {
         container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'No assignments posted for this subject.' : 'لا توجد واجبات مسجلة لهذه المادة حالياً.'}</div>`;
@@ -620,18 +636,35 @@
       if (!currentUser) return alert('صلاحية مخصصة للمصرح لهم فقط');
       const title = document.getElementById('hw-title').value.trim();
       const dueDate = document.getElementById('hw-due').value;
+      const subject = document.getElementById('hw-subject').value || (currentUser.extra || 'عام');
 
       if (!title) return alert(currentUser.lang === 'en' ? 'Please enter assignment details' : 'يرجى كتابة تفاصيل الواجب');
 
-      await client.from('homework').insert([{
+      const submitBtn = document.getElementById('hw-submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'جاري النشر...';
+
+      const { data, error } = await client.from('homework').insert([{
         title: title,
-        subject: document.getElementById('hw-subject').value,
+        subject: subject,
         due_date: dueDate || null
       }]);
 
+      submitBtn.disabled = false;
+      submitBtn.textContent = currentUser.lang === 'en' ? '+ Publish Homework' : '+ نشر الواجب';
+
+      if (error) {
+        alert('حدث خطأ أثناء حفظ الواجب: ' + error.message);
+        return;
+      }
+
       document.getElementById('hw-title').value = '';
       document.getElementById('hw-due').value = '';
-      loadHomework();
+      
+      // تحديث الفلتر ليعرض المادة المنشورة فوراً
+      document.getElementById('hw-filter').value = subject;
+      await loadHomework();
+      
       alert(currentUser.lang === 'en' ? 'Assignment published successfully!' : 'تم نشر الواجب بنجاح!');
     }
 
@@ -659,14 +692,20 @@
       if (!currentUser) return alert('صلاحية مخصصة للمصرح لهم فقط');
       const title = document.getElementById('quiz-title').value.trim();
       const date = document.getElementById('quiz-date').value;
+      const subject = document.getElementById('quiz-subject').value || (currentUser.extra || 'عام');
 
       if (!title || !date) return alert(currentUser.lang === 'en' ? 'Please fill all quiz fields' : 'يرجى ملء جميع بيانات الكويز');
 
-      await client.from('quizzes').insert([{
+      const { error } = await client.from('quizzes').insert([{
         title: title,
-        subject: document.getElementById('quiz-subject').value,
+        subject: subject,
         quiz_date: date
       }]);
+
+      if (error) {
+        alert('حدث خطأ أثناء حفظ الكويز: ' + error.message);
+        return;
+      }
 
       document.getElementById('quiz-title').value = '';
       document.getElementById('quiz-date').value = '';
