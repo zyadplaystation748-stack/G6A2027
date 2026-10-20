@@ -274,7 +274,7 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges (صورة حقيقية HD + أنيميشن داخل الكارت) -->
+    <!-- 4. Profile & Badges (بروفايل المالك مع صورة بطل خارق سينمائية مضمنة) -->
     <section id="section-profile" class="space-y-6 hidden">
       <div class="relative profile-animated-card rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/50">
         <div class="card-orb w-64 h-64 bg-amber-500/25 top-[-20%] right-[-10%]"></div>
@@ -282,13 +282,13 @@
         <div class="card-orb w-48 h-48 bg-blue-500/20 top-[40%] left-[35%]"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
-          <!-- صورة فوتوغرافية حقيقية HD بدقة عالية ومضمونة 100% -->
           <div class="relative group">
             <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
               👑
             </div>
+            <!-- صورة احترافية مدمجة كودياً تعمل دون انقطاع -->
             <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Cristiano_Ronaldo_playing_for_Al_Nassr_FC_against_Persepolis%2C_September_2023_%28cropped%29.jpg/640px-Cristiano_Ronaldo_playing_for_Al_Nassr_FC_against_Persepolis%2C_September_2023_%28cropped%29.jpg" alt="Zyad Profile" class="w-full h-full object-cover">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'><defs><linearGradient id='g1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231e1b4b'/><stop offset='50%25' stop-color='%23311042'/><stop offset='100%25' stop-color='%23020617'/></linearGradient><radialGradient id='g2' cx='50%25' cy='45%25' r='60%25'><stop offset='0%25' stop-color='%2338bdf8' stop-opacity='0.8'/><stop offset='100%25' stop-color='%23000' stop-opacity='0'/></radialGradient><linearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23fde047'/><stop offset='50%25' stop-color='%23eab308'/><stop offset='100%25' stop-color='%23ca8a04'/></linearGradient></defs><rect width='240' height='240' fill='url(%23g1)'/><circle cx='120' cy='120' r='100' fill='url(%23g2)'/><path d='M40 220 C50 150, 190 150, 200 220 Z' fill='%23090d16' stroke='url(%23gold)' stroke-width='3'/><path d='M70 170 L120 135 L170 170 L145 220 L95 220 Z' fill='%231e1b4b'/><polygon points='80,85 160,85 145,150 120,165 95,150' fill='%23fed7aa'/><path d='M60 90 L85 30 L105 55 L120 20 L135 55 L155 30 L180 90 L160 75 L120 80 L80 75 Z' fill='%23020617' stroke='%2338bdf8' stroke-width='2'/><polygon points='92,105 106,102 102,112' fill='%230284c7'/><polygon points='148,105 134,102 138,112' fill='%230284c7'/><path d='M110 135 Q120 142 130 135' stroke='%23475569' stroke-width='3' stroke-linecap='round' fill='none'/><polygon points='100,20 110,32 120,15 130,32 140,20 135,38 105,38' fill='url(%23gold)'/></svg>" alt="Zyad Profile" class="w-full h-full object-cover">
             </div>
             <span class="absolute bottom-1 right-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
               OWNER ⚡
@@ -511,7 +511,7 @@
       }
 
       applyUserDashboard();
-      loadHomework();
+      refreshAllViews();
     }
 
     function logoutUser() {
@@ -531,7 +531,18 @@
       document.getElementById('hw-filter').value = 'all';
 
       setArabicUI();
+      refreshAllViews();
+    }
+
+    function refreshAllViews() {
       loadHomework();
+      if (!document.getElementById('section-quizzes').classList.contains('hidden')) loadQuizzes();
+      if (!document.getElementById('section-quotes').classList.contains('hidden')) loadQuotes();
+      if (!document.getElementById('section-feedback').classList.contains('hidden')) loadFeedback();
+    }
+
+    function isPowerUser() {
+      return currentUser && (currentUser.roleType === 'owner' || currentUser.roleType === 'admin');
     }
 
     function applyUserDashboard() {
@@ -687,7 +698,7 @@
       if (tabName === 'feedback') loadFeedback();
     }
 
-    // 1. الواجبات + سلة حذف
+    // 1. الواجبات (الحذف للمالك والإدارة فقط)
     async function loadHomework() {
       const filter = document.getElementById('hw-filter').value;
       const container = document.getElementById('homework-list');
@@ -709,6 +720,9 @@
         container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'No assignments posted for this subject.' : 'لا توجد واجبات مسجلة لهذه المادة حالياً.'}</div>`;
         return;
       }
+
+      const allowDelete = isPowerUser();
+
       container.innerHTML = data.map(hw => `
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-start gap-3">
           <div class="flex-1">
@@ -719,9 +733,11 @@
             <h3 class="font-bold text-slate-800 text-base mb-1">${hw.title}</h3>
             ${hw.created_by ? `<div class="text-[11px] text-slate-400 mt-2 border-t pt-1">بواسطة: ${hw.created_by}</div>` : ''}
           </div>
-          <button onclick="deleteItem('homework', ${hw.id})" title="حذف الواجب" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
-            🗑️
-          </button>
+          ${allowDelete ? `
+            <button onclick="deleteItem('homework', ${hw.id})" title="حذف الواجب" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+              🗑️
+            </button>
+          ` : ''}
         </div>
       `).join('');
     }
@@ -762,7 +778,7 @@
       alert(currentUser.lang === 'en' ? 'Assignment published successfully!' : 'تم نشر الواجب بنجاح!');
     }
 
-    // 2. الكويزات + سلة حذف
+    // 2. الكويزات (الحذف للمالك والإدارة فقط)
     async function loadQuizzes() {
       const container = document.getElementById('quizzes-list');
       const { data, error } = await client.from('quizzes').select('*').order('quiz_date', { ascending: true });
@@ -777,6 +793,9 @@
         container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No quizzes scheduled 🎉' : 'لا توجد كويزات مسجلة حالياً 🎉'}</div>`;
         return;
       }
+
+      const allowDelete = isPowerUser();
+
       container.innerHTML = data.map(qz => `
         <div class="flex justify-between items-center p-3 bg-red-50 rounded-xl border border-red-100">
           <div class="flex-1">
@@ -785,9 +804,11 @@
           </div>
           <div class="flex items-center gap-2">
             <span class="bg-red-200 text-red-800 text-xs px-2 py-1 rounded font-bold">${isEn ? 'Quiz' : 'كويز'}</span>
-            <button onclick="deleteItem('quizzes', ${qz.id})" title="حذف الكويز" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-lg transition text-base">
-              🗑️
-            </button>
+            ${allowDelete ? `
+              <button onclick="deleteItem('quizzes', ${qz.id})" title="حذف الكويز" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-lg transition text-base">
+                🗑️
+              </button>
+            ` : ''}
           </div>
         </div>
       `).join('');
@@ -819,7 +840,7 @@
       alert(currentUser.lang === 'en' ? 'Quiz added successfully!' : 'تمت إضافة الكويز بنجاح!');
     }
 
-    // 3. جملة من كل واحد
+    // 3. جملة من كل واحد (الحذف للمالك والإدارة فقط)
     function toggleQuotePasscode() {
       const role = document.getElementById('quote-role').value;
       const passInput = document.getElementById('quote-pass');
@@ -845,6 +866,9 @@
         container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'Be the first to post a quote!' : 'كن أول من يترك جملة تذكارية!'}</div>`;
         return;
       }
+
+      const allowDelete = isPowerUser();
+
       container.innerHTML = data.map(q => `
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden flex flex-col justify-between">
           <p class="text-slate-700 text-sm font-semibold mb-3 relative z-10 leading-relaxed">“${q.quote_text}”</p>
@@ -852,9 +876,11 @@
             <span class="font-bold text-slate-800">${q.author_name}</span>
             <div class="flex items-center gap-2">
               <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">${q.role}</span>
-              <button onclick="deleteItem('quotes', ${q.id})" title="حذف الجملة" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
-                🗑️
-              </button>
+              ${allowDelete ? `
+                <button onclick="deleteItem('quotes', ${q.id})" title="حذف الجملة" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+                  🗑️
+                </button>
+              ` : ''}
             </div>
           </div>
         </div>
@@ -904,7 +930,7 @@
       alert('✨ تم نشر جملتك التذكارية بنجاح!');
     }
 
-    // 4. نظام المنشورات والآراء التفاعلية وتصويت المفيد
+    // 4. نظام المنشورات والآراء (الحذف للمالك والإدارة فقط)
     async function loadFeedback() {
       const container = document.getElementById('feedback-list');
       const { data, error } = await client.from('feedback').select('*').order('id', { ascending: false });
@@ -958,6 +984,8 @@
         return;
       }
 
+      const allowDelete = isPowerUser();
+
       container.innerHTML = filtered.map(f => {
         let typeBadge = "";
         let avatarBg = "from-purple-500 to-indigo-600";
@@ -992,9 +1020,11 @@
                 </div>
               </div>
 
-              <button onclick="deleteItem('feedback', ${f.id})" title="حذف المنشور" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
-                🗑️
-              </button>
+              ${allowDelete ? `
+                <button onclick="deleteItem('feedback', ${f.id})" title="حذف المنشور (صلاحية الإدارة)" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+                  🗑️
+                </button>
+              ` : ''}
             </div>
             
             <div class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50/70 p-4 rounded-xl border border-slate-100">
@@ -1076,9 +1106,14 @@
       alert(currentUser && currentUser.lang === 'en' ? 'Post published successfully!' : 'تم نشر البوست بنجاح في المنتدى!');
     }
 
-    // دالة الحذف الشاملة
+    // دالة الحذف العامة المحمية (تطلب صلاحية المالك أو الإدارة)
     async function deleteItem(table, id) {
-      if (!confirm('هل أنت متأكد من رغبتك في حذف هذا العنصر نهائياً؟')) return;
+      if (!isPowerUser()) {
+        alert('⛔ عذراً! صلاحية الحذف محصورة بمالك المنصة وإدارة المدرسة فقط.');
+        return;
+      }
+
+      if (!confirm('هل أنت متأكد من رغبتك في حذف هذا العنصر نهائياً بصفتك مسؤولاً؟')) return;
 
       const { error } = await client.from(table).delete().eq('id', id);
 
