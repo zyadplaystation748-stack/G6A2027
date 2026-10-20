@@ -90,24 +90,6 @@
       border-bottom: 3px solid #fbbf24 !important;
       box-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
     }
-
-    .game-cell {
-      aspect-ratio: 1 / 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-      font-weight: 900;
-      border-radius: 1rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
-    }
-    .game-cell:hover {
-      background: #e0e7ff;
-      transform: scale(1.03);
-    }
   </style>
 </head>
 <body id="body-root" class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-500">
@@ -159,7 +141,7 @@
         💡 الآراء والتحسينات
       </button>
       <button onclick="switchTab('arcade')" id="tab-arcade" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        🎮 الألعاب والتحديات
+        🔥 الألغاز والتصويت
       </button>
     </div>
   </header>
@@ -377,8 +359,6 @@
         </h3>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-          
-          <!-- 1. المالك -->
           <div onclick="toggleRankList('rank-owner')" class="p-3.5 bg-purple-50 hover:bg-purple-100/70 rounded-xl border border-purple-200 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
@@ -392,7 +372,6 @@
             </div>
           </div>
 
-          <!-- 2. إدارة المدرسة والناظر -->
           <div onclick="toggleRankList('rank-admin')" class="p-3.5 bg-red-50 hover:bg-red-100/70 rounded-xl border border-red-200 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
@@ -410,7 +389,6 @@
             </div>
           </div>
 
-          <!-- 3. أعضاء هيئة التدريس -->
           <div onclick="toggleRankList('rank-teachers')" class="p-3.5 bg-blue-50 hover:bg-blue-100/70 rounded-xl border border-blue-200 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
@@ -431,7 +409,6 @@
             </div>
           </div>
 
-          <!-- 4. التوب (The Top) -->
           <div onclick="toggleRankList('rank-top')" class="p-3.5 bg-amber-50 hover:bg-amber-100/70 rounded-xl border border-amber-200 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
@@ -449,7 +426,6 @@
             </div>
           </div>
 
-          <!-- 5. الرتبة الذهبية -->
           <div onclick="toggleRankList('rank-gold')" class="p-3.5 bg-yellow-50 hover:bg-yellow-100/70 rounded-xl border border-yellow-200 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
@@ -467,7 +443,6 @@
             </div>
           </div>
 
-          <!-- 6. الرتبة الفضية -->
           <div onclick="toggleRankList('rank-silver')" class="p-3.5 bg-cyan-50 hover:bg-cyan-100/70 rounded-xl border border-cyan-200 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
@@ -483,7 +458,6 @@
             </div>
           </div>
 
-          <!-- 7. طلاب 6A الأعزاء -->
           <div onclick="toggleRankList('rank-students')" class="p-3.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition cursor-pointer select-none col-span-full sm:col-span-2 md:col-span-3">
             <div class="flex justify-between items-center">
               <div>
@@ -500,7 +474,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -561,217 +534,123 @@
       </div>
     </section>
 
-    <!-- 6. Arcade & Games (الأركيد الشامل المطور بالكامل) -->
+    <!-- 6. قسم الألغاز الصعبة والتصويت المباشر المخصص للمالك والإدارة -->
     <section id="section-arcade" class="hidden space-y-6">
-      <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
-        <div class="relative z-10">
-          <h2 class="text-2xl md:text-3xl font-black mb-1 flex items-center gap-2">
-            <span>🎮 ساحة الألعاب والتحديات الكبرى</span>
-          </h2>
-          <p class="text-emerald-100 text-sm">ألعاب نيون حقيقية، اختبارات سرعة، مسابقات، واستطلاعات رأي مباشرة!</p>
+      
+      <!-- بنر القسم الجديد -->
+      <div class="bg-gradient-to-r from-amber-500 via-orange-600 to-purple-700 text-white p-6 rounded-3xl shadow-xl relative overflow-hidden">
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-black mb-1 flex items-center gap-2">
+              <span>🔥 مجلس التصويت وتحديات العباقرة</span>
+            </h2>
+            <p class="text-amber-100 text-sm">استطلاعات رأي رسمية يتحكم بها المالك والإدارة، وألغاز منطقية حقيقية لأذكى عقول 6A!</p>
+          </div>
+          <span class="bg-white/20 border border-white/30 text-white text-xs font-black px-4 py-2 rounded-xl backdrop-blur">
+            النسخة المعتمدة 2026/2027
+          </span>
         </div>
       </div>
 
-      <!-- شبكة الألعاب الكبرى -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- كارت خاص بالأدمن والمالك فقط لإنشاء وتغيير سؤال التصويت -->
+      <div id="admin-poll-card" style="display: none;" class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-6 rounded-3xl shadow-lg border border-amber-400/40 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <span class="font-black text-amber-400 text-sm flex items-center gap-2">
+            <span>⚙️ لوحة المالك والإدارة: نشر سؤال تصويت جديد</span>
+          </span>
+          <span class="text-[11px] bg-amber-400/20 text-amber-300 px-2.5 py-0.5 rounded-full font-bold">صلاحيات المسؤول</span>
+        </div>
 
-        <!-- اللعبة 1: لعبة الثعبان النيون الكلاسيكية -->
-        <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl border border-emerald-500/30 flex flex-col items-center">
-          <div class="w-full flex justify-between items-center mb-3">
-            <span class="font-black text-emerald-400 text-sm flex items-center gap-1.5">🐍 لعبة الثعبان النيون (Snake)</span>
-            <span id="snake-score-display" class="text-xs bg-emerald-950 text-emerald-300 px-3 py-1 rounded-full font-black border border-emerald-700/50">النقاط: 0</span>
+        <div class="space-y-3 text-xs">
+          <input type="text" id="admin-poll-q" placeholder="اكتب سؤال التصويت هنا (مثال: ما رأيك في جدول الامتحانات؟)..." class="w-full p-3 rounded-xl border border-slate-700 bg-slate-950/80 text-white focus:ring-2 focus:ring-amber-400 outline-none text-sm">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <input type="text" id="admin-poll-opt1" placeholder="الخيار الأول..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
+            <input type="text" id="admin-poll-opt2" placeholder="الخيار الثاني..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
+            <input type="text" id="admin-poll-opt3" placeholder="الخيار الثالث (اختياري)..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
+            <input type="text" id="admin-poll-opt4" placeholder="الخيار الرابع (اختياري)..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
           </div>
 
-          <canvas id="snake-canvas" width="280" height="280" class="bg-slate-950 rounded-xl border border-slate-800 shadow-inner mb-3"></canvas>
-
-          <!-- أزرار تحكم الشاشات والموبايل -->
-          <div class="flex flex-col items-center gap-1.5 mb-2">
-            <button onclick="changeSnakeDir('UP')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition">▲</button>
-            <div class="flex gap-2">
-              <button onclick="changeSnakeDir('LEFT')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition">◀</button>
-              <button onclick="changeSnakeDir('DOWN')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition">▼</button>
-              <button onclick="changeSnakeDir('RIGHT')" class="w-12 h-10 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-sm transition">▶</button>
-            </div>
-          </div>
-
-          <button onclick="startSnakeGame()" id="snake-start-btn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2 rounded-xl text-xs transition shadow-lg">
-            ▶️ ابدأ اللعبة / جولة جديدة
+          <button onclick="publishNewPoll()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black py-2.5 rounded-xl text-sm transition shadow-md">
+            🚀 نشر الاستطلاع وتصفير العدادات فوراً
           </button>
         </div>
+      </div>
 
-        <!-- اللعبة 2: تحدي سرعة رد الفعل بالمللي ثانية -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- 1. استطلاع رأي الفصل الرسمي -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
           <div>
-            <div class="flex justify-between items-center mb-3">
-              <h3 class="font-black text-slate-800 text-base flex items-center gap-1.5">⚡ تحدي سرعة رد الفعل (Reaction Time)</h3>
-              <span id="reaction-badge" class="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full font-bold">جاهز</span>
-            </div>
-            <p class="text-xs text-slate-500 mb-3">اضغط على المربع أول ما يتحول للون الأخضر بأقصى سرعة ممكنة!</p>
-            
-            <div id="reaction-box" onclick="handleReactionClick()" class="w-full h-44 bg-rose-500 text-white rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-md">
-              <span id="reaction-main-text" class="text-xl mb-1">اضغط هنا للبدء!</span>
-              <span id="reaction-sub-text" class="text-xs opacity-80">انتظر اللون الأخضر...</span>
-            </div>
-          </div>
-
-          <div class="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-600 font-bold">
-            <span id="reaction-best">أفضل وقت: -- ms</span>
-            <span id="reaction-rank">التقييم: في انتظارك</span>
-          </div>
-        </div>
-
-        <!-- اللعبة 3: إكس أو ضد الذكاء الاصطناعي الذكي -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>🤖 إكس أو ضد الكمبيوتر (Play vs AI)</span>
-              </h3>
-              <span id="ttt-status" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold">
-                أنت <span class="text-blue-600 font-black">X</span> والكمبيوتر <span class="text-rose-600 font-black">O</span>
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-black text-slate-800 text-base flex items-center gap-2">
+                <span>📊 استطلاع رأي الفصل الرسمي</span>
+              </span>
+              <span id="poll-live-indicator" class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-black flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                مباشر
               </span>
             </div>
 
-            <div class="grid grid-cols-3 gap-2.5 max-w-[260px] mx-auto mb-4">
-              <div onclick="makeMoveVsAI(0)" id="cell-0" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(1)" id="cell-1" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(2)" id="cell-2" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(3)" id="cell-3" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(4)" id="cell-4" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(5)" id="cell-5" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(6)" id="cell-6" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(7)" id="cell-7" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(8)" id="cell-8" class="game-cell"></div>
+            <!-- نص السؤال المنشور -->
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-4">
+              <h4 id="display-poll-q" class="text-sm font-black text-slate-800 leading-relaxed">
+                سؤال الاستطلاع المعتمد
+              </h4>
+            </div>
+
+            <!-- خيارات التصويت التفاعلية بنسب مئوية -->
+            <div id="display-poll-options" class="space-y-3">
+              <!-- تتولد ديناميكياً -->
             </div>
           </div>
 
-          <div class="flex justify-between items-center pt-3 border-t border-slate-100">
-            <span class="text-xs text-slate-500 font-bold" id="ttt-score">فوزك: 0 | الكمبيوتر: 0</span>
-            <button onclick="resetGameVsAI()" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl transition shadow">
-              🔄 إعادة التحدي
-            </button>
+          <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+            <span id="poll-total-votes" class="font-bold">إجمالي الأصوات: 0</span>
+            <span id="poll-user-status" class="font-bold text-indigo-600">اختر خيارك للتصويت!</span>
           </div>
         </div>
 
-        <!-- اللعبة 4: مسابقة وتحدي العباقرة بالنقاط (Trivia Quiz) -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <h3 class="font-black text-slate-800 text-base flex items-center gap-1.5">🧠 مسابقة عباقرة الفصل (Speed Trivia)</h3>
-              <span id="trivia-score" class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-black">النقاط: 0/3</span>
-            </div>
-            
-            <div id="trivia-box" class="space-y-3">
-              <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 font-bold text-slate-800 text-xs md:text-sm" id="trivia-q-text">
-                جاري تجهيز السؤال...
-              </div>
-
-              <div id="trivia-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <!-- الخيارات تتولد تلقائياً -->
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
-            <span id="trivia-feedback" class="text-xs font-bold text-slate-500">اختر الإجابة الصحيحة!</span>
-            <button onclick="restartTrivia()" class="text-xs bg-slate-800 hover:bg-black text-white font-bold px-3 py-1.5 rounded-lg transition">
-              سؤال جديد
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- الاستطلاع واللغز المدمجين أسفل الألعاب -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
-        <!-- استطلاع رأي الفصل -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+        <!-- 2. قسم الألغاز الصعبة والتحديات الفكرية -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
           <div>
             <div class="flex items-center justify-between mb-3">
-              <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>📊 تصويت الفصل اليومي</span>
-              </h3>
-              <span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">مباشر ⚡</span>
+              <span class="font-black text-slate-800 text-base flex items-center gap-2">
+                <span>🧠 لغز العباقرة والتفكير المنطقي</span>
+              </span>
+              <span id="riddle-level-badge" class="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-black">مستوى: عبقري 🔥</span>
             </div>
-            
-            <p class="text-xs font-bold text-slate-600 mb-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
-              سؤال اليوم: "إيه أكتر مادة بتستمتعوا بيها في الفصل الأسبوع ده؟"
-            </p>
 
-            <div class="space-y-3" id="poll-container">
-              <div onclick="votePoll('science')" class="cursor-pointer group">
-                <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
-                  <span>🔬 Science</span>
-                  <span id="poll-pct-science">0%</span>
-                </div>
-                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
-                  <div id="poll-bar-science" class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-              </div>
-
-              <div onclick="votePoll('math')" class="cursor-pointer group">
-                <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
-                  <span>📐 Math</span>
-                  <span id="poll-pct-math">0%</span>
-                </div>
-                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
-                  <div id="poll-bar-math" class="bg-purple-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-              </div>
-
-              <div onclick="votePoll('english')" class="cursor-pointer group">
-                <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
-                  <span>📖 English</span>
-                  <span id="poll-pct-english">0%</span>
-                </div>
-                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
-                  <div id="poll-bar-english" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-              </div>
-
-              <div onclick="votePoll('ict')" class="cursor-pointer group">
-                <div class="flex justify-between text-xs font-bold mb-1 text-slate-700">
-                  <span>💻 ICT</span>
-                  <span id="poll-pct-ict">0%</span>
-                </div>
-                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
-                  <div id="poll-bar-ict" class="bg-emerald-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-4 pt-3 border-t border-slate-100 text-center">
-            <span id="poll-vote-msg" class="text-xs text-slate-400 font-bold">اضغط على المادة للتصويت فوراً!</span>
-          </div>
-        </div>
-
-        <!-- لغز الأسبوع -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>🧩 لغز الأسبوع العبقري</span>
-              </h3>
-              <span class="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-black">جائزة الشرف 🌟</span>
-            </div>
-            <p class="text-xs text-slate-500 mb-3">اختبر ذكاءك واكتشف الحل:</p>
-            
-            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100 mb-3">
-              <p class="text-sm font-bold text-slate-800 leading-relaxed">
-                "شيء كلما أخذت منه كَبُر، وكلما وضعت فيه صَغُر، فما هو؟"
+            <!-- كارت اللغز الصعب -->
+            <div class="bg-gradient-to-br from-purple-50 via-slate-50 to-indigo-50 p-5 rounded-2xl border border-purple-100 mb-4 space-y-2">
+              <span class="text-[11px] font-black text-purple-700 block" id="riddle-number-tag">اللغز رقم #1</span>
+              <p id="riddle-question-text" class="text-sm font-black text-slate-800 leading-relaxed">
+                جاري تحميل اللغز الصعب...
               </p>
             </div>
 
-            <div class="flex gap-2">
-              <input type="text" id="riddle-input" placeholder="اكتب إجابتك هنا..." class="flex-1 p-2.5 rounded-xl border text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-purple-500 outline-none">
-              <button onclick="checkRiddle()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition shadow">
-                تحقق ✨
-              </button>
+            <!-- حقل الإجابة والتأكيد -->
+            <div class="space-y-2">
+              <div class="flex gap-2">
+                <input type="text" id="riddle-user-answer" placeholder="اكتب إجابتك هنا بدقة..." class="flex-1 p-3 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-purple-600 outline-none font-bold">
+                <button onclick="verifyHardRiddle()" class="bg-purple-600 hover:bg-purple-700 text-white font-black px-5 rounded-xl text-xs transition shadow-md">
+                  تحقق ✨
+                </button>
+              </div>
+              <p id="riddle-feedback-text" class="text-xs font-bold min-h-[18px]"></p>
             </div>
-            <p id="riddle-result" class="text-xs font-bold mt-2"></p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+            <button onclick="showRiddleHint()" class="text-xs text-amber-600 hover:text-amber-700 font-bold flex items-center gap-1">
+              💡 إظهار تلميح
+            </button>
+            <button onclick="nextHardRiddle()" class="text-xs bg-slate-900 hover:bg-black text-white px-3.5 py-1.5 rounded-xl font-bold transition">
+              اللغز التالي ⏭️
+            </button>
           </div>
         </div>
+
       </div>
 
     </section>
@@ -792,321 +671,177 @@
     let allFeedbackData = [];
     let currentFeedbackFilter = 'all';
 
-    // 1. محرك لعبة الثعبان النيون
-    let sCanvas, sCtx;
-    let snakeInterval = null;
-    let snake = [{x: 140, y: 140}];
-    let snakeDir = 'RIGHT';
-    let food = {x: 60, y: 60};
-    let snakeScore = 0;
-    const sBox = 14;
+    // -------------------------------------------------------------
+    // نظام التصويت الذكي (الذي يتحكم فيه المالك والإدارة فقط)
+    // -------------------------------------------------------------
+    let currentPoll = {
+      question: "ما هي المادة التي تحتاج إلى وقت أطول للمراجعة هذا الأسبوع؟",
+      options: [
+        { id: 1, text: "Science", votes: 14 },
+        { id: 2, text: "Math", votes: 19 },
+        { id: 3, text: "English", votes: 9 },
+        { id: 4, text: "ICT", votes: 12 }
+      ]
+    };
 
-    function initSnakeEngine() {
-      sCanvas = document.getElementById('snake-canvas');
-      if (!sCanvas) return;
-      sCtx = sCanvas.getContext('2d');
+    function loadSavedPoll() {
+      const saved = localStorage.getItem('class_active_poll_data');
+      if (saved) {
+        try { currentPoll = JSON.parse(saved); } catch(e){}
+      }
+      renderPollUI();
     }
 
-    function startSnakeGame() {
-      clearInterval(snakeInterval);
-      snake = [{x: 140, y: 140}, {x: 126, y: 140}];
-      snakeDir = 'RIGHT';
-      snakeScore = 0;
-      document.getElementById('snake-score-display').textContent = `النقاط: 0`;
-      spawnFood();
-      snakeInterval = setInterval(gameLoopSnake, 110);
+    function renderPollUI() {
+      document.getElementById('display-poll-q').textContent = currentPoll.question;
+      const container = document.getElementById('display-poll-options');
+      const totalVotes = currentPoll.options.reduce((sum, opt) => sum + opt.votes, 0);
+      document.getElementById('poll-total-votes').textContent = `إجمالي الأصوات: ${totalVotes}`;
+
+      const colors = ['bg-blue-600', 'bg-purple-600', 'bg-amber-500', 'bg-emerald-600'];
+
+      container.innerHTML = currentPoll.options.map((opt, idx) => {
+        const pct = totalVotes > 0 ? Math.round((opt.votes / totalVotes) * 100) : 0;
+        const color = colors[idx % colors.length];
+
+        return `
+          <div onclick="castPollVote(${opt.id})" class="cursor-pointer group p-2.5 rounded-xl border border-slate-100 hover:border-indigo-300 hover:bg-slate-50/70 transition">
+            <div class="flex justify-between items-center text-xs font-bold text-slate-800 mb-1.5">
+              <span>${opt.text}</span>
+              <span class="text-slate-500">${pct}% (${opt.votes} صوت)</span>
+            </div>
+            <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+              <div class="${color} h-full rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
-    function spawnFood() {
-      food = {
-        x: Math.floor(Math.random() * (280 / sBox)) * sBox,
-        y: Math.floor(Math.random() * (280 / sBox)) * sBox
-      };
-    }
-
-    function changeSnakeDir(dir) {
-      if (dir === 'UP' && snakeDir !== 'DOWN') snakeDir = 'UP';
-      if (dir === 'DOWN' && snakeDir !== 'UP') snakeDir = 'DOWN';
-      if (dir === 'LEFT' && snakeDir !== 'RIGHT') snakeDir = 'LEFT';
-      if (dir === 'RIGHT' && snakeDir !== 'LEFT') snakeDir = 'RIGHT';
-    }
-
-    function gameLoopSnake() {
-      let headX = snake[0].x;
-      let headY = snake[0].y;
-
-      if (snakeDir === 'UP') headY -= sBox;
-      if (snakeDir === 'DOWN') headY += sBox;
-      if (snakeDir === 'LEFT') headX -= sBox;
-      if (snakeDir === 'RIGHT') headX += sBox;
-
-      // الاصطدام بالجدران
-      if (headX < 0 || headX >= 280 || headY < 0 || headY >= 280) {
-        clearInterval(snakeInterval);
-        alert(`💥 Game Over! سكورك: ${snakeScore}`);
+    function castPollVote(optId) {
+      if (localStorage.getItem('user_has_voted_active_poll')) {
+        alert('لقد قمت بالتصويت في هذا الاستطلاع بالفعل! شكراً لمشاركتك.');
         return;
       }
 
-      // الاصطدام بالجسم
-      for (let i = 0; i < snake.length; i++) {
-        if (headX === snake[i].x && headY === snake[i].y) {
-          clearInterval(snakeInterval);
-          alert(`💥 Game Over! سكورك: ${snakeScore}`);
-          return;
-        }
-      }
-
-      const newHead = {x: headX, y: headY};
-
-      if (headX === food.x && headY === food.y) {
-        snakeScore += 10;
-        document.getElementById('snake-score-display').textContent = `النقاط: ${snakeScore}`;
-        spawnFood();
-      } else {
-        snake.pop();
-      }
-
-      snake.unshift(newHead);
-
-      // الرسم
-      sCtx.fillStyle = '#020617';
-      sCtx.fillRect(0, 0, 280, 280);
-
-      // رسم الأكل
-      sCtx.fillStyle = '#fbbf24';
-      sCtx.shadowBlur = 10;
-      sCtx.shadowColor = '#fbbf24';
-      sCtx.fillRect(food.x, food.y, sBox - 1, sBox - 1);
-
-      // رسم الثعبان
-      snake.forEach((part, index) => {
-        sCtx.fillStyle = index === 0 ? '#34d399' : '#10b981';
-        sCtx.shadowBlur = 8;
-        sCtx.shadowColor = '#34d399';
-        sCtx.fillRect(part.x, part.y, sBox - 1, sBox - 1);
-      });
-    }
-
-    // 2. محرك تحدي سرعة رد الفعل
-    let reactionState = 'WAIT_START'; // WAIT_START, WAITING_GREEN, READY_CLICK
-    let reactionTimeout = null;
-    let startTime = 0;
-    let bestReaction = Infinity;
-
-    function handleReactionClick() {
-      const box = document.getElementById('reaction-box');
-      const mainText = document.getElementById('reaction-main-text');
-      const subText = document.getElementById('reaction-sub-text');
-      const badge = document.getElementById('reaction-badge');
-
-      if (reactionState === 'WAIT_START') {
-        reactionState = 'WAITING_GREEN';
-        box.className = "w-full h-44 bg-rose-600 text-white rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-md";
-        mainText.textContent = "انتظر اللون الأخضر...";
-        subText.textContent = "أوعى تدوس دلوقتي!";
-        badge.textContent = "جاهز للتحدي...";
-        
-        const delay = Math.floor(Math.random() * 3000) + 1500;
-        reactionTimeout = setTimeout(() => {
-          reactionState = 'READY_CLICK';
-          startTime = Date.now();
-          box.className = "w-full h-44 bg-emerald-500 text-slate-950 rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-lg animate-pulse";
-          mainText.textContent = "دوس دلوقتيييي!";
-          subText.textContent = "بأسرع ما عندك!";
-        }, delay);
-      } else if (reactionState === 'WAITING_GREEN') {
-        clearTimeout(reactionTimeout);
-        reactionState = 'WAIT_START';
-        box.className = "w-full h-44 bg-amber-500 text-slate-950 rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-md";
-        mainText.textContent = "تسرعت! 😅";
-        subText.textContent = "دست قبل ما يتحول أخضر! اضغط لإعادة المحاولة.";
-      } else if (reactionState === 'READY_CLICK') {
-        const timeTaken = Date.now() - startTime;
-        reactionState = 'WAIT_START';
-        if (timeTaken < bestReaction) bestReaction = timeTaken;
-
-        let rank = "Normal ⚡";
-        if (timeTaken < 220) rank = "Godlike 👑🔥";
-        else if (timeTaken < 320) rank = "Pro Gamer 🚀";
-
-        box.className = "w-full h-44 bg-indigo-600 text-white rounded-2xl flex flex-col items-center justify-center font-black cursor-pointer select-none transition-all duration-200 shadow-md";
-        mainText.textContent = `${timeTaken} ms`;
-        subText.textContent = "سرعة رائعة! اضغط لإعادة الاختبار.";
-        document.getElementById('reaction-best').textContent = `أفضل وقت: ${bestReaction} ms`;
-        document.getElementById('reaction-rank').textContent = `التقييم: ${rank}`;
-        badge.textContent = rank;
+      const opt = currentPoll.options.find(o => o.id === optId);
+      if (opt) {
+        opt.votes++;
+        localStorage.setItem('class_active_poll_data', JSON.stringify(currentPoll));
+        localStorage.setItem('user_has_voted_active_poll', 'true');
+        document.getElementById('poll-user-status').textContent = '✅ تم تسجيل صوتك بنجاح!';
+        renderPollUI();
       }
     }
 
-    // 3. إكس أو ضد الذكاء الاصطناعي
-    let aiBoard = ['', '', '', '', '', '', '', '', ''];
-    let aiActive = true;
-    let aiScoreUser = 0;
-    let aiScoreBot = 0;
-
-    function makeMoveVsAI(idx) {
-      if (aiBoard[idx] !== '' || !aiActive) return;
-
-      aiBoard[idx] = 'X';
-      const cell = document.getElementById(`cell-${idx}`);
-      cell.textContent = 'X';
-      cell.classList.add('text-blue-600');
-
-      if (checkAiWin('X')) {
-        document.getElementById('ttt-status').innerHTML = '🎉 <span class="font-black text-emerald-600">أنت الفائز! أسطورة!</span>';
-        aiScoreUser++;
-        updateAiScore();
-        aiActive = false;
+    function publishNewPoll() {
+      if (!isPowerUser()) {
+        alert('صلاحية مخصصة لمالك المنصة وإدارة المدرسة فقط!');
         return;
       }
 
-      if (aiBoard.every(c => c !== '')) {
-        document.getElementById('ttt-status').textContent = '🤝 تعادل قوي!';
-        aiActive = false;
+      const q = document.getElementById('admin-poll-q').value.trim();
+      const o1 = document.getElementById('admin-poll-opt1').value.trim();
+      const o2 = document.getElementById('admin-poll-opt2').value.trim();
+      const o3 = document.getElementById('admin-poll-opt3').value.trim();
+      const o4 = document.getElementById('admin-poll-opt4').value.trim();
+
+      if (!q || !o1 || !o2) {
+        alert('يرجى كتابة السؤال مع خيارين على الأقل!');
         return;
       }
 
-      aiActive = false;
-      document.getElementById('ttt-status').textContent = 'الكمبيوتر يفكر... 🤖';
-
-      setTimeout(() => {
-        botMove();
-        aiActive = true;
-      }, 400);
-    }
-
-    function botMove() {
-      // البحث عن حركة فوز أو دفاع
-      let emptyIdxs = [];
-      aiBoard.forEach((v, i) => { if (v === '') emptyIdxs.push(i); });
-
-      if (emptyIdxs.length === 0) return;
-
-      // حركة ذكية عشوائية
-      let pick = emptyIdxs[Math.floor(Math.random() * emptyIdxs.length)];
-      aiBoard[pick] = 'O';
-      const cell = document.getElementById(`cell-${pick}`);
-      cell.textContent = 'O';
-      cell.classList.add('text-rose-600');
-
-      if (checkAiWin('O')) {
-        document.getElementById('ttt-status').innerHTML = '🤖 <span class="font-black text-rose-600">فاز الكمبيوتر! حظ أوفر.</span>';
-        aiScoreBot++;
-        updateAiScore();
-        aiActive = false;
-        return;
-      }
-
-      document.getElementById('ttt-status').innerHTML = 'الدور عليك يا بطل! (<span class="text-blue-600 font-black">X</span>)';
-    }
-
-    function checkAiWin(sym) {
-      const wins = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        [0, 4, 8], [2, 4, 6]
+      const newOptions = [
+        { id: 1, text: o1, votes: 0 },
+        { id: 2, text: o2, votes: 0 }
       ];
-      return wins.some(([a, b, c]) => aiBoard[a] === sym && aiBoard[b] === sym && aiBoard[c] === sym);
+
+      if (o3) newOptions.push({ id: 3, text: o3, votes: 0 });
+      if (o4) newOptions.push({ id: 4, text: o4, votes: 0 });
+
+      currentPoll = { question: q, options: newOptions };
+      localStorage.setItem('class_active_poll_data', JSON.stringify(currentPoll));
+      localStorage.removeItem('user_has_voted_active_poll');
+
+      document.getElementById('admin-poll-q').value = '';
+      document.getElementById('admin-poll-opt1').value = '';
+      document.getElementById('admin-poll-opt2').value = '';
+      document.getElementById('admin-poll-opt3').value = '';
+      document.getElementById('admin-poll-opt4').value = '';
+
+      renderPollUI();
+      alert('🚀 تم نشر سؤال التصويت الجديد بنجاح وإعادة فتح التصويت للجميع!');
     }
 
-    function updateAiScore() {
-      document.getElementById('ttt-score').textContent = `فوزك: ${aiScoreUser} | الكمبيوتر: ${aiScoreBot}`;
-    }
-
-    function resetGameVsAI() {
-      aiBoard = ['', '', '', '', '', '', '', '', ''];
-      aiActive = true;
-      for (let i = 0; i < 9; i++) {
-        const cell = document.getElementById(`cell-${i}`);
-        cell.textContent = '';
-        cell.className = 'game-cell';
+    // -------------------------------------------------------------
+    // بنك الألغاز الصعبة الحقيقية
+    // -------------------------------------------------------------
+    const hardRiddles = [
+      {
+        id: 1,
+        question: "رجل يقف أمام لوحة لشخص، فقال: 'لا إخوة لي ولا أخوات، ولكن والد هذا الرجل هو ابن والدي'. من يكون الرجل الذي في اللوحة؟",
+        answers: ["ابنه", "ابن", "ابني", "ولده"],
+        hint: "ركز في عبارة 'ابن والدي' وأنت لا إخوة لك، إذن من هو ابن والدك؟"
+      },
+      {
+        id: 2,
+        question: "قطار كهربائي يسير من الشمال إلى الجنوب بسرعة 100 كم/س، والرياح تهب من الشرق إلى الغرب، ففي أي اتجاه يتجه دخان القطار؟",
+        answers: ["لا يوجد دخان", "مافيش دخان", "مفيش دخان", "ليس له دخان", "لا دخان"],
+        hint: "اقرأ نوع القطار جيداً في بداية السؤال!"
+      },
+      {
+        id: 3,
+        question: "إذا كانت 5 قطط تستغرق 5 دقائق للإمساك بـ 5 فئران، فكم دقيقة تستغرق 100 قطة للإمساك بـ 100 فأر؟",
+        answers: ["5", "5 دقائق", "خمس", "خمسة"],
+        hint: "كل قطة تحتاج وقتاً محدداً للإمساك بفأرها، احسبها لكل قطة على حدة!"
       }
-      document.getElementById('ttt-status').innerHTML = 'أنت <span class="text-blue-600 font-black">X</span> والكمبيوتر <span class="text-rose-600 font-black">O</span>';
-    }
-
-    // 4. مسابقة وتحدي العباقرة
-    const triviaQuestions = [
-      { q: "ما هو أكبر كوكب في المجموعة الشمسية؟", opts: ["الأرض", "المشتري", "المريخ", "زحل"], ans: 1 },
-      { q: "ما هو الحيوان الذي يُلقب بسفينة الصحراء؟", opts: ["الحصان", "الجمل", "الفيل", "الأسد"], ans: 1 },
-      { q: "كم عدد قارات العالم؟", opts: ["5", "6", "7", "8"], ans: 2 },
-      { q: "ما هي عاصمة جمهورية مصر العربية؟", opts: ["الإسكندرية", "القاهرة", "الجيزة", "الأقصر"], ans: 1 }
     ];
-    let currentQIdx = 0;
-    let triviaScore = 0;
 
-    function loadTriviaQuestion() {
-      const q = triviaQuestions[currentQIdx];
-      document.getElementById('trivia-q-text').textContent = `سؤال: ${q.q}`;
-      const optsBox = document.getElementById('trivia-options');
-      optsBox.innerHTML = q.opts.map((opt, i) => `
-        <button onclick="handleAnswer(${i})" class="p-2.5 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300 rounded-xl border border-slate-200 text-xs font-bold transition text-right">
-          ${i + 1}. ${opt}
-        </button>
-      `).join('');
+    let currentRiddleIndex = 0;
+
+    function renderCurrentRiddle() {
+      const r = hardRiddles[currentRiddleIndex];
+      document.getElementById('riddle-number-tag').textContent = `اللغز الذكي #${r.id} من ${hardRiddles.length}`;
+      document.getElementById('riddle-question-text').textContent = r.question;
+      document.getElementById('riddle-user-answer').value = '';
+      document.getElementById('riddle-feedback-text').textContent = '';
     }
 
-    function handleAnswer(choice) {
-      const q = triviaQuestions[currentQIdx];
-      const fb = document.getElementById('trivia-feedback');
-      if (choice === q.ans) {
-        triviaScore++;
+    function verifyHardRiddle() {
+      const input = document.getElementById('riddle-user-answer').value.trim().toLowerCase();
+      const fb = document.getElementById('riddle-feedback-text');
+      const r = hardRiddles[currentRiddleIndex];
+
+      if (!input) {
+        fb.className = "text-xs font-bold text-amber-600";
+        fb.textContent = "اكتب إجابتك أولاً!";
+        return;
+      }
+
+      const isCorrect = r.answers.some(ans => input.includes(ans.toLowerCase()));
+
+      if (isCorrect) {
         fb.className = "text-xs font-black text-emerald-600";
-        fb.textContent = "✅ إجابة صحيحة وممتازة!";
+        fb.textContent = "🎉 إجابة عبقرية وصحيحة 100%! أنت بطل التفكير المنطقي!";
       } else {
         fb.className = "text-xs font-black text-rose-500";
-        fb.textContent = `❌ إجابة خاطئة! الصحيح: ${q.opts[q.ans]}`;
-      }
-      document.getElementById('trivia-score').textContent = `النقاط: ${triviaScore}`;
-
-      currentQIdx = (currentQIdx + 1) % triviaQuestions.length;
-      setTimeout(loadTriviaQuestion, 1200);
-    }
-
-    function restartTrivia() {
-      currentQIdx = (currentQIdx + 1) % triviaQuestions.length;
-      loadTriviaQuestion();
-      document.getElementById('trivia-feedback').textContent = "اختر الإجابة الصحيحة!";
-    }
-
-    // استطلاع رأي الفصل
-    let pollVotes = { science: 14, math: 11, english: 8, ict: 18 };
-
-    function renderPoll() {
-      const saved = localStorage.getItem('class_poll_votes');
-      if (saved) pollVotes = JSON.parse(saved);
-
-      const total = Object.values(pollVotes).reduce((a, b) => a + b, 0) || 1;
-      ['science', 'math', 'english', 'ict'].forEach(sub => {
-        const pct = Math.round((pollVotes[sub] / total) * 100);
-        document.getElementById(`poll-pct-${sub}`).textContent = `${pct}% (${pollVotes[sub]})`;
-        document.getElementById(`poll-bar-${sub}`).style.width = `${pct}%`;
-      });
-    }
-
-    function votePoll(sub) {
-      if (localStorage.getItem('has_voted_poll_today')) {
-        alert('لقد قمت بالتصويت في استطلاع اليوم بالفعل! شكراً لمشاركتك.');
-        return;
-      }
-      pollVotes[sub]++;
-      localStorage.setItem('class_poll_votes', JSON.stringify(pollVotes));
-      localStorage.setItem('has_voted_poll_today', 'true');
-      document.getElementById('poll-vote-msg').textContent = '✅ تم تسجيل صوتك بنجاح!';
-      renderPoll();
-    }
-
-    function checkRiddle() {
-      const val = document.getElementById('riddle-input').value.trim().toLowerCase();
-      const res = document.getElementById('riddle-result');
-      if (val.includes('حفره') || val.includes('حفرة') || val.includes('الحفرة') || val.includes('الحفره')) {
-        res.className = 'text-xs font-black text-emerald-600 mt-2';
-        res.textContent = '🎉 إجابة صحيحة 100%! العبقرية تتحدث (الحفرة).';
-      } else {
-        res.className = 'text-xs font-black text-red-500 mt-2';
-        res.textContent = '❌ إجابة غير صحيحة، فكر جيداً وحاول مرة أخرى!';
+        fb.textContent = "❌ إجابة غير صحيحة، فكر بعمق أو اطلب تلميحاً!";
       }
     }
 
+    function showRiddleHint() {
+      const r = hardRiddles[currentRiddleIndex];
+      alert(`💡 تلميح الذكاء:\n${r.hint}`);
+    }
+
+    function nextHardRiddle() {
+      currentRiddleIndex = (currentRiddleIndex + 1) % hardRiddles.length;
+      renderCurrentRiddle();
+    }
+
+    // -------------------------------------------------------------
+    // المحرك العام وأنيميشن الجزيئات
+    // -------------------------------------------------------------
     function initDynamicBackground() {
       const canvas = document.getElementById('bg-canvas');
       const ctx = canvas.getContext('2d');
@@ -1169,11 +904,10 @@
     window.onload = () => {
       try { localStorage.clear(); } catch(e){}
       initDynamicBackground();
-      initSnakeEngine();
-      loadTriviaQuestion();
       setArabicUI();
       loadHomework();
-      renderPoll();
+      loadSavedPoll();
+      renderCurrentRiddle();
     };
 
     function openLoginModal() {
@@ -1219,6 +953,7 @@
       document.getElementById('hw-input-card').style.display = 'none';
       document.getElementById('quiz-input-card').style.display = 'none';
       document.getElementById('owner-welcome-bar').style.display = 'none';
+      document.getElementById('admin-poll-card').style.display = 'none';
       
       document.body.classList.remove('royal-mode');
       document.getElementById('main-header').className = "bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg transition-all duration-500";
@@ -1253,8 +988,15 @@
 
       const hwCard = document.getElementById('hw-input-card');
       const quizCard = document.getElementById('quiz-input-card');
+      const adminPollCard = document.getElementById('admin-poll-card');
       hwCard.style.display = 'block';
       quizCard.style.display = 'flex';
+
+      if (isPowerUser()) {
+        adminPollCard.style.display = 'block';
+      } else {
+        adminPollCard.style.display = 'none';
+      }
 
       if (currentUser.roleType === 'owner') {
         badge.className = "text-xs bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl shadow-lg border border-amber-300";
@@ -1303,7 +1045,7 @@
       document.getElementById('tab-quotes').innerHTML = "💬 Quotes Wall";
       document.getElementById('tab-profile').innerHTML = "👑 Owner Profile & Ranks";
       document.getElementById('tab-feedback').innerHTML = "💡 Feedback";
-      document.getElementById('tab-arcade').innerHTML = "🎮 Games & Arcade";
+      document.getElementById('tab-arcade').innerHTML = "🔥 Riddles & Polls";
 
       document.getElementById('hw-list-heading').textContent = "Class Assignments:";
       document.getElementById('hw-form-heading').textContent = `📚 Add Homework (${currentUser ? currentUser.extra : ''})`;
@@ -1349,7 +1091,7 @@
       document.getElementById('tab-quotes').innerHTML = "💬 جملة من كل واحد";
       document.getElementById('tab-profile').innerHTML = "👑 بروفايل المالك والرتب";
       document.getElementById('tab-feedback').innerHTML = "💡 الآراء والتحسينات";
-      document.getElementById('tab-arcade').innerHTML = "🎮 الألعاب والتحديات";
+      document.getElementById('tab-arcade').innerHTML = "🔥 الألغاز والتصويت";
 
       document.getElementById('hw-list-heading').textContent = "قائمة واجبات الفصل:";
       document.getElementById('hw-form-heading').textContent = currentUser ? `📚 إضافة واجب مدرسي (${currentUser.extra || ''})` : "";
