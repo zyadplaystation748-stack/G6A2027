@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl" id="html-root">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>6A Official Platform 2027</title>
+  <title id="site-title">منصة 6A 2027 الرسمية</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Cairo:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .arabic-font { font-family: 'Cairo', sans-serif; }
+    body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; }
     .tab-btn.active {
       background-color: #2563eb;
       color: white;
@@ -17,48 +16,48 @@
     }
   </style>
 </head>
-<body class="bg-slate-100 min-h-screen text-slate-800">
+<body class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-300">
 
-  <!-- Header & Navigation -->
+  <!-- Header -->
   <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg">
     <div class="max-w-5xl mx-auto px-4 py-6">
       <div class="flex justify-between items-center mb-4">
-        <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">Official 6A Edition</span>
+        <span id="badge-official" class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">النسخة الرسمية 6A</span>
         
-        <!-- Teacher / Admin Area -->
+        <!-- Login / User status -->
         <div id="admin-status-area">
           <button onclick="openTeacherModal()" id="teacher-login-btn" class="text-xs bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1">
-            🔒 Teachers & Admin Login
+            🔒 دخول المعلمين والإدارة
           </button>
           <div id="teacher-badge-container" class="hidden flex items-center gap-2">
             <span id="teacher-badge" class="text-xs bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-xl shadow"></span>
-            <button onclick="logoutTeacher()" class="text-xs bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg">Logout</button>
+            <button onclick="logoutTeacher()" id="logout-btn" class="text-xs bg-red-500 hover:bg-red-600 text-white px-2.5 py-1 rounded-lg font-bold">خروج</button>
           </div>
         </div>
       </div>
 
       <div class="text-center pb-2">
         <h1 class="text-4xl md:text-5xl font-black tracking-wide drop-shadow-md">6A 2027</h1>
-        <p class="text-blue-100 mt-1 text-sm font-medium">The Official Unified Platform • Teachers • Students • Administration</p>
+        <p id="site-subtitle" class="text-blue-100 mt-1 text-sm font-medium">المنصة الرسمية الموحدة للفصل • المعلمون • الطلاب • الإدارة</p>
       </div>
     </div>
     
     <!-- Tabbed Navigation -->
     <div class="max-w-5xl mx-auto px-4 flex overflow-x-auto gap-1 border-b border-blue-500/30">
       <button onclick="switchTab('homework')" id="tab-homework" class="tab-btn active px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        📚 Homework
+        📚 الواجبات
       </button>
       <button onclick="switchTab('quizzes')" id="tab-quizzes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        📝 Quizzes & Schedule
+        📝 الكويزات والجدول
       </button>
       <button onclick="switchTab('quotes')" id="tab-quotes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        💬 Quotes Wall
+        💬 جملة من كل واحد
       </button>
       <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        👤 Profiles & Badges
+        👤 بروفايلك ورتبتك
       </button>
       <button onclick="switchTab('feedback')" id="tab-feedback" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        💡 Feedback & Ideas
+        💡 الآراء والتحسينات
       </button>
     </div>
   </header>
@@ -66,26 +65,29 @@
   <!-- Login Modal -->
   <div id="teacher-modal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white p-6 rounded-2xl max-w-sm w-full shadow-2xl border text-center">
-      <h3 class="text-lg font-bold text-slate-800 mb-2">🔐 Teacher / Admin Login</h3>
-      <p class="text-xs text-slate-500 mb-3">Select your profile and enter passcode:</p>
+      <h3 id="modal-title" class="text-lg font-bold text-slate-800 mb-2">🔐 تسجيل دخول المعلم / الإدارة</h3>
+      <p id="modal-desc" class="text-xs text-slate-500 mb-3">اختر اسمك ومادتك وأدخل الرمز السري:</p>
       
       <select id="teacher-select" class="w-full p-2.5 border rounded-lg text-sm bg-white mb-3">
-        <option value="Science|Ms. Nourhan">Ms. Nourhan (Science)</option>
-        <option value="English|Ms. Asmaa Yasser">Ms. Asmaa Yasser (English)</option>
-        <option value="Social Studies|Mr. Osama">Mr. Osama (Social Studies)</option>
-        <option value="Arabic|Ms. Fatima Ramadan">Ms. Fatima Ramadan (Arabic)</option>
-        <option value="Religion|Ms. Fatima Ramadan">Ms. Fatima Ramadan (Religion)</option>
-        <option value="French|Ms. Yasmina">Ms. Yasmina (French)</option>
-        <option value="ICT|Ms. Samah">Ms. Samah (ICT)</option>
-        <option value="Math|Ms. Dina">Ms. Dina (Math)</option>
-        <option value="Administration|Platform Owner">Platform Owner / Administration</option>
+        <!-- English Dashboard Teachers -->
+        <option value="Science|Ms. Nourhan|en">مس نورهان (Science)</option>
+        <option value="English|Ms. Asmaa Yasser|en">مس أسماء ياسر (English)</option>
+        <option value="Math|Ms. Dina|en">مس دينا (Math)</option>
+        <option value="ICT|Ms. Samah|en">مس سماح (ICT)</option>
+        <option value="French|Ms. Yasmina|en">مس ياسمينا (French)</option>
+        
+        <!-- Arabic Dashboard Teachers -->
+        <option value="سوشيال|مستر أسامة|ar">مستر أسامة (الدراسات / سوشيال)</option>
+        <option value="عربي|مس فاطمة رمضان|ar">مس فاطمة رمضان (لغة عربية)</option>
+        <option value="دين|مس فاطمة رمضان|ar">مس فاطمة رمضان (تربية دينية)</option>
+        <option value="الإدارة|مالك المنصة وإدارة المدرسة|ar">مالك المنصة (زياد محمد فتوح) / الإدارة</option>
       </select>
 
-      <input type="password" id="teacher-pass-input" placeholder="Enter Passcode..." class="w-full p-2.5 border rounded-lg text-sm text-center mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
+      <input type="password" id="teacher-pass-input" placeholder="الرمز السري..." class="w-full p-2.5 border rounded-lg text-sm text-center mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
       
       <div class="flex gap-2">
-        <button onclick="loginTeacher()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-sm">Sign In</button>
-        <button onclick="closeTeacherModal()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-lg text-sm">Cancel</button>
+        <button onclick="loginTeacher()" id="modal-login-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-sm">دخول</button>
+        <button onclick="closeTeacherModal()" id="modal-cancel-btn" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-lg text-sm">إلغاء</button>
       </div>
     </div>
   </div>
@@ -96,69 +98,69 @@
     <!-- 1. Homework -->
     <section id="section-homework" class="space-y-6">
       <div id="teacher-hw-card" class="hidden bg-white p-6 rounded-2xl shadow-sm border border-blue-200">
-        <h2 id="hw-form-heading" class="text-xl font-bold text-slate-800 mb-2">📚 Post New Assignment</h2>
+        <h2 id="hw-form-heading" class="text-xl font-bold text-slate-800 mb-2"></h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-blue-50 p-4 rounded-xl border border-blue-100">
-          <input type="text" id="hw-title" placeholder="Homework Title / Details" class="p-2.5 rounded-lg border text-sm">
+          <input type="text" id="hw-title" placeholder="عنوان الواجب" class="p-2.5 rounded-lg border text-sm">
           <input type="text" id="hw-subject" readonly class="p-2.5 rounded-lg border text-sm bg-slate-100 text-slate-600 font-bold">
           <input type="date" id="hw-due" class="p-2.5 rounded-lg border text-sm">
           <button id="hw-submit-btn" onclick="addHomework()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition">
-            + Publish Assignment
+            + نشر الواجب
           </button>
         </div>
       </div>
 
       <div class="flex items-center justify-between">
-        <h3 class="font-bold text-lg text-slate-800">Class Assignments:</h3>
+        <h3 id="hw-list-heading" class="font-bold text-lg text-slate-800">قائمة واجبات الفصل:</h3>
         <select id="hw-filter" onchange="loadHomework()" class="p-2 border rounded-lg text-xs bg-white">
-          <option value="all">All Subjects</option>
+          <option value="all">كل المواد / All</option>
           <option value="Science">Science</option>
           <option value="English">English</option>
-          <option value="Social Studies">Social Studies</option>
-          <option value="Arabic">Arabic</option>
-          <option value="Religion">Religion</option>
-          <option value="French">French</option>
-          <option value="ICT">ICT</option>
           <option value="Math">Math</option>
+          <option value="ICT">ICT</option>
+          <option value="French">French</option>
+          <option value="سوشيال">سوشيال (دراسات)</option>
+          <option value="عربي">لغة عربية</option>
+          <option value="دين">تربية دينية</option>
         </select>
       </div>
       <div id="homework-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="col-span-full text-center text-slate-400 py-6">Loading assignments...</div>
+        <div class="col-span-full text-center text-slate-400 py-6" id="hw-loading-text">جاري تحميل الواجبات...</div>
       </div>
     </section>
 
-    <!-- 2. Quizzes & Schedule -->
+    <!-- 2. Quizzes & Timetable -->
     <section id="section-quizzes" class="hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-4">
           <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-            <h3 class="font-bold text-lg mb-3 text-red-600 flex items-center gap-2">
-              🚨 Upcoming Quizzes & Tests
+            <h3 id="quiz-section-heading" class="font-bold text-lg mb-3 text-red-600 flex items-center gap-2">
+              🚨 جدول الكويزات والاختبارات القصيرة
             </h3>
             
             <div id="teacher-quiz-card" class="hidden flex-wrap gap-2 mb-4 bg-red-50 p-3 rounded-xl border border-red-100">
-              <input type="text" id="quiz-title" placeholder="Quiz topic / chapter" class="p-2 border rounded-lg text-sm flex-1">
+              <input type="text" id="quiz-title" placeholder="موضوع الكويز" class="p-2 border rounded-lg text-sm flex-1">
               <input type="text" id="quiz-subject" readonly class="p-2 border rounded-lg text-sm w-32 bg-slate-100 text-slate-600 font-bold">
               <input type="date" id="quiz-date" class="p-2 border rounded-lg text-sm">
-              <button id="quiz-submit-btn" onclick="addQuiz()" class="bg-red-600 hover:bg-red-700 text-white px-4 rounded-lg text-sm font-bold">Add Quiz</button>
+              <button id="quiz-submit-btn" onclick="addQuiz()" class="bg-red-600 hover:bg-red-700 text-white px-4 rounded-lg text-sm font-bold">إضافة</button>
             </div>
 
             <div id="quizzes-list" class="space-y-2">
-              <div class="text-center text-slate-400 py-4">Loading quizzes...</div>
+              <div class="text-center text-slate-400 py-4" id="quiz-loading-text">جاري التحميل...</div>
             </div>
           </div>
         </div>
 
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
           <div>
-            <h3 class="font-bold text-lg mb-2 text-slate-800">📅 Weekly Schedule</h3>
-            <p class="text-xs text-slate-500 mb-4">Official timetable for Class 6A.</p>
+            <h3 id="schedule-card-title" class="font-bold text-lg mb-2 text-slate-800">📅 جدول الحصص الأسبوعي</h3>
+            <p id="schedule-card-desc" class="text-xs text-slate-500 mb-4">جدول الحصص المعتمد لفصل 6A متاح كملف رسمي.</p>
           </div>
           <div class="p-6 bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl text-center">
             <span class="text-4xl block mb-2">📑</span>
-            <span class="text-sm font-bold text-slate-700 block">6A Timetable (2026/2027)</span>
-            <span class="text-xs text-slate-400 block mb-3">Official PDF Document</span>
-            <button onclick="alert('Schedule link will be added soon!')" class="bg-slate-800 hover:bg-black text-white px-4 py-2 rounded-lg text-xs font-bold transition">
-              View Schedule
+            <span id="schedule-file-name" class="text-sm font-bold text-slate-700 block">جدول 6A - 2026/2027</span>
+            <span id="schedule-file-type" class="text-xs text-slate-400 block mb-3">صيغة PDF رسمية</span>
+            <button id="schedule-btn" onclick="alert('سيتم إضافة رابط الجدول قريباً!')" class="bg-slate-800 hover:bg-black text-white px-4 py-2 rounded-lg text-xs font-bold transition">
+              تحميل / فتح الجدول
             </button>
           </div>
         </div>
@@ -168,49 +170,49 @@
     <!-- 3. Quotes Wall -->
     <section id="section-quotes" class="hidden space-y-6">
       <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-6 rounded-2xl shadow-md">
-        <h2 class="text-2xl font-black mb-1">🌟 Class Quotes Wall</h2>
-        <p class="text-amber-100 text-sm">A shared space for every student, teacher, and administrator to leave a memory!</p>
+        <h2 id="quotes-banner-title" class="text-2xl font-black mb-1">🌟 حائط "جملة من كل واحد"</h2>
+        <p id="quotes-banner-desc" class="text-amber-100 text-sm">مساحة خاصة لكل عضو في الفصل، المدرسين، والمديرة لمشاركة كلماتهم التذكارية!</p>
       </div>
 
       <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <input type="text" id="quote-author" placeholder="Your name..." class="p-2.5 rounded-lg border text-sm">
+          <input type="text" id="quote-author" placeholder="اسمك الكريم..." class="p-2.5 rounded-lg border text-sm">
           <select id="quote-role" class="p-2.5 rounded-lg border text-sm bg-white">
-            <option value="Student">6A Student</option>
-            <option value="Teacher">Teacher</option>
-            <option value="Administration">School Admin</option>
-            <option value="Platform Owner">Platform Owner</option>
+            <option value="طالب">طالب في 6A / Student</option>
+            <option value="معلم">معلم / Teacher</option>
+            <option value="إدارة">إدارة المدرسة / Admin</option>
+            <option value="مالك المنصة">مالك المنصة / Owner</option>
           </select>
         </div>
-        <textarea id="quote-text" rows="2" placeholder="Write your memorable quote or word here..." class="w-full p-3 rounded-lg border text-sm"></textarea>
-        <button onclick="addQuote()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 rounded-lg transition text-sm">
-          Post Quote to Wall ✨
+        <textarea id="quote-text" rows="2" placeholder="اكتب جملتك الملهمة أو الذكرى هنا..." class="w-full p-3 rounded-lg border text-sm"></textarea>
+        <button id="quote-submit-btn" onclick="addQuote()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 rounded-lg transition text-sm">
+          شارك جملتك على الحائط ✨
         </button>
       </div>
 
       <div id="quotes-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="col-span-full text-center text-slate-400 py-6">Loading quotes...</div>
+        <div class="col-span-full text-center text-slate-400 py-6" id="quotes-loading-text">جاري التحميل...</div>
       </div>
     </section>
 
-    <!-- 4. Profiles & Badges -->
+    <!-- 4. Profile & Badges -->
     <section id="section-profile" class="space-y-6 hidden">
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center">
         <div class="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto text-3xl font-black mb-3">
           🎖️
         </div>
-        <h2 class="text-xl font-black text-slate-800">Class 6A Roles & Badges</h2>
-        <p class="text-xs text-slate-500 mt-1">Official platform ranks and member recognitions</p>
+        <h2 id="profile-heading" class="text-xl font-black text-slate-800">أعضاء ورتب فصل 6A</h2>
+        <p id="profile-subheading" class="text-xs text-slate-500 mt-1">الرتب والتقديرات المعتمدة لجميع أبطال الفصل</p>
 
-        <div class="mt-8 border-t pt-4 text-left max-w-lg mx-auto">
-          <h4 class="text-sm font-bold text-slate-600 mb-3">Roles Directory:</h4>
+        <div class="mt-8 border-t pt-4 text-start max-w-lg mx-auto">
+          <h4 id="roles-title" class="text-sm font-bold text-slate-600 mb-3">دليل الرتب في المنصة:</h4>
           <div class="flex flex-wrap gap-2 text-xs">
-            <span class="bg-purple-100 text-purple-800 px-3 py-1.5 rounded-full font-bold">👑 Platform Owner (Zyad Mohamed Fattouh)</span>
-            <span class="bg-red-100 text-red-800 px-3 py-1.5 rounded-full font-bold">🏛️ Administration & Principal</span>
-            <span class="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full font-bold">👨‍🏫 Faculty (8 Subjects)</span>
-            <span class="bg-amber-100 text-amber-800 px-3 py-1.5 rounded-full font-bold">⭐ Elite Member</span>
-            <span class="bg-yellow-100 text-yellow-800 px-3 py-1.5 rounded-full font-bold">🥇 Gold Member</span>
-            <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-full font-bold">🌱 6A Students</span>
+            <span class="bg-purple-100 text-purple-800 px-3 py-1.5 rounded-full font-bold">👑 مالك المنصة (زياد محمد فتوح)</span>
+            <span class="bg-red-100 text-red-800 px-3 py-1.5 rounded-full font-bold">🏛️ إدارة المدرسة والناظر</span>
+            <span class="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full font-bold">👨‍🏫 السادة المعلمون</span>
+            <span class="bg-amber-100 text-amber-800 px-3 py-1.5 rounded-full font-bold">⭐ عضو مميز</span>
+            <span class="bg-yellow-100 text-yellow-800 px-3 py-1.5 rounded-full font-bold">🥇 عضو ذهبي</span>
+            <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-full font-bold">🌱 طلاب 6A الأعزاء</span>
           </div>
         </div>
       </div>
@@ -219,25 +221,25 @@
     <!-- 5. Feedback -->
     <section id="section-feedback" class="hidden space-y-6">
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-        <h2 class="text-xl font-bold mb-2">💡 Feedback & Suggestions</h2>
-        <p class="text-xs text-slate-500 mb-4">Your opinion matters in improving our platform continuously!</p>
+        <h2 id="feedback-heading" class="text-xl font-bold mb-2">💡 التحسينات والآراء</h2>
+        <p id="feedback-desc" class="text-xs text-slate-500 mb-4">صوتك مهم لتطوير المنصة باستمرار!</p>
         <div class="space-y-3 bg-slate-50 p-4 rounded-xl border">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <input type="text" id="fb-user" placeholder="Your name..." class="p-2.5 border rounded-lg text-sm bg-white">
+            <input type="text" id="fb-user" placeholder="اسمك..." class="p-2.5 border rounded-lg text-sm bg-white">
             <select id="fb-type" class="p-2.5 border rounded-lg text-sm bg-white">
-              <option value="Idea">✨ Feature Suggestion</option>
-              <option value="Bug">⚠️ Issue / Bug Report</option>
-              <option value="Review">💬 General Opinion</option>
+              <option value="اقتراح">✨ اقتراح فكرة جديدة / Feature</option>
+              <option value="عيب">⚠️ عيب أو مشكلة / Issue</option>
+              <option value="رأي">💬 كلمة وانطباع / Opinion</option>
             </select>
           </div>
-          <textarea id="fb-text" rows="3" placeholder="Enter your detailed suggestion..." class="w-full p-2.5 border rounded-lg text-sm"></textarea>
-          <button onclick="addFeedback()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg text-sm transition">
-            Submit Feedback
+          <textarea id="fb-text" rows="3" placeholder="تفاصيل الملاحظة..." class="w-full p-2.5 border rounded-lg text-sm"></textarea>
+          <button id="fb-submit-btn" onclick="addFeedback()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg text-sm transition">
+            إرسال الملاحظة
           </button>
         </div>
       </div>
       <div id="feedback-list" class="space-y-3">
-        <div class="text-center text-slate-400 py-4">Loading feedback...</div>
+        <div class="text-center text-slate-400 py-4" id="fb-loading-text">جاري التحميل...</div>
       </div>
     </section>
   </main>
@@ -254,7 +256,9 @@
       const saved = localStorage.getItem('teacherSession');
       if (saved) {
         currentTeacher = JSON.parse(saved);
-        applyTeacherView();
+        applySessionLanguage();
+      } else {
+        setArabicUI();
       }
       loadHomework();
     };
@@ -270,18 +274,19 @@
     function loginTeacher() {
       const pass = document.getElementById('teacher-pass-input').value.trim();
       if (pass !== PASSCODE) {
-        alert('Invalid passcode!');
+        alert(currentTeacher && currentTeacher.lang === 'en' ? 'Invalid passcode!' : 'الرمز السري غير صحيح!');
         return;
       }
 
       const val = document.getElementById('teacher-select').value.split('|');
       currentTeacher = {
         subject: val[0],
-        name: val[1]
+        name: val[1],
+        lang: val[2]
       };
 
       localStorage.setItem('teacherSession', JSON.stringify(currentTeacher));
-      applyTeacherView();
+      applySessionLanguage();
       closeTeacherModal();
     }
 
@@ -293,16 +298,18 @@
       document.getElementById('teacher-hw-card').classList.add('hidden');
       document.getElementById('teacher-quiz-card').classList.add('hidden');
       document.getElementById('teacher-quiz-card').classList.remove('flex');
-      alert('Signed out successfully.');
+      
+      // الرجوع للغة العربية للطلاب
+      setArabicUI();
+      loadHomework();
     }
 
-    function applyTeacherView() {
+    function applySessionLanguage() {
       if (!currentTeacher) return;
       document.getElementById('teacher-login-btn').classList.add('hidden');
       const badgeBox = document.getElementById('teacher-badge-container');
       const badge = document.getElementById('teacher-badge');
       badgeBox.classList.remove('hidden');
-      badge.textContent = `Active: ${currentTeacher.name} (${currentTeacher.subject})`;
 
       const hwCard = document.getElementById('teacher-hw-card');
       const quizCard = document.getElementById('teacher-quiz-card');
@@ -312,7 +319,114 @@
 
       document.getElementById('hw-subject').value = currentTeacher.subject;
       document.getElementById('quiz-subject').value = currentTeacher.subject;
-      document.getElementById('hw-form-heading').textContent = `📚 Add Homework (${currentTeacher.subject} - ${currentTeacher.name})`;
+
+      if (currentTeacher.lang === 'en') {
+        setEnglishUI();
+        badge.textContent = `Teacher: ${currentTeacher.name} (${currentTeacher.subject})`;
+      } else {
+        setArabicUI();
+        badge.textContent = `المعلم: ${currentTeacher.name} (${currentTeacher.subject})`;
+      }
+    }
+
+    // واجهة اللغة الإنجليزية الكاملة (للمعلمين المحددين)
+    function setEnglishUI() {
+      const root = document.getElementById('html-root');
+      root.setAttribute('lang', 'en');
+      root.setAttribute('dir', 'ltr');
+
+      document.getElementById('site-title').textContent = "6A Official Platform 2027";
+      document.getElementById('badge-official').textContent = "Official 6A Edition";
+      document.getElementById('site-subtitle').textContent = "The Official Unified Platform • Teachers • Students • Administration";
+      document.getElementById('teacher-login-btn').textContent = "🔒 Teachers & Admin Login";
+      document.getElementById('logout-btn').textContent = "Logout";
+
+      document.getElementById('tab-homework').innerHTML = "📚 Homework";
+      document.getElementById('tab-quizzes').innerHTML = "📝 Quizzes & Schedule";
+      document.getElementById('tab-quotes').innerHTML = "💬 Quotes Wall";
+      document.getElementById('tab-profile').innerHTML = "👤 Profiles & Badges";
+      document.getElementById('tab-feedback').innerHTML = "💡 Feedback";
+
+      document.getElementById('hw-list-heading').textContent = "Class Assignments:";
+      document.getElementById('hw-loading-text').textContent = "Loading assignments...";
+      document.getElementById('hw-form-heading').textContent = `📚 Add Homework (${currentTeacher ? currentTeacher.subject : ''})`;
+      document.getElementById('hw-title').placeholder = "Homework Title / Details";
+      document.getElementById('hw-submit-btn').textContent = "+ Publish Homework";
+
+      document.getElementById('quiz-section-heading').innerHTML = "🚨 Upcoming Quizzes & Tests";
+      document.getElementById('quiz-title').placeholder = "Quiz topic";
+      document.getElementById('quiz-submit-btn').textContent = "Add Quiz";
+      document.getElementById('quiz-loading-text').textContent = "Loading quizzes...";
+
+      document.getElementById('schedule-card-title').textContent = "📅 Weekly Schedule";
+      document.getElementById('schedule-card-desc').textContent = "Official timetable for Class 6A.";
+      document.getElementById('schedule-file-name').textContent = "6A Timetable (2026/2027)";
+      document.getElementById('schedule-file-type').textContent = "Official PDF Document";
+      document.getElementById('schedule-btn').textContent = "View Schedule";
+
+      document.getElementById('quotes-banner-title').textContent = "🌟 Class Quotes Wall";
+      document.getElementById('quotes-banner-desc').textContent = "A shared space for every student and teacher to leave a memory!";
+      document.getElementById('quote-author').placeholder = "Your name...";
+      document.getElementById('quote-text').placeholder = "Write your memorable quote or word here...";
+      document.getElementById('quote-submit-btn').textContent = "Post Quote to Wall ✨";
+      document.getElementById('quotes-loading-text').textContent = "Loading quotes...";
+
+      document.getElementById('feedback-heading').textContent = "💡 Feedback & Suggestions";
+      document.getElementById('feedback-desc').textContent = "Your opinion matters to improve the platform!";
+      document.getElementById('fb-user').placeholder = "Your name...";
+      document.getElementById('fb-text').placeholder = "Detailed suggestion or issue...";
+      document.getElementById('fb-submit-btn').textContent = "Submit Feedback";
+      document.getElementById('fb-loading-text').textContent = "Loading feedback...";
+    }
+
+    // واجهة اللغة العربية الكاملة (الأساسية للطلاب والمواد العربية)
+    function setArabicUI() {
+      const root = document.getElementById('html-root');
+      root.setAttribute('lang', 'ar');
+      root.setAttribute('dir', 'rtl');
+
+      document.getElementById('site-title').textContent = "منصة 6A 2027 الرسمية";
+      document.getElementById('badge-official').textContent = "النسخة الرسمية 6A";
+      document.getElementById('site-subtitle').textContent = "المنصة الرسمية الموحدة للفصل • المعلمون • الطلاب • الإدارة";
+      document.getElementById('teacher-login-btn').textContent = "🔒 دخول المعلمين والإدارة";
+      document.getElementById('logout-btn').textContent = "خروج";
+
+      document.getElementById('tab-homework').innerHTML = "📚 الواجبات";
+      document.getElementById('tab-quizzes').innerHTML = "📝 الكويزات والجدول";
+      document.getElementById('tab-quotes').innerHTML = "💬 جملة من كل واحد";
+      document.getElementById('tab-profile').innerHTML = "👤 بروفايلك ورتبتك";
+      document.getElementById('tab-feedback').innerHTML = "💡 الآراء والتحسينات";
+
+      document.getElementById('hw-list-heading').textContent = "قائمة واجبات الفصل:";
+      document.getElementById('hw-loading-text').textContent = "جاري تحميل الواجبات...";
+      document.getElementById('hw-form-heading').textContent = currentTeacher ? `📚 إضافة واجب مدرسي (${currentTeacher.subject})` : "";
+      document.getElementById('hw-title').placeholder = "عنوان وتفاصيل الواجب";
+      document.getElementById('hw-submit-btn').textContent = "+ نشر الواجب";
+
+      document.getElementById('quiz-section-heading').innerHTML = "🚨 جدول الكويزات والاختبارات القصيرة";
+      document.getElementById('quiz-title').placeholder = "موضوع الكويز";
+      document.getElementById('quiz-submit-btn').textContent = "إضافة";
+      document.getElementById('quiz-loading-text').textContent = "جاري التحميل...";
+
+      document.getElementById('schedule-card-title').textContent = "📅 جدول الحصص الأسبوعي";
+      document.getElementById('schedule-card-desc').textContent = "جدول الحصص المعتمد لفصل 6A متاح كملف رسمي.";
+      document.getElementById('schedule-file-name').textContent = "جدول 6A - 2026/2027";
+      document.getElementById('schedule-file-type').textContent = "صيغة PDF رسمية";
+      document.getElementById('schedule-btn').textContent = "تحميل / فتح الجدول";
+
+      document.getElementById('quotes-banner-title').textContent = "🌟 حائط \"جملة من كل واحد\"";
+      document.getElementById('quotes-banner-desc').textContent = "مساحة خاصة لكل عضو في الفصل، المدرسين، والمديرة لمشاركة كلماتهم التذكارية!";
+      document.getElementById('quote-author').placeholder = "اسمك الكريم...";
+      document.getElementById('quote-text').placeholder = "اكتب جملتك الملهمة أو الذكرى هنا...";
+      document.getElementById('quote-submit-btn').textContent = "شارك جملتك على الحائط ✨";
+      document.getElementById('quotes-loading-text').textContent = "جاري التحميل...";
+
+      document.getElementById('feedback-heading').textContent = "💡 التحسينات والآراء";
+      document.getElementById('feedback-desc').textContent = "صوتك مهم لتطوير المنصة باستمرار!";
+      document.getElementById('fb-user').placeholder = "اسمك...";
+      document.getElementById('fb-text').placeholder = "تفاصيل الملاحظة...";
+      document.getElementById('fb-submit-btn').textContent = "إرسال الملاحظة";
+      document.getElementById('fb-loading-text').textContent = "جاري التحميل...";
     }
 
     function switchTab(tabName) {
@@ -344,15 +458,17 @@
       }
 
       const { data } = await query;
+      const isEn = currentTeacher && currentTeacher.lang === 'en';
+
       if (!data || data.length === 0) {
-        container.innerHTML = '<div class="col-span-full text-center text-slate-400 py-6">No assignments posted for this subject.</div>';
+        container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'No assignments posted for this subject.' : 'لا توجد واجبات مسجلة لهذه المادة حالياً.'}</div>`;
         return;
       }
       container.innerHTML = data.map(hw => `
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex justify-between items-start mb-2">
             <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-md">${hw.subject}</span>
-            <span class="text-xs text-red-500 font-bold">Due: ${hw.due_date || 'N/A'}</span>
+            <span class="text-xs text-red-500 font-bold">${isEn ? 'Due: ' : 'تسليم: '}${hw.due_date || (isEn ? 'N/A' : 'غير محدد')}</span>
           </div>
           <h3 class="font-bold text-slate-800 text-base mb-1">${hw.title}</h3>
         </div>
@@ -360,11 +476,11 @@
     }
 
     async function addHomework() {
-      if (!currentTeacher) return alert('Authorized teachers only');
+      if (!currentTeacher) return alert('هذه الخاصية للمعلمين فقط');
       const title = document.getElementById('hw-title').value.trim();
       const dueDate = document.getElementById('hw-due').value;
 
-      if (!title) return alert('Please enter assignment details');
+      if (!title) return alert(currentTeacher.lang === 'en' ? 'Please enter assignment details' : 'يرجى كتابة تفاصيل الواجب');
 
       await client.from('homework').insert([{
         title: title,
@@ -375,33 +491,35 @@
       document.getElementById('hw-title').value = '';
       document.getElementById('hw-due').value = '';
       loadHomework();
-      alert('Assignment published successfully!');
+      alert(currentTeacher.lang === 'en' ? 'Assignment published successfully!' : 'تم نشر الواجب بنجاح!');
     }
 
     async function loadQuizzes() {
       const container = document.getElementById('quizzes-list');
       const { data } = await client.from('quizzes').select('*').order('quiz_date', { ascending: true });
+      const isEn = currentTeacher && currentTeacher.lang === 'en';
+
       if (!data || data.length === 0) {
-        container.innerHTML = '<div class="text-center text-slate-400 py-4 text-sm">No quizzes scheduled 🎉</div>';
+        container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No quizzes scheduled 🎉' : 'لا توجد كويزات مسجلة حالياً 🎉'}</div>`;
         return;
       }
       container.innerHTML = data.map(qz => `
         <div class="flex justify-between items-center p-3 bg-red-50 rounded-xl border border-red-100">
           <div>
             <span class="font-bold text-slate-800 text-sm block">${qz.title} (${qz.subject})</span>
-            <span class="text-xs text-red-600 font-semibold">Date: ${qz.quiz_date}</span>
+            <span class="text-xs text-red-600 font-semibold">${isEn ? 'Date: ' : 'الميعاد: '}${qz.quiz_date}</span>
           </div>
-          <span class="bg-red-200 text-red-800 text-xs px-2 py-1 rounded font-bold">Quiz</span>
+          <span class="bg-red-200 text-red-800 text-xs px-2 py-1 rounded font-bold">${isEn ? 'Quiz' : 'كويز'}</span>
         </div>
       `).join('');
     }
 
     async function addQuiz() {
-      if (!currentTeacher) return alert('Authorized teachers only');
+      if (!currentTeacher) return alert('هذه الخاصية للمعلمين فقط');
       const title = document.getElementById('quiz-title').value.trim();
       const date = document.getElementById('quiz-date').value;
 
-      if (!title || !date) return alert('Please complete quiz fields');
+      if (!title || !date) return alert(currentTeacher.lang === 'en' ? 'Please fill all quiz fields' : 'يرجى ملء جميع بيانات الكويز');
 
       await client.from('quizzes').insert([{
         title: title,
@@ -412,20 +530,21 @@
       document.getElementById('quiz-title').value = '';
       document.getElementById('quiz-date').value = '';
       loadQuizzes();
-      alert('Quiz added successfully!');
+      alert(currentTeacher.lang === 'en' ? 'Quiz added successfully!' : 'تمت إضافة الكويز بنجاح!');
     }
 
     async function loadQuotes() {
       const container = document.getElementById('quotes-list');
       const { data } = await client.from('quotes').select('*').order('id', { ascending: false });
+      const isEn = currentTeacher && currentTeacher.lang === 'en';
+
       if (!data || data.length === 0) {
-        container.innerHTML = '<div class="col-span-full text-center text-slate-400 py-6">Be the first to post a memory!</div>';
+        container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'Be the first to post a quote!' : 'كن أول من يترك جملة تذكارية!'}</div>`;
         return;
       }
       container.innerHTML = data.map(q => `
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
-          <div class="text-4xl text-amber-200 absolute -top-1 right-3 font-serif">“</div>
-          <p class="text-slate-700 text-sm font-semibold mb-3 relative z-10 leading-relaxed">${q.quote_text}</p>
+          <p class="text-slate-700 text-sm font-semibold mb-3 relative z-10 leading-relaxed">“${q.quote_text}”</p>
           <div class="flex justify-between items-center text-xs border-t pt-2 text-slate-500">
             <span class="font-bold text-slate-800">${q.author_name}</span>
             <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">${q.role}</span>
@@ -439,7 +558,7 @@
       const role = document.getElementById('quote-role').value;
       const text = document.getElementById('quote-text').value.trim();
 
-      if (!author || !text) return alert('Please enter both name and quote');
+      if (!author || !text) return alert(currentTeacher && currentTeacher.lang === 'en' ? 'Please fill your name and quote' : 'يرجى كتابة اسمك وجملتك أولاً');
 
       await client.from('quotes').insert([{
         author_name: author,
@@ -454,8 +573,10 @@
     async function loadFeedback() {
       const container = document.getElementById('feedback-list');
       const { data } = await client.from('feedback').select('*').order('id', { ascending: false });
+      const isEn = currentTeacher && currentTeacher.lang === 'en';
+
       if (!data || data.length === 0) {
-        container.innerHTML = '<div class="text-center text-slate-400 py-4 text-sm">No feedback submitted yet.</div>';
+        container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No feedback yet.' : 'لا توجد ملاحظات بعد.'}</div>`;
         return;
       }
       container.innerHTML = data.map(f => `
@@ -474,7 +595,7 @@
       const type = document.getElementById('fb-type').value;
       const text = document.getElementById('fb-text').value.trim();
 
-      if (!text) return alert('Please enter your feedback');
+      if (!text) return alert(currentTeacher && currentTeacher.lang === 'en' ? 'Please enter your note' : 'يرجى كتابة الملاحظة');
 
       await client.from('feedback').insert([{
         user_name: user,
@@ -484,7 +605,7 @@
 
       document.getElementById('fb-text').value = '';
       loadFeedback();
-      alert('Feedback submitted successfully!');
+      alert(currentTeacher && currentTeacher.lang === 'en' ? 'Feedback submitted successfully!' : 'تم إرسال الملاحظة بنجاح!');
     }
   </script>
 </body>
