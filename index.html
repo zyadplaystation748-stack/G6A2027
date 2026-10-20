@@ -27,7 +27,7 @@
         <!-- Login status area -->
         <div id="admin-status-area">
           <button onclick="openLoginModal()" id="main-login-btn" class="text-xs bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1">
-            🔒 بوابة الدخول (المالك • الإدارة • المعلمون)
+            🔒 بوابة الدخول
           </button>
           <div id="logged-badge-container" class="hidden flex items-center gap-2">
             <span id="logged-badge" class="text-xs text-white font-bold px-3 py-1.5 rounded-xl shadow"></span>
@@ -65,24 +65,24 @@
   <!-- Login Modal -->
   <div id="login-modal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white p-6 rounded-2xl max-w-sm w-full shadow-2xl border text-center">
-      <h3 id="modal-title" class="text-lg font-bold text-slate-800 mb-2">🔐 تسجيل الدخول المعتمد</h3>
-      <p id="modal-desc" class="text-xs text-slate-500 mb-3">اختر صفتك من القائمة وأدخل الرمز السري الخاص بك:</p>
+      <h3 id="modal-title" class="text-lg font-bold text-slate-800 mb-2">🔐 تسجيل الدخول</h3>
+      <p id="modal-desc" class="text-xs text-slate-500 mb-3">اختر الحساب واكتب الرمز السري:</p>
       
       <select id="user-role-select" class="w-full p-2.5 border rounded-lg text-sm bg-white mb-3">
-        <!-- 1. Platform Owner -->
-        <option value="owner|زياد محمد فتوح|👑 مالك المنصة|ar">👑 مالك المنصة (زياد محمد فتوح)</option>
+        <!-- 1. مالك المنصة لوحده تماماً بدون إدارة -->
+        <option value="owner|زياد محمد فتوح|عام|ar">👑 مالك المنصة (زياد محمد فتوح)</option>
         
-        <!-- 2. School Administration -->
-        <option value="admin|إدارة المدرسة|🏛️ إدارة المدرسة والناظر|ar">🏛️ إدارة المدرسة والناظر</option>
+        <!-- 2. الإدارة لوحدها تماماً -->
+        <option value="admin|إدارة المدرسة|إدارة|ar">🏛️ إدارة المدرسة والناظر</option>
         
-        <!-- 3. English Teachers -->
+        <!-- 3. المعلمين بالإنجليزية -->
         <option value="teacher|مس نورهان|Science|en">مس نورهان (Science)</option>
         <option value="teacher|مس أسماء ياسر|English|en">مس أسماء ياسر (English)</option>
         <option value="teacher|مس دينا|Math|en">مس دينا (Math)</option>
         <option value="teacher|مس سماح|ICT|en">مس سماح (ICT)</option>
         <option value="teacher|مس ياسمينا|French|en">مس ياسمينا (French)</option>
         
-        <!-- 4. Arabic Teachers -->
+        <!-- 4. المعلمين بالعربية -->
         <option value="teacher|مستر أسامة|سوشيال|ar">مستر أسامة (الدراسات / سوشيال)</option>
         <option value="teacher|مس فاطمة رمضان|عربي|ar">مس فاطمة رمضان (لغة عربية)</option>
         <option value="teacher|مس فاطمة رمضان|دين|ar">مس فاطمة رمضان (تربية دينية)</option>
@@ -91,7 +91,7 @@
       <input type="password" id="passcode-input" placeholder="الرمز السري..." class="w-full p-2.5 border rounded-lg text-sm text-center mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
       
       <div class="flex gap-2">
-        <button onclick="handleLogin()" id="modal-login-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-sm">تسجيل الدخول</button>
+        <button onclick="handleLogin()" id="modal-login-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-sm">دخول</button>
         <button onclick="closeLoginModal()" id="modal-cancel-btn" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-lg text-sm">إلغاء</button>
       </div>
     </div>
@@ -254,7 +254,6 @@
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvaWh5dWFidGVjbmtsZ2J0emlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0Mzc3NDEsImV4cCI6MjEwODAxMzc0MX0.jW0SWGGnEBbdJXABiWJ5L0WM88rbHdfEdaNqG19X-CM";
     const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // كلمات المرور المنفصلة
     const PASSWORDS = {
       owner: "1111",
       admin: "4321",
@@ -264,8 +263,8 @@
     let currentUser = null;
 
     window.onload = () => {
-      // إزالة أي تعليق قديم والبدء دائمًا بالعربية
-      localStorage.clear();
+      // تفريغ أي ذاكرة قديمة نهائياً
+      try { localStorage.clear(); } catch(e){}
       setArabicUI();
       loadHomework();
     };
@@ -275,8 +274,12 @@
       document.getElementById('login-modal').classList.remove('hidden');
     }
 
+    // الدالة المسؤولة عن إغلاق النافذة بنجاح
     function closeLoginModal() {
-      document.getElementById('login-modal').classList.add('hidden');
+      const modal = document.getElementById('login-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+      }
     }
 
     function handleLogin() {
@@ -284,9 +287,9 @@
       const val = document.getElementById('user-role-select').value.split('|');
       
       const roleType = val[0];  // owner, admin, teacher
-      const name = val[1];      // الاسم
-      const extra = val[2];     // المادة أو الوصف
-      const lang = val[3];      // ar أو en
+      const name = val[1];      
+      const extra = val[2];     
+      const lang = val[3];      
 
       if (pass !== PASSWORDS[roleType]) {
         alert(lang === 'en' ? 'Incorrect passcode!' : 'الرمز السري غير صحيح!');
@@ -294,8 +297,12 @@
       }
 
       currentUser = { roleType, name, extra, lang };
-      applyUserDashboard();
+      
+      // إغلاق النافذة أولاً فوراً بدون أي تأخير!
       closeLoginModal();
+      
+      // تطبيق لوحة التحكم
+      applyUserDashboard();
     }
 
     function logoutUser() {
@@ -324,7 +331,6 @@
       quizCard.classList.remove('hidden');
       quizCard.classList.add('flex');
 
-      // تمييز الألوان والأسماء حسب الرتبة
       if (currentUser.roleType === 'owner') {
         badge.className = "text-xs bg-purple-600 text-white font-bold px-3 py-1.5 rounded-xl shadow";
         badge.textContent = `👑 مالك المنصة: ${currentUser.name}`;
@@ -402,7 +408,7 @@
       document.getElementById('site-title').textContent = "منصة 6A 2027 الرسمية";
       document.getElementById('badge-official').textContent = "النسخة الرسمية 6A";
       document.getElementById('site-subtitle').textContent = "المنصة الرسمية الموحدة للفصل • المعلمون • الطلاب • الإدارة";
-      document.getElementById('main-login-btn').textContent = "🔒 بوابة الدخول (المالك • الإدارة • المعلمون)";
+      document.getElementById('main-login-btn').textContent = "🔒 بوابة الدخول";
       document.getElementById('logout-btn').textContent = "خروج";
 
       document.getElementById('tab-homework').innerHTML = "📚 الواجبات";
