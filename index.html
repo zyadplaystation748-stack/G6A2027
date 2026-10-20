@@ -9,6 +9,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; }
+    
+    /* خلفية متدرجة ملكية متحركة */
+    .royal-animated-bg {
+      background: linear-gradient(-45deg, #0f172a, #312e81, #581c87, #1e1b4b);
+      background-size: 400% 400%;
+      animation: royalGradient 12s ease infinite;
+    }
+    @keyframes royalGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* توهج ذهبي نيون للمالك */
+    .neon-gold-border {
+      border: 3px solid #fbbf24;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.6), inset 0 0 15px rgba(251, 191, 36, 0.3);
+    }
+    .neon-gold-text {
+      text-shadow: 0 0 15px rgba(251, 191, 36, 0.8), 0 0 30px rgba(245, 158, 11, 0.6);
+    }
+
+    /* حركة التاج الملكي */
+    .crown-float {
+      animation: floatCrown 2.5s ease-in-out infinite;
+    }
+    @keyframes floatCrown {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(3deg); }
+    }
+
     .tab-btn.active {
       background-color: #2563eb;
       color: white;
@@ -18,8 +49,15 @@
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-300">
 
+  <!-- إشعار المالك الملوكي الترحيبي (يظهر عند تسجيلك بـ 1111) -->
+  <div id="owner-welcome-bar" style="display: none;" class="bg-gradient-to-r from-amber-500 via-purple-600 to-amber-500 text-white py-2 px-4 text-center font-black text-sm tracking-wide shadow-xl flex items-center justify-center gap-2">
+    <span class="text-xl crown-float">👑</span>
+    <span>نظام المالك نشط: مرحباً بك يا فخامة المالك والمطور الأسطوري زياد محمد فتوح!</span>
+    <span class="text-xl crown-float">👑</span>
+  </div>
+
   <!-- Header -->
-  <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg">
+  <header id="main-header" class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg transition-all duration-500">
     <div class="max-w-5xl mx-auto px-4 py-6">
       <div class="flex justify-between items-center mb-4">
         <span id="badge-official" class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">النسخة الرسمية 6A</span>
@@ -54,7 +92,7 @@
         💬 جملة من كل واحد
       </button>
       <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        👤 بروفايلك ورتبتك
+        👑 بروفايل المالك والرتب
       </button>
       <button onclick="switchTab('feedback')" id="tab-feedback" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
         💡 الآراء والتحسينات
@@ -200,24 +238,89 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges -->
+    <!-- 4. Profile & Badges (البروفايل الملوكي الأسطوري) -->
     <section id="section-profile" class="space-y-6 hidden">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center">
-        <div class="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto text-3xl font-black mb-3">
-          🎖️
-        </div>
-        <h2 id="profile-heading" class="text-xl font-black text-slate-800">أعضاء ورتب فصل 6A</h2>
-        <p id="profile-subheading" class="text-xs text-slate-500 mt-1">الرتب والتقديرات المعتمدة لجميع أبطال الفصل</p>
+      
+      <!-- كارت المالك الملوكي الخارق -->
+      <div class="relative royal-animated-bg rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-purple-500/30">
+        
+        <!-- نجوم وإضاءات خلفية -->
+        <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-purple-500/30 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="mt-8 border-t pt-4 text-start max-w-lg mx-auto">
-          <h4 id="roles-title" class="text-sm font-bold text-slate-600 mb-3">دليل الرتب في المنصة:</h4>
-          <div class="flex flex-wrap gap-2 text-xs">
-            <span class="bg-purple-100 text-purple-800 px-3 py-1.5 rounded-full font-bold">👑 مالك المنصة (زياد محمد فتوح)</span>
-            <span class="bg-red-100 text-red-800 px-3 py-1.5 rounded-full font-bold">🏛️ إدارة المدرسة والناظر</span>
-            <span class="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full font-bold">👨‍🏫 السادة المعلمون</span>
-            <span class="bg-amber-100 text-amber-800 px-3 py-1.5 rounded-full font-bold">⭐ عضو مميز</span>
-            <span class="bg-yellow-100 text-yellow-800 px-3 py-1.5 rounded-full font-bold">🥇 عضو ذهبي</span>
-            <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-full font-bold">🌱 طلاب 6A الأعزاء</span>
+        <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
+          
+          <!-- صورة البروفايل الملكية مع التاج النيون -->
+          <div class="relative group">
+            <div class="absolute -top-7 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
+              👑
+            </div>
+            <div class="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden neon-gold-border bg-slate-900 flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition duration-300">
+              <!-- لقطة أسطورية من الفيديو بجودة عالية -->
+              <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop" alt="Zyad Profile" class="w-full h-full object-cover">
+            </div>
+            <span class="absolute bottom-1 right-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
+              OWNER ⚡
+            </span>
+          </div>
+
+          <!-- تفاصيل وهوية المالك -->
+          <div class="flex-1 space-y-2">
+            <div class="inline-flex items-center gap-2 bg-amber-400/20 text-amber-300 px-3 py-1 rounded-full text-xs font-bold border border-amber-400/30">
+              <span>🌟 مؤسس ومبرمج المنصة الرسمية</span>
+            </div>
+            <h2 class="text-2xl md:text-4xl font-black tracking-wide text-white">
+              زياد محمد فتوح <span class="text-amber-400 neon-gold-text">#1</span>
+            </h2>
+            <p class="text-slate-300 text-xs md:text-sm font-medium leading-relaxed max-w-xl">
+              المطور والمالك الحصري لمنصة 6A 2027 • صاحب الصلاحيات المطلقة • "نلعب لنتصدر، ونبني لنبهر العالم!" ⚽🔥
+            </p>
+            
+            <!-- أوسمة وشارات المالك -->
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
+              <span class="bg-purple-900/60 border border-purple-400/40 text-purple-200 text-[11px] font-bold px-3 py-1 rounded-lg backdrop-blur">
+                🛡️ رتبة: Platform Emperor
+              </span>
+              <span class="bg-amber-900/60 border border-amber-400/40 text-amber-200 text-[11px] font-bold px-3 py-1 rounded-lg backdrop-blur">
+                ⚡ Passcode: 1111 VIP
+              </span>
+              <span class="bg-emerald-900/60 border border-emerald-400/40 text-emerald-200 text-[11px] font-bold px-3 py-1 rounded-lg backdrop-blur">
+                🚀 Server Status: Ultra Active
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دليل الرتب الرسمية للفصل -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <h3 id="roles-title" class="text-base font-black text-slate-800 mb-3 flex items-center gap-2">
+          <span>🎖️ الهيكل الرسمي للرتب في المنصة:</span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+          <div class="p-3 bg-purple-50 rounded-xl border border-purple-200">
+            <span class="font-black text-purple-900 block text-sm mb-0.5">👑 مالك ومطور المنصة</span>
+            <span class="text-purple-700">زياد محمد فتوح (صلاحيات كاملة)</span>
+          </div>
+          <div class="p-3 bg-red-50 rounded-xl border border-red-200">
+            <span class="font-black text-red-900 block text-sm mb-0.5">🏛️ إدارة المدرسة والناظر</span>
+            <span class="text-red-700">الإشراف الإداري والأكاديمي</span>
+          </div>
+          <div class="p-3 bg-blue-50 rounded-xl border border-blue-200">
+            <span class="font-black text-blue-900 block text-sm mb-0.5">👨‍🏫 أعضاء هيئة التدريس</span>
+            <span class="text-blue-700">معلمو الـ 8 مواد المعتمدة</span>
+          </div>
+          <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
+            <span class="font-black text-amber-900 block text-sm mb-0.5">⭐ الأعضاء المميزون</span>
+            <span class="text-amber-700">أوائل الفصل والمشاركون الفعالون</span>
+          </div>
+          <div class="p-3 bg-yellow-50 rounded-xl border border-yellow-200">
+            <span class="font-black text-yellow-900 block text-sm mb-0.5">🥇 الرتبة الذهبية</span>
+            <span class="text-yellow-700">نجوم الأنشطة والتحديات</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="font-black text-slate-800 block text-sm mb-0.5">🌱 طلاب 6A الأعزاء</span>
+            <span class="text-slate-600">أبطال دفعة 2027</span>
           </div>
         </div>
       </div>
@@ -263,7 +366,6 @@
     let currentUser = null;
 
     window.onload = () => {
-      // تفريغ أي كاش قديم للبدء دائما كطالب عربي
       try { localStorage.clear(); } catch(e){}
       setArabicUI();
       loadHomework();
@@ -293,18 +395,12 @@
         return;
       }
 
-      // إخفاء فوري للنافذة
       closeLoginModal();
-
-      // تعيين المستخدم النشط
       currentUser = { roleType, name, extra, lang };
       
-      // ضبط الفلتر تلقائياً حسب مادة المعلم
       if (roleType === 'teacher') {
         const filterDropdown = document.getElementById('hw-filter');
-        if (filterDropdown) {
-          filterDropdown.value = extra;
-        }
+        if (filterDropdown) filterDropdown.value = extra;
       }
 
       applyUserDashboard();
@@ -317,8 +413,11 @@
       document.getElementById('main-login-btn').style.display = 'inline-flex';
       document.getElementById('hw-input-card').style.display = 'none';
       document.getElementById('quiz-input-card').style.display = 'none';
+      document.getElementById('owner-welcome-bar').style.display = 'none';
       
-      // تفريغ البيانات وإعادة الفلتر للكل
+      // إعادة الهيدر للوضع الافتراضي
+      document.getElementById('main-header').className = "bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg transition-all duration-500";
+
       document.getElementById('passcode-input').value = '';
       document.getElementById('hw-title').value = '';
       document.getElementById('quiz-title').value = '';
@@ -342,20 +441,26 @@
       quizCard.style.display = 'flex';
 
       if (currentUser.roleType === 'owner') {
-        badge.className = "text-xs bg-purple-600 text-white font-bold px-3 py-1.5 rounded-xl shadow";
+        badge.className = "text-xs bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl shadow-lg border border-amber-300";
         badge.textContent = `👑 مالك المنصة: ${currentUser.name}`;
         document.getElementById('hw-subject').value = "عام / المنصة";
         document.getElementById('quiz-subject').value = "عام";
+        
+        // تفعيل النمط الملوكي في الهيدر والبانر
+        document.getElementById('owner-welcome-bar').style.display = 'flex';
+        document.getElementById('main-header').className = "royal-animated-bg text-white shadow-2xl transition-all duration-500 border-b border-amber-400/40";
       } else if (currentUser.roleType === 'admin') {
         badge.className = "text-xs bg-red-600 text-white font-bold px-3 py-1.5 rounded-xl shadow";
         badge.textContent = `🏛️ ${currentUser.name}`;
         document.getElementById('hw-subject').value = "إدارة المدرسة";
         document.getElementById('quiz-subject').value = "إدارة";
+        document.getElementById('owner-welcome-bar').style.display = 'none';
       } else {
         badge.className = "text-xs bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-xl shadow";
         badge.textContent = currentUser.lang === 'en' ? `Teacher: ${currentUser.name} (${currentUser.extra})` : `المعلم: ${currentUser.name} (${currentUser.extra})`;
         document.getElementById('hw-subject').value = currentUser.extra;
         document.getElementById('quiz-subject').value = currentUser.extra;
+        document.getElementById('owner-welcome-bar').style.display = 'none';
       }
 
       if (currentUser.lang === 'en') {
@@ -379,7 +484,7 @@
       document.getElementById('tab-homework').innerHTML = "📚 Homework";
       document.getElementById('tab-quizzes').innerHTML = "📝 Quizzes & Schedule";
       document.getElementById('tab-quotes').innerHTML = "💬 Quotes Wall";
-      document.getElementById('tab-profile').innerHTML = "👤 Profiles & Badges";
+      document.getElementById('tab-profile').innerHTML = "👑 Owner Profile & Ranks";
       document.getElementById('tab-feedback').innerHTML = "💡 Feedback";
 
       document.getElementById('hw-list-heading').textContent = "Class Assignments:";
@@ -424,7 +529,7 @@
       document.getElementById('tab-homework').innerHTML = "📚 الواجبات";
       document.getElementById('tab-quizzes').innerHTML = "📝 الكويزات والجدول";
       document.getElementById('tab-quotes').innerHTML = "💬 جملة من كل واحد";
-      document.getElementById('tab-profile').innerHTML = "👤 بروفايلك ورتبتك";
+      document.getElementById('tab-profile').innerHTML = "👑 بروفايل المالك والرتب";
       document.getElementById('tab-feedback').innerHTML = "💡 الآراء والتحسينات";
 
       document.getElementById('hw-list-heading').textContent = "قائمة واجبات الفصل:";
