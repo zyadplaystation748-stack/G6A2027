@@ -70,17 +70,17 @@
       
       <select id="teacher-select" class="w-full p-2.5 border rounded-lg text-sm bg-white mb-3">
         <!-- English Dashboard Teachers -->
-        <option value="Science|Ms. Nourhan|en">مس نورهان (Science)</option>
-        <option value="English|Ms. Asmaa Yasser|en">مس أسماء ياسر (English)</option>
-        <option value="Math|Ms. Dina|en">مس دينا (Math)</option>
-        <option value="ICT|Ms. Samah|en">مس سماح (ICT)</option>
-        <option value="French|Ms. Yasmina|en">مس ياسمينا (French)</option>
+        <option value="Science|Ms. Nourhan|en">مس نورهان (Science) 🇺🇸</option>
+        <option value="English|Ms. Asmaa Yasser|en">مس أسماء ياسر (English) 🇺🇸</option>
+        <option value="Math|Ms. Dina|en">مس دينا (Math) 🇺🇸</option>
+        <option value="ICT|Ms. Samah|en">مس سماح (ICT) 🇺🇸</option>
+        <option value="French|Ms. Yasmina|en">مس ياسمينا (French) 🇫🇷</option>
         
         <!-- Arabic Dashboard Teachers -->
-        <option value="سوشيال|مستر أسامة|ar">مستر أسامة (الدراسات / سوشيال)</option>
-        <option value="عربي|مس فاطمة رمضان|ar">مس فاطمة رمضان (لغة عربية)</option>
-        <option value="دين|مس فاطمة رمضان|ar">مس فاطمة رمضان (تربية دينية)</option>
-        <option value="الإدارة|مالك المنصة وإدارة المدرسة|ar">مالك المنصة (زياد محمد فتوح) / الإدارة</option>
+        <option value="سوشيال|مستر أسامة|ar">مستر أسامة (الدراسات / سوشيال) 🇪🇬</option>
+        <option value="عربي|مس فاطمة رمضان|ar">مس فاطمة رمضان (لغة عربية) 🇪🇬</option>
+        <option value="دين|مس فاطمة رمضان|ar">مس فاطمة رمضان (تربية دينية) 🇪🇬</option>
+        <option value="الإدارة|مالك المنصة وإدارة المدرسة|ar">مالك المنصة (زياد محمد فتوح) / الإدارة 👑</option>
       </select>
 
       <input type="password" id="teacher-pass-input" placeholder="الرمز السري..." class="w-full p-2.5 border rounded-lg text-sm text-center mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
@@ -253,11 +253,20 @@
     let currentTeacher = null;
 
     window.onload = () => {
-      const saved = localStorage.getItem('teacherSession');
-      if (saved) {
-        currentTeacher = JSON.parse(saved);
-        applySessionLanguage();
-      } else {
+      // تنظيف أي بيانات قديمة إذا كانت غير متوافقة
+      try {
+        const saved = localStorage.getItem('teacherSession');
+        if (saved) {
+          currentTeacher = JSON.parse(saved);
+          if (currentTeacher && currentTeacher.lang) {
+            applySessionLanguage();
+          } else {
+            logoutTeacher();
+          }
+        } else {
+          setArabicUI();
+        }
+      } catch (e) {
         setArabicUI();
       }
       loadHomework();
@@ -274,7 +283,7 @@
     function loginTeacher() {
       const pass = document.getElementById('teacher-pass-input').value.trim();
       if (pass !== PASSCODE) {
-        alert(currentTeacher && currentTeacher.lang === 'en' ? 'Invalid passcode!' : 'الرمز السري غير صحيح!');
+        alert('الرمز السري غير صحيح!');
         return;
       }
 
@@ -292,6 +301,7 @@
 
     function logoutTeacher() {
       localStorage.removeItem('teacherSession');
+      localStorage.removeItem('isTeacher');
       currentTeacher = null;
       document.getElementById('teacher-badge-container').classList.add('hidden');
       document.getElementById('teacher-login-btn').classList.remove('hidden');
@@ -299,7 +309,6 @@
       document.getElementById('teacher-quiz-card').classList.add('hidden');
       document.getElementById('teacher-quiz-card').classList.remove('flex');
       
-      // الرجوع للغة العربية للطلاب
       setArabicUI();
       loadHomework();
     }
@@ -329,7 +338,6 @@
       }
     }
 
-    // واجهة اللغة الإنجليزية الكاملة (للمعلمين المحددين)
     function setEnglishUI() {
       const root = document.getElementById('html-root');
       root.setAttribute('lang', 'en');
@@ -379,7 +387,6 @@
       document.getElementById('fb-loading-text').textContent = "Loading feedback...";
     }
 
-    // واجهة اللغة العربية الكاملة (الأساسية للطلاب والمواد العربية)
     function setArabicUI() {
       const root = document.getElementById('html-root');
       root.setAttribute('lang', 'ar');
@@ -498,115 +505,3 @@
       const container = document.getElementById('quizzes-list');
       const { data } = await client.from('quizzes').select('*').order('quiz_date', { ascending: true });
       const isEn = currentTeacher && currentTeacher.lang === 'en';
-
-      if (!data || data.length === 0) {
-        container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No quizzes scheduled 🎉' : 'لا توجد كويزات مسجلة حالياً 🎉'}</div>`;
-        return;
-      }
-      container.innerHTML = data.map(qz => `
-        <div class="flex justify-between items-center p-3 bg-red-50 rounded-xl border border-red-100">
-          <div>
-            <span class="font-bold text-slate-800 text-sm block">${qz.title} (${qz.subject})</span>
-            <span class="text-xs text-red-600 font-semibold">${isEn ? 'Date: ' : 'الميعاد: '}${qz.quiz_date}</span>
-          </div>
-          <span class="bg-red-200 text-red-800 text-xs px-2 py-1 rounded font-bold">${isEn ? 'Quiz' : 'كويز'}</span>
-        </div>
-      `).join('');
-    }
-
-    async function addQuiz() {
-      if (!currentTeacher) return alert('هذه الخاصية للمعلمين فقط');
-      const title = document.getElementById('quiz-title').value.trim();
-      const date = document.getElementById('quiz-date').value;
-
-      if (!title || !date) return alert(currentTeacher.lang === 'en' ? 'Please fill all quiz fields' : 'يرجى ملء جميع بيانات الكويز');
-
-      await client.from('quizzes').insert([{
-        title: title,
-        subject: currentTeacher.subject,
-        quiz_date: date
-      }]);
-
-      document.getElementById('quiz-title').value = '';
-      document.getElementById('quiz-date').value = '';
-      loadQuizzes();
-      alert(currentTeacher.lang === 'en' ? 'Quiz added successfully!' : 'تمت إضافة الكويز بنجاح!');
-    }
-
-    async function loadQuotes() {
-      const container = document.getElementById('quotes-list');
-      const { data } = await client.from('quotes').select('*').order('id', { ascending: false });
-      const isEn = currentTeacher && currentTeacher.lang === 'en';
-
-      if (!data || data.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'Be the first to post a quote!' : 'كن أول من يترك جملة تذكارية!'}</div>`;
-        return;
-      }
-      container.innerHTML = data.map(q => `
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
-          <p class="text-slate-700 text-sm font-semibold mb-3 relative z-10 leading-relaxed">“${q.quote_text}”</p>
-          <div class="flex justify-between items-center text-xs border-t pt-2 text-slate-500">
-            <span class="font-bold text-slate-800">${q.author_name}</span>
-            <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">${q.role}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    async function addQuote() {
-      const author = document.getElementById('quote-author').value.trim();
-      const role = document.getElementById('quote-role').value;
-      const text = document.getElementById('quote-text').value.trim();
-
-      if (!author || !text) return alert(currentTeacher && currentTeacher.lang === 'en' ? 'Please fill your name and quote' : 'يرجى كتابة اسمك وجملتك أولاً');
-
-      await client.from('quotes').insert([{
-        author_name: author,
-        role: role,
-        quote_text: text
-      }]);
-
-      document.getElementById('quote-text').value = '';
-      loadQuotes();
-    }
-
-    async function loadFeedback() {
-      const container = document.getElementById('feedback-list');
-      const { data } = await client.from('feedback').select('*').order('id', { ascending: false });
-      const isEn = currentTeacher && currentTeacher.lang === 'en';
-
-      if (!data || data.length === 0) {
-        container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No feedback yet.' : 'لا توجد ملاحظات بعد.'}</div>`;
-        return;
-      }
-      container.innerHTML = data.map(f => `
-        <div class="bg-white p-4 rounded-xl border border-slate-200">
-          <div class="flex justify-between text-xs mb-1">
-            <span class="font-bold text-slate-700">${f.user_name}</span>
-            <span class="text-indigo-600 font-semibold">${f.type}</span>
-          </div>
-          <p class="text-xs text-slate-600">${f.message}</p>
-        </div>
-      `).join('');
-    }
-
-    async function addFeedback() {
-      const user = document.getElementById('fb-user').value.trim() || 'Class Member';
-      const type = document.getElementById('fb-type').value;
-      const text = document.getElementById('fb-text').value.trim();
-
-      if (!text) return alert(currentTeacher && currentTeacher.lang === 'en' ? 'Please enter your note' : 'يرجى كتابة الملاحظة');
-
-      await client.from('feedback').insert([{
-        user_name: user,
-        type: type,
-        message: text
-      }]);
-
-      document.getElementById('fb-text').value = '';
-      loadFeedback();
-      alert(currentTeacher && currentTeacher.lang === 'en' ? 'Feedback submitted successfully!' : 'تم إرسال الملاحظة بنجاح!');
-    }
-  </script>
-</body>
-</html>
