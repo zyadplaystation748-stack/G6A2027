@@ -10,7 +10,6 @@
   <style>
     body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
     
-    /* كانفاس الجزيئات المتحركة في الخلفية العامة */
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -21,7 +20,6 @@
       pointer-events: none;
     }
 
-    /* خلفية كارت البروفايل المتحركة الفخمة */
     .profile-animated-card {
       background: linear-gradient(125deg, #090d16, #1e1b4b, #311042, #0f172a, #1e1b4b);
       background-size: 300% 300%;
@@ -33,7 +31,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* كرات ضوئية متحركة داخل كارت البروفايل */
     .card-orb {
       position: absolute;
       border-radius: 50%;
@@ -46,7 +43,6 @@
       100% { transform: scale(1.3) translate(20px, -20px); opacity: 0.7; }
     }
 
-    /* الثيم الملوكي عند تفعيل رمز المالك */
     body.royal-mode {
       background: #020617 !important;
       color: #f8fafc !important;
@@ -98,17 +94,14 @@
 </head>
 <body id="body-root" class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-500">
 
-  <!-- كانفاس الأنيميشن التفاعلي -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- بنر ترحيب المالك -->
   <div id="owner-welcome-bar" style="display: none;" class="bg-gradient-to-r from-amber-500 via-purple-700 to-amber-500 text-white py-2 px-4 text-center font-black text-xs md:text-sm tracking-wide shadow-2xl items-center justify-center gap-2">
     <span class="text-xl crown-float">👑</span>
     <span>تم تفعيل النمط الملوكي الحصري: مرحباً بك يا فخامة المالك زياد محمد فتوح!</span>
     <span class="text-xl crown-float">👑</span>
   </div>
 
-  <!-- Header -->
   <header id="main-header" class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg transition-all duration-500">
     <div class="max-w-5xl mx-auto px-4 py-6">
       <div class="flex justify-between items-center mb-4">
@@ -131,7 +124,6 @@
       </div>
     </div>
     
-    <!-- Navigation Tabs -->
     <div class="max-w-5xl mx-auto px-4 flex overflow-x-auto gap-1 border-b border-blue-500/30">
       <button onclick="switchTab('homework')" id="tab-homework" class="tab-btn active px-5 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
         📚 الواجبات
@@ -151,7 +143,6 @@
     </div>
   </header>
 
-  <!-- Login Modal -->
   <div id="login-modal" style="display: none;" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white p-6 rounded-2xl max-w-sm w-full shadow-2xl border text-center">
       <h3 id="modal-title" class="text-lg font-bold text-slate-800 mb-2">🔐 تسجيل الدخول</h3>
@@ -179,7 +170,6 @@
     </div>
   </div>
 
-  <!-- Main Content -->
   <main class="max-w-5xl mx-auto p-4 md:p-6">
 
     <!-- 1. Homework -->
@@ -284,17 +274,14 @@
       </div>
     </section>
 
-    <!-- 4. Profile & Badges (بروفايل المالك مع أنيميشن مخصص داخل الكارت وشعار ملكي فخم) -->
+    <!-- 4. Profile & Badges -->
     <section id="section-profile" class="space-y-6 hidden">
       <div class="relative profile-animated-card rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/50">
-        
-        <!-- كرات نيون متحركة داخل خلفية الكارت -->
         <div class="card-orb w-64 h-64 bg-amber-500/25 top-[-20%] right-[-10%]"></div>
         <div class="card-orb w-72 h-72 bg-purple-600/35 bottom-[-30%] left-[-15%]"></div>
         <div class="card-orb w-48 h-48 bg-blue-500/20 top-[40%] left-[35%]"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
-          <!-- صورة الشعار الملكي الأسطوري المدمج -->
           <div class="relative group">
             <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-4xl crown-float filter drop-shadow">
               👑
@@ -313,12 +300,9 @@
                     <stop offset="100%" stop-color="#fef08a"/>
                   </linearGradient>
                 </defs>
-                <!-- درع المالك الفخم -->
                 <polygon points="60,10 100,28 88,85 60,110 32,85 20,28" fill="url(#shieldGrad)" stroke="#fef08a" stroke-width="2"/>
-                <!-- شعلة الطاقة المركزية -->
                 <path d="M60,30 Q75,55 60,78 Q45,55 60,30 Z" fill="url(#goldFlame)"/>
                 <circle cx="60" cy="55" r="7" fill="#ffffff" filter="drop-shadow(0 0 8px #fef08a)"/>
-                <!-- التاج الصغير الداخلي -->
                 <polygon points="48,70 54,64 60,70 66,64 72,70 70,75 50,75" fill="#fef08a"/>
               </svg>
             </div>
@@ -327,7 +311,6 @@
             </span>
           </div>
 
-          <!-- تفاصيل وهوية المالك -->
           <div class="flex-1 space-y-2">
             <div class="inline-flex items-center gap-2 bg-amber-400/20 text-amber-300 px-3 py-1 rounded-full text-xs font-bold border border-amber-400/30">
               <span>🌟 مؤسس ومبرمج المنصة الرسمية</span>
@@ -354,7 +337,6 @@
         </div>
       </div>
 
-      <!-- دليل الرتب -->
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
         <h3 id="roles-title" class="text-base font-black text-slate-800 mb-3 flex items-center gap-2">
           <span>🎖️ الهيكل الرسمي للرتب في المنصة:</span>
@@ -388,28 +370,62 @@
       </div>
     </section>
 
-    <!-- 5. Feedback -->
+    <!-- 5. Feedback (نظام البوستات التفاعلية وتصويت المفيد) -->
     <section id="section-feedback" class="hidden space-y-6">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-        <h2 id="feedback-heading" class="text-xl font-bold mb-2">💡 التحسينات والآراء</h2>
-        <p id="feedback-desc" class="text-xs text-slate-500 mb-4">صوتك مهم لتطوير المنصة باستمرار!</p>
-        <div class="space-y-3 bg-slate-50 p-4 rounded-xl border">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <input type="text" id="fb-user" placeholder="اسمك..." class="p-2.5 border rounded-lg text-sm bg-white">
-            <select id="fb-type" class="p-2.5 border rounded-lg text-sm bg-white">
-              <option value="اقتراح">✨ اقتراح فكرة جديدة / Feature</option>
-              <option value="عيب">⚠️ عيب أو مشكلة / Issue</option>
-              <option value="رأي">💬 كلمة وانطباع / Opinion</option>
-            </select>
+      <div class="bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+        <div class="relative z-10">
+          <h2 id="feedback-heading" class="text-2xl font-black mb-1 flex items-center gap-2">
+            <span>📢 منتدى المنشورات والآراء التفاعلية</span>
+          </h2>
+          <p id="feedback-desc" class="text-indigo-100 text-sm">شارك أفكارك وتجاربك كمنشور، وصوّت على آراء زملائك إذا كانت مفيدة!</p>
+        </div>
+      </div>
+
+      <!-- مربع إنشاء بوست جديد (Create Post Box) -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow">
+            ✍️
           </div>
-          <textarea id="fb-text" rows="3" placeholder="تفاصيل الملاحظة..." class="w-full p-2.5 border rounded-lg text-sm"></textarea>
-          <button id="fb-submit-btn" onclick="addFeedback()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg text-sm transition">
-            إرسال الملاحظة
+          <div>
+            <h3 class="font-black text-slate-800 text-sm">أنشئ منشوراً جديداً في المنتدى</h3>
+            <p class="text-slate-400 text-xs">اطرح اقتراحاً أو مشكلة وشاركها مع الجميع للتصويت عليها</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+          <input type="text" id="fb-user" placeholder="اسمك الكريم..." class="p-3 border rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition">
+          <select id="fb-type" class="p-3 border rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-bold">
+            <option value="اقتراح">💡 اقتراح فكرة جديدة (Feature Post)</option>
+            <option value="عيب">⚠️ بلاغ عن مشكلة فنية (Bug Report)</option>
+            <option value="رأي">💬 كلمة أو انطباع عام (General Post)</option>
+          </select>
+        </div>
+
+        <textarea id="fb-text" rows="3" placeholder="ما الذي يدور في ذهنك؟ اكتب المنشور هنا بالتفصيل..." class="w-full p-3.5 border rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition"></textarea>
+
+        <div class="flex justify-end">
+          <button id="fb-submit-btn" onclick="addFeedback()" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-black px-8 py-3 rounded-xl text-sm transition shadow-md flex items-center gap-2">
+            <span>📢 نشر البوست الآن</span>
           </button>
         </div>
       </div>
-      <div id="feedback-list" class="space-y-3">
-        <div class="text-center text-slate-400 py-4" id="fb-loading-text">جاري التحميل...</div>
+
+      <!-- فلاتر فرز البوستات -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-slate-600">فرز المنشورات:</span>
+          <button onclick="filterFeedback('all')" id="fb-filter-all" class="px-3 py-1.5 rounded-lg font-bold bg-indigo-600 text-white transition">جميع البوستات</button>
+          <button onclick="filterFeedback('اقتراح')" id="fb-filter-prop" class="px-3 py-1.5 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">💡 اقتراحات</button>
+          <button onclick="filterFeedback('عيب')" id="fb-filter-bug" class="px-3 py-1.5 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">⚠️ مشاكل</button>
+          <button onclick="filterFeedback('رأي')" id="fb-filter-op" class="px-3 py-1.5 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">💬 عام</button>
+        </div>
+        <span id="fb-count-badge" class="font-bold text-slate-400">جاري الحساب...</span>
+      </div>
+
+      <!-- قائمة المنشورات التفاعلية (Feed List) -->
+      <div id="feedback-list" class="space-y-4">
+        <div class="text-center text-slate-400 py-6" id="fb-loading-text">جاري تحميل المنشورات...</div>
       </div>
     </section>
   </main>
@@ -426,8 +442,9 @@
     };
 
     let currentUser = null;
+    let allFeedbackData = [];
+    let currentFeedbackFilter = 'all';
 
-    // محرك الأنيميشن الحي للخلفية المتحركة
     function initDynamicBackground() {
       const canvas = document.getElementById('bg-canvas');
       const ctx = canvas.getContext('2d');
@@ -618,11 +635,11 @@
       document.getElementById('quote-text').placeholder = "Write your memorable quote or word here...";
       document.getElementById('quote-submit-btn').textContent = "Post Quote to Wall ✨";
 
-      document.getElementById('feedback-heading').textContent = "💡 Feedback & Suggestions";
-      document.getElementById('feedback-desc').textContent = "Your opinion matters to improve the platform!";
+      document.getElementById('feedback-heading').textContent = "📢 Interactive Posts & Feedback";
+      document.getElementById('feedback-desc').textContent = "Share your ideas as posts and vote on whether they are helpful!";
       document.getElementById('fb-user').placeholder = "Your name...";
-      document.getElementById('fb-text').placeholder = "Detailed suggestion or issue...";
-      document.getElementById('fb-submit-btn').textContent = "Submit Feedback";
+      document.getElementById('fb-text').placeholder = "What is on your mind? Write details here...";
+      document.getElementById('fb-submit-btn').innerHTML = "<span>📢 Post Now</span>";
     }
 
     function setArabicUI() {
@@ -663,11 +680,11 @@
       document.getElementById('quote-text').placeholder = "اكتب جملتك التذكارية الوحيدة هنا...";
       document.getElementById('quote-submit-btn').textContent = "شارك جملتك على الحائط ✨";
 
-      document.getElementById('feedback-heading').textContent = "💡 التحسينات والآراء";
-      document.getElementById('feedback-desc').textContent = "صوتك مهم لتطوير المنصة باستمرار!";
-      document.getElementById('fb-user').placeholder = "اسمك...";
-      document.getElementById('fb-text').placeholder = "تفاصيل الملاحظة...";
-      document.getElementById('fb-submit-btn').textContent = "إرسال الملاحظة";
+      document.getElementById('feedback-heading').textContent = "📢 منتدى المنشورات والآراء التفاعلية";
+      document.getElementById('feedback-desc').textContent = "شارك أفكارك وتجاربك كمنشور، وصوّت على آراء زملائك إذا كانت مفيدة!";
+      document.getElementById('fb-user').placeholder = "اسمك الكريم...";
+      document.getElementById('fb-text').placeholder = "ما الذي يدور في ذهنك؟ اكتب المنشور هنا بالتفصيل...";
+      document.getElementById('fb-submit-btn').innerHTML = "<span>📢 نشر البوست الآن</span>";
     }
 
     function switchTab(tabName) {
@@ -906,44 +923,162 @@
       alert('✨ تم نشر جملتك التذكارية بنجاح!');
     }
 
-    // 4. التحسينات والآراء
+    // 4. نظام المنشورات التفاعلية وتصويت المفيد
     async function loadFeedback() {
       const container = document.getElementById('feedback-list');
       const { data, error } = await client.from('feedback').select('*').order('id', { ascending: false });
       const isEn = currentUser && currentUser.lang === 'en';
 
       if (error) {
-        container.innerHTML = `<div class="text-center text-red-400 py-4 text-sm">خطأ في التحميل: ${error.message}</div>`;
+        container.innerHTML = `<div class="text-center text-red-400 py-6 text-sm">خطأ في التحميل: ${error.message}</div>`;
         return;
       }
 
-      if (!data || data.length === 0) {
-        container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No feedback yet.' : 'لا توجد ملاحظات بعد.'}</div>`;
+      allFeedbackData = data || [];
+      renderFeedbackList();
+    }
+
+    function filterFeedback(type) {
+      currentFeedbackFilter = type;
+      
+      const buttons = {
+        'all': 'fb-filter-all',
+        'اقتراح': 'fb-filter-prop',
+        'عيب': 'fb-filter-bug',
+        'رأي': 'fb-filter-op'
+      };
+
+      Object.keys(buttons).forEach(k => {
+        const btn = document.getElementById(buttons[k]);
+        if (k === type) {
+          btn.className = "px-3 py-1.5 rounded-lg font-bold bg-indigo-600 text-white transition";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
+        }
+      });
+
+      renderFeedbackList();
+    }
+
+    function renderFeedbackList() {
+      const container = document.getElementById('feedback-list');
+      const countBadge = document.getElementById('fb-count-badge');
+      const isEn = currentUser && currentUser.lang === 'en';
+
+      let filtered = allFeedbackData;
+      if (currentFeedbackFilter !== 'all') {
+        filtered = allFeedbackData.filter(f => f.type === currentFeedbackFilter);
+      }
+
+      countBadge.textContent = `إجمالي المنشورات: ${filtered.length}`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="text-center text-slate-400 py-10 text-sm bg-white rounded-2xl border border-slate-200">${isEn ? 'No posts yet. Be the first to publish!' : 'لا توجد منشورات حتى الآن. كن أول من ينشر بوست!'}</div>`;
         return;
       }
 
-      container.innerHTML = data.map(f => `
-        <div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-start gap-3 transition">
-          <div class="flex-1">
-            <div class="flex items-center gap-2 text-xs mb-1">
-              <span class="font-bold text-slate-700">${f.user_name}</span>
-              <span class="text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded">${f.type}</span>
+      container.innerHTML = filtered.map(f => {
+        let typeBadge = "";
+        let avatarBg = "from-purple-500 to-indigo-600";
+
+        if (f.type === 'عيب') {
+          typeBadge = `<span class="bg-red-100 text-red-700 border border-red-200 px-2.5 py-1 rounded-md font-black text-xs flex items-center gap-1">⚠️ مشكلة / Bug</span>`;
+          avatarBg = "from-red-500 to-rose-600";
+        } else if (f.type === 'اقتراح') {
+          typeBadge = `<span class="bg-blue-100 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-md font-black text-xs flex items-center gap-1">💡 فكرة وتطوير</span>`;
+          avatarBg = "from-blue-500 to-cyan-600";
+        } else {
+          typeBadge = `<span class="bg-purple-100 text-purple-700 border border-purple-200 px-2.5 py-1 rounded-md font-black text-xs flex items-center gap-1">💬 عام / Post</span>`;
+          avatarBg = "from-purple-500 to-indigo-600";
+        }
+
+        const helpfulVotes = parseInt(localStorage.getItem(`fb_helpful_${f.id}`) || '0');
+        const unhelpfulVotes = parseInt(localStorage.getItem(`fb_unhelpful_${f.id}`) || '0');
+
+        return `
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition hover:shadow-md space-y-4">
+            <!-- رأس المنشور (Author Info & Delete) -->
+            <div class="flex justify-between items-start gap-2">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr ${avatarBg} text-white font-black flex items-center justify-center text-sm shadow">
+                  ${f.user_name.charAt(0)}
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-black text-slate-800 text-sm">${f.user_name}</span>
+                    ${typeBadge}
+                  </div>
+                  <span class="text-[11px] text-slate-400">منشور في منصة 6A • منشور عام</span>
+                </div>
+              </div>
+
+              <button onclick="deleteItem('feedback', ${f.id})" title="حذف المنشور" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+                🗑️
+              </button>
             </div>
-            <p class="text-xs text-slate-600 leading-relaxed">${f.message}</p>
+            
+            <!-- نص المنشور -->
+            <div class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50/70 p-4 rounded-xl border border-slate-100">
+              ${f.message}
+            </div>
+
+            <!-- أزرار تفاعل: مفيد ولا مش مفيد -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-slate-500">هل هذا المنشور مفيد؟</span>
+                
+                <button onclick="voteFeedback(${f.id}, 'helpful')" class="px-3 py-1.5 rounded-lg font-bold border transition flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100">
+                  <span>👍 مفيد</span>
+                  <span id="vote-helpful-${f.id}" class="bg-white px-1.5 py-0.5 rounded text-[11px] font-black">${helpfulVotes}</span>
+                </button>
+
+                <button onclick="voteFeedback(${f.id}, 'unhelpful')" class="px-3 py-1.5 rounded-lg font-bold border transition flex items-center gap-1.5 bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100">
+                  <span>👎 غير مفيد</span>
+                  <span id="vote-unhelpful-${f.id}" class="bg-white px-1.5 py-0.5 rounded text-[11px] font-black">${unhelpfulVotes}</span>
+                </button>
+              </div>
+
+              <span class="text-[11px] text-slate-400 font-semibold">بوست رقم #${f.id}</span>
+            </div>
           </div>
-          <button onclick="deleteItem('feedback', ${f.id})" title="حذف الرسالة" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
-            🗑️
-          </button>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    function voteFeedback(id, type) {
+      const userVoteKey = `voted_fb_${id}`;
+      const existingVote = localStorage.getItem(userVoteKey);
+
+      if (existingVote) {
+        alert('لقد قمت بالتصويت على هذا المنشور بالفعل!');
+        return;
+      }
+
+      if (type === 'helpful') {
+        const count = parseInt(localStorage.getItem(`fb_helpful_${id}`) || '0') + 1;
+        localStorage.setItem(`fb_helpful_${id}`, count);
+        const elem = document.getElementById(`vote-helpful-${id}`);
+        if (elem) elem.textContent = count;
+      } else {
+        const count = parseInt(localStorage.getItem(`fb_unhelpful_${id}`) || '0') + 1;
+        localStorage.setItem(`fb_unhelpful_${id}`, count);
+        const elem = document.getElementById(`vote-unhelpful-${id}`);
+        if (elem) elem.textContent = count;
+      }
+
+      localStorage.setItem(userVoteKey, type);
     }
 
     async function addFeedback() {
-      const user = document.getElementById('fb-user').value.trim() || 'Class Member';
+      const user = document.getElementById('fb-user').value.trim() || 'عضو في الفصل';
       const type = document.getElementById('fb-type').value;
       const text = document.getElementById('fb-text').value.trim();
 
-      if (!text) return alert(currentUser && currentUser.lang === 'en' ? 'Please enter your note' : 'يرجى كتابة الملاحظة');
+      if (!text) return alert(currentUser && currentUser.lang === 'en' ? 'Please enter post details' : 'يرجى كتابة تفاصيل المنشور أولاً');
+
+      const submitBtn = document.getElementById('fb-submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "<span>جاري النشر...</span>";
 
       const { error } = await client.from('feedback').insert([{
         user_name: user,
@@ -951,16 +1086,19 @@
         message: text
       }]);
 
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = "<span>📢 نشر البوست الآن</span>";
+
       if (error) {
-        return alert('حدث خطأ أثناء الإرسال: ' + error.message);
+        return alert('حدث خطأ أثناء نشر البوست: ' + error.message);
       }
 
       document.getElementById('fb-text').value = '';
       loadFeedback();
-      alert(currentUser && currentUser.lang === 'en' ? 'Feedback submitted successfully!' : 'تم إرسال الملاحظة بنجاح!');
+      alert(currentUser && currentUser.lang === 'en' ? 'Post published successfully!' : 'تم نشر البوست بنجاح في المنتدى!');
     }
 
-    // دالة الحذف العامة
+    // دالة الحذف الشاملة
     async function deleteItem(table, id) {
       if (!confirm('هل أنت متأكد من رغبتك في حذف هذا العنصر نهائياً؟')) return;
 
