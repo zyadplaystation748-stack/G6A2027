@@ -263,7 +263,7 @@
     let currentUser = null;
 
     window.onload = () => {
-      // تفريغ أي جلسة متخزنة نهائياً
+      // تفريغ أي كاش قديم للبدء دائما كطالب عربي
       try { localStorage.clear(); } catch(e){}
       setArabicUI();
       loadHomework();
@@ -298,7 +298,17 @@
 
       // تعيين المستخدم النشط
       currentUser = { roleType, name, extra, lang };
+      
+      // ضبط الفلتر تلقائياً حسب مادة المعلم
+      if (roleType === 'teacher') {
+        const filterDropdown = document.getElementById('hw-filter');
+        if (filterDropdown) {
+          filterDropdown.value = extra;
+        }
+      }
+
       applyUserDashboard();
+      loadHomework();
     }
 
     function logoutUser() {
@@ -308,10 +318,11 @@
       document.getElementById('hw-input-card').style.display = 'none';
       document.getElementById('quiz-input-card').style.display = 'none';
       
-      // تفريغ المدخلات
+      // تفريغ البيانات وإعادة الفلتر للكل
       document.getElementById('passcode-input').value = '';
       document.getElementById('hw-title').value = '';
       document.getElementById('quiz-title').value = '';
+      document.getElementById('hw-filter').value = 'all';
 
       setArabicUI();
       loadHomework();
