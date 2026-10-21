@@ -6,10 +6,29 @@
   <title id="site-title">منصة 6A 2027 الرسمية</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
-    
+    :root {
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --card-border: rgba(255, 255, 255, 0.08);
+    }
+
+    body.royal-mode {
+      --accent: #fbbf24;
+      --accent-glow: rgba(251, 191, 36, 0.4);
+      --card-border: rgba(251, 191, 36, 0.35);
+    }
+
+    body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+      background-color: #060913;
+      color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -20,156 +39,172 @@
       pointer-events: none;
     }
 
-    .profile-animated-card {
-      background: linear-gradient(125deg, #090d16, #1e1b4b, #311042, #0f172a, #1e1b4b);
-      background-size: 300% 300%;
-      animation: cardGradient 8s ease infinite;
-    }
-    @keyframes cardGradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .card-orb {
-      position: absolute;
+    /* تأثيرات الإضاءة الخلفية */
+    .ambient-light {
+      position: fixed;
       border-radius: 50%;
-      filter: blur(40px);
+      filter: blur(110px);
+      z-index: -1;
       pointer-events: none;
-      animation: pulseOrb 6s alternate infinite ease-in-out;
-    }
-    @keyframes pulseOrb {
-      0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
-      100% { transform: scale(1.3) translate(20px, -20px); opacity: 0.7; }
+      opacity: 0.35;
     }
 
-    body.royal-mode {
-      background: #020617 !important;
-      color: #f8fafc !important;
+    /* الكروت الزجاجية الحديثة */
+    .glass-card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    body.royal-mode .bg-white {
-      background: rgba(15, 23, 42, 0.85) !important;
-      border: 1px solid rgba(251, 191, 36, 0.45) !important;
-      color: #f8fafc !important;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    }
-    body.royal-mode input, body.royal-mode select, body.royal-mode textarea {
-      background: rgba(2, 6, 23, 0.9) !important;
-      color: #fef08a !important;
-      border-color: rgba(251, 191, 36, 0.5) !important;
-    }
-    body.royal-mode h2, body.royal-mode h3 {
-      color: #fef08a !important;
-    }
-    body.royal-mode #main-header {
-      background: linear-gradient(135deg, #020617, #3b0764, #1e1b4b) !important;
-      border-bottom: 2px solid #fbbf24;
-      box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+    .glass-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 15px 35px -5px var(--accent-glow);
+      transform: translateY(-2px);
     }
 
+    /* حقول الإدخال العصرية */
+    .cyber-input {
+      background: rgba(9, 13, 24, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #f8fafc;
+      transition: all 0.25s ease;
+    }
+    .cyber-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent-glow);
+      outline: none;
+    }
+    .cyber-input::placeholder {
+      color: #64748b;
+    }
+
+    /* شريط التنقل العائم */
+    .nav-pill {
+      color: #94a3b8;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+    .nav-pill:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .nav-pill.active {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.6);
+    }
+    body.royal-mode .nav-pill.active {
+      background: linear-gradient(135deg, #d97706, #b45309, #7c2d12);
+      border-color: #fbbf24;
+      color: #fef08a;
+      box-shadow: 0 8px 25px -4px rgba(251, 191, 36, 0.6);
+    }
+
+    /* أنيميشن التاج والحدود الذهبية */
     .neon-gold-border {
       border: 3px solid #fbbf24;
-      box-shadow: 0 0 25px rgba(251, 191, 36, 0.85), inset 0 0 12px rgba(251, 191, 36, 0.4);
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.7), inset 0 0 15px rgba(251, 191, 36, 0.3);
     }
     .crown-float {
       animation: floatCrown 2.5s ease-in-out infinite;
     }
     @keyframes floatCrown {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-7px) rotate(4deg); }
+      50% { transform: translateY(-7px) rotate(5deg); }
     }
 
-    .tab-btn.active {
-      background-color: #2563eb;
-      color: white;
-      border-bottom: 3px solid #1e3a8a;
-    }
-    body.royal-mode .tab-btn.active {
-      background-color: #7c3aed !important;
-      border-bottom: 3px solid #fbbf24 !important;
-      box-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
-    }
-
-    .game-cell {
-      aspect-ratio: 1 / 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      font-weight: 900;
-      border-radius: 1rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
-    }
-    .game-cell:hover {
-      background: #e0e7ff;
-      transform: scale(1.03);
+    .text-gradient-gold {
+      background: linear-gradient(to left, #fef08a, #f59e0b, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   </style>
 </head>
-<body id="body-root" class="bg-slate-100 min-h-screen text-slate-800 transition-all duration-500">
+<body id="body-root" class="min-h-screen selection:bg-indigo-500 selection:text-white">
 
+  <!-- خلفية النيون والنجوم المتحركة -->
   <canvas id="bg-canvas"></canvas>
+  <div class="ambient-light w-96 h-96 bg-indigo-600 top-[-10%] right-[-5%]"></div>
+  <div class="ambient-light w-96 h-96 bg-purple-600 bottom-[-10%] left-[-5%]"></div>
 
-  <div id="owner-welcome-bar" style="display: none;" class="bg-gradient-to-r from-amber-500 via-purple-700 to-amber-500 text-white py-2 px-4 text-center font-black text-xs md:text-sm tracking-wide shadow-2xl items-center justify-center gap-2">
+  <!-- شريط ترحيب المالك الحصري -->
+  <div id="owner-welcome-bar" style="display: none;" class="bg-gradient-to-r from-amber-500 via-yellow-600 to-amber-500 text-slate-950 py-2 px-4 text-center font-black text-xs md:text-sm tracking-wide shadow-2xl items-center justify-center gap-2 border-b border-yellow-300">
     <span class="text-xl crown-float">👑</span>
-    <span>تم تفعيل النمط الملوكي الحصري: مرحباً بك يا فخامة المالك زياد محمد فتوح!</span>
+    <span>تم تفعيل النمط الإمبراطوري الذهبي: أهلاً بك يا فخامة المالك زياد محمد فتوح!</span>
     <span class="text-xl crown-float">👑</span>
   </div>
 
-  <header id="main-header" class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg transition-all duration-500">
-    <div class="max-w-5xl mx-auto px-4 py-6">
-      <div class="flex justify-between items-center mb-4">
-        <span id="badge-official" class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">النسخة الرسمية 6A</span>
+  <!-- الهيدر الفخم -->
+  <header class="relative pt-6 pb-4 px-4">
+    <div class="max-w-5xl mx-auto">
+      
+      <!-- الشريط العلوي -->
+      <div class="flex justify-between items-center mb-8 glass-card px-4 py-3 rounded-2xl">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span id="badge-official" class="text-slate-200 text-xs font-black tracking-wide">النسخة الرسمية VIP • 6A</span>
+        </div>
         
         <div id="admin-status-area">
-          <button onclick="openLoginModal()" id="main-login-btn" class="text-xs bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1">
-            🔒 بوابة الدخول
+          <button onclick="openLoginModal()" id="main-login-btn" class="text-xs bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-slate-950 font-black px-4 py-2 rounded-xl transition shadow-lg flex items-center gap-1.5">
+            <span>🔐</span>
+            <span>بوابة الدخول</span>
           </button>
           <div id="logged-badge-container" style="display: none;" class="flex items-center gap-2">
-            <span id="logged-badge" class="text-xs text-white font-bold px-3 py-1.5 rounded-xl shadow"></span>
-            <button onclick="logoutUser()" id="logout-btn" class="text-xs bg-red-500 hover:bg-red-600 text-white px-2.5 py-1 rounded-lg font-bold">خروج</button>
+            <span id="logged-badge" class="text-xs font-black px-3 py-1.5 rounded-xl shadow"></span>
+            <button onclick="logoutUser()" id="logout-btn" class="text-xs bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/40 px-3 py-1.5 rounded-xl font-bold transition">خروج</button>
           </div>
         </div>
       </div>
 
-      <div class="text-center pb-2">
-        <h1 class="text-4xl md:text-5xl font-black tracking-wide drop-shadow-md">6A 2027</h1>
-        <p id="site-subtitle" class="text-blue-100 mt-1 text-sm font-medium">المنصة الرسمية الموحدة للفصل • المعلمون • الطلاب • الإدارة</p>
+      <!-- اللوجو والعنوان الرئيسي -->
+      <div class="text-center mb-8 relative">
+        <div class="inline-block px-4 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-bold mb-3">
+          ⚡ THE NEXT-GEN CLASS HUB
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black tracking-tight text-white drop-shadow-[0_5px_25px_rgba(99,102,241,0.5)]">
+          6A <span class="text-gradient-gold">2027</span>
+        </h1>
+        <p id="site-subtitle" class="text-slate-400 mt-2 text-xs md:text-sm font-semibold max-w-lg mx-auto">
+          المنصة الرقمية الموحدة لفصل 6A • تواصل أسرع • تنظيم أذكى • واجهة النخبة
+        </p>
       </div>
-    </div>
-    
-    <div class="max-w-5xl mx-auto px-4 flex overflow-x-auto gap-1 border-b border-blue-500/30">
-      <button onclick="switchTab('homework')" id="tab-homework" class="tab-btn active px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        📚 الواجبات
-      </button>
-      <button onclick="switchTab('quizzes')" id="tab-quizzes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        📝 الكويزات والجدول
-      </button>
-      <button onclick="switchTab('quotes')" id="tab-quotes" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        💬 جملة من كل واحد
-      </button>
-      <button onclick="switchTab('profile')" id="tab-profile" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        👑 بروفايل المالك والرتب
-      </button>
-      <button onclick="switchTab('feedback')" id="tab-feedback" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        💡 الآراء والتحسينات
-      </button>
-      <button onclick="switchTab('arcade')" id="tab-arcade" class="tab-btn bg-blue-800/40 text-blue-100 hover:bg-blue-800 px-4 py-3 font-bold rounded-t-lg transition flex items-center gap-2 whitespace-nowrap">
-        🎮 الألعاب والتصويت
-      </button>
+
+      <!-- شريط التنقل العائم (Floating Dock) -->
+      <nav class="glass-card p-2 rounded-2xl flex overflow-x-auto gap-1.5 justify-start md:justify-center max-w-3xl mx-auto">
+        <button onclick="switchTab('homework')" id="tab-homework" class="nav-pill active px-5 py-2.5 font-extrabold rounded-xl text-xs md:text-sm flex items-center gap-2 whitespace-nowrap">
+          📚 الواجبات
+        </button>
+        <button onclick="switchTab('quizzes')" id="tab-quizzes" class="nav-pill px-5 py-2.5 font-extrabold rounded-xl text-xs md:text-sm flex items-center gap-2 whitespace-nowrap">
+          📝 الكويزات والجدول
+        </button>
+        <button onclick="switchTab('quotes')" id="tab-quotes" class="nav-pill px-5 py-2.5 font-extrabold rounded-xl text-xs md:text-sm flex items-center gap-2 whitespace-nowrap">
+          💬 جملة من كل واحد
+        </button>
+        <button onclick="switchTab('profile')" id="tab-profile" class="nav-pill px-5 py-2.5 font-extrabold rounded-xl text-xs md:text-sm flex items-center gap-2 whitespace-nowrap">
+          👑 بروفايل المالك والرتب
+        </button>
+        <button onclick="switchTab('feedback')" id="tab-feedback" class="nav-pill px-5 py-2.5 font-extrabold rounded-xl text-xs md:text-sm flex items-center gap-2 whitespace-nowrap">
+          💡 منتدى الآراء
+        </button>
+      </nav>
+
     </div>
   </header>
 
-  <div id="login-modal" style="display: none;" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white p-6 rounded-2xl max-w-sm w-full shadow-2xl border text-center">
-      <h3 id="modal-title" class="text-lg font-bold text-slate-800 mb-2">🔐 تسجيل الدخول</h3>
-      <p id="modal-desc" class="text-xs text-slate-500 mb-3">اختر الحساب واكتب الرمز السري:</p>
+  <!-- نافذة تسجيل الدخول -->
+  <div id="login-modal" style="display: none;" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="glass-card p-6 rounded-3xl max-w-sm w-full text-center border border-indigo-500/30">
+      <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center mx-auto mb-3 text-2xl">
+        🔐
+      </div>
+      <h3 id="modal-title" class="text-lg font-black text-white mb-1">بوابة الدخول المعتمدة</h3>
+      <p id="modal-desc" class="text-xs text-slate-400 mb-4">اختر الحساب وأدخل الرمز السري الخاص بك:</p>
       
-      <select id="user-role-select" class="w-full p-2.5 border rounded-lg text-sm bg-white mb-3">
+      <select id="user-role-select" class="w-full p-3 rounded-xl text-xs font-bold cyber-input mb-3">
         <option value="owner|زياد محمد فتوح|عام|ar">👑 مالك المنصة (زياد محمد فتوح)</option>
         <option value="admin|إدارة المدرسة|إدارة|ar">🏛️ إدارة المدرسة والناظر</option>
         <option value="teacher|مس نورهان|Science|en">مس نورهان (Science)</option>
@@ -182,125 +217,131 @@
         <option value="teacher|مس فاطمة رمضان|دين|ar">مس فاطمة رمضان (تربية دينية)</option>
       </select>
 
-      <input type="password" id="passcode-input" placeholder="الرمز السري..." class="w-full p-2.5 border rounded-lg text-sm text-center mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
+      <input type="password" id="passcode-input" placeholder="الرمز السري..." class="w-full p-3 rounded-xl text-sm text-center font-black cyber-input mb-4">
       
       <div class="flex gap-2">
-        <button onclick="handleLogin()" id="modal-login-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-sm">دخول</button>
-        <button onclick="closeLoginModal()" id="modal-cancel-btn" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-lg text-sm">إلغاء</button>
+        <button onclick="handleLogin()" id="modal-login-btn" class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black py-2.5 rounded-xl text-xs transition shadow-lg">دخول</button>
+        <button onclick="closeLoginModal()" id="modal-cancel-btn" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2.5 rounded-xl text-xs transition">إلغاء</button>
       </div>
     </div>
   </div>
 
+  <!-- المحتوى الرئيسي -->
   <main class="max-w-5xl mx-auto p-4 md:p-6">
 
-    <!-- 1. Homework -->
+    <!-- 1. قسم الواجبات -->
     <section id="section-homework" class="space-y-6">
-      <div id="hw-input-card" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-blue-200">
-        <h2 id="hw-form-heading" class="text-xl font-bold text-slate-800 mb-2"></h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-          <input type="text" id="hw-title" placeholder="عنوان وتفاصيل الواجب..." class="p-2.5 rounded-lg border text-sm">
-          <input type="text" id="hw-subject" readonly class="p-2.5 rounded-lg border text-sm bg-slate-100 text-slate-700 font-bold">
-          <input type="date" id="hw-due" class="p-2.5 rounded-lg border text-sm">
-          <button id="hw-submit-btn" onclick="addHomework()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition">
-            + نشر الواجب
+      <div id="hw-input-card" style="display: none;" class="glass-card p-6 rounded-3xl">
+        <h2 id="hw-form-heading" class="text-lg font-black text-amber-400 mb-3"></h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <input type="text" id="hw-title" placeholder="عنوان وتفاصيل الواجب..." class="p-3 rounded-xl text-xs font-bold cyber-input">
+          <input type="text" id="hw-subject" readonly class="p-3 rounded-xl text-xs font-black cyber-input opacity-75">
+          <input type="date" id="hw-due" class="p-3 rounded-xl text-xs font-bold cyber-input">
+          <button id="hw-submit-btn" onclick="addHomework()" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black rounded-xl text-xs py-3 transition shadow-lg">
+            + نشر الواجب الآن
           </button>
         </div>
       </div>
 
-      <div class="flex items-center justify-between">
-        <h3 id="hw-list-heading" class="font-bold text-lg text-slate-800">قائمة واجبات الفصل:</h3>
-        <select id="hw-filter" onchange="loadHomework()" class="p-2 border rounded-lg text-xs bg-white">
-          <option value="all">كل المواد / All</option>
-          <option value="Science">Science</option>
-          <option value="English">English</option>
-          <option value="Math">Math</option>
-          <option value="ICT">ICT</option>
-          <option value="French">French</option>
-          <option value="سوشيال">سوشيال (دراسات)</option>
-          <option value="عربي">لغة عربية</option>
-          <option value="دين">تربية دينية</option>
-          <option value="عام">عام / المنصة</option>
+      <div class="flex flex-wrap items-center justify-between gap-3 glass-card px-5 py-3.5 rounded-2xl">
+        <h3 id="hw-list-heading" class="font-black text-base text-white flex items-center gap-2">
+          <span>📌</span>
+          <span>قائمة الواجبات الدراسية:</span>
+        </h3>
+        <select id="hw-filter" onchange="loadHomework()" class="p-2.5 rounded-xl text-xs font-bold cyber-input">
+          <option value="all">كل المواد / All Subjects</option>
+          <option value="Science">🔬 Science</option>
+          <option value="English">📖 English</option>
+          <option value="Math">📐 Math</option>
+          <option value="ICT">💻 ICT</option>
+          <option value="French">🗼 French</option>
+          <option value="سوشيال">🌍 سوشيال (دراسات)</option>
+          <option value="عربي">📚 لغة عربية</option>
+          <option value="دين">🌙 تربية دينية</option>
+          <option value="عام">⚡ عام / المنصة</option>
         </select>
       </div>
+
       <div id="homework-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="col-span-full text-center text-slate-400 py-6" id="hw-loading-text">جاري تحميل الواجبات...</div>
+        <div class="col-span-full text-center text-slate-400 py-10 glass-card rounded-3xl text-sm">جاري تحميل الواجبات...</div>
       </div>
     </section>
 
-    <!-- 2. Quizzes & Timetable -->
+    <!-- 2. قسم الكويزات والجدول -->
     <section id="section-quizzes" class="hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-4">
-          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-            <h3 id="quiz-section-heading" class="font-bold text-lg mb-3 text-red-600 flex items-center gap-2">
-              🚨 جدول الكويزات والاختبارات القصيرة
+          <div class="glass-card p-6 rounded-3xl">
+            <h3 id="quiz-section-heading" class="font-black text-lg mb-4 text-rose-400 flex items-center gap-2">
+              <span>🚨</span>
+              <span>جدول الكويزات والاختبارات القادمة</span>
             </h3>
             
-            <div id="quiz-input-card" style="display: none;" class="flex-wrap gap-2 mb-4 bg-red-50/50 p-3 rounded-xl border border-red-100">
-              <input type="text" id="quiz-title" placeholder="موضوع الكويز" class="p-2 border rounded-lg text-sm flex-1">
-              <input type="text" id="quiz-subject" readonly class="p-2 border rounded-lg text-sm w-32 bg-slate-100 text-slate-700 font-bold">
-              <input type="date" id="quiz-date" class="p-2 border rounded-lg text-sm">
-              <button id="quiz-submit-btn" onclick="addQuiz()" class="bg-red-600 hover:bg-red-700 text-white px-4 rounded-lg text-sm font-bold">إضافة</button>
+            <div id="quiz-input-card" style="display: none;" class="flex-wrap gap-2 mb-5 p-3.5 rounded-2xl bg-rose-950/30 border border-rose-500/30">
+              <input type="text" id="quiz-title" placeholder="موضوع الكويز..." class="p-2.5 rounded-xl text-xs font-bold cyber-input flex-1">
+              <input type="text" id="quiz-subject" readonly class="p-2.5 rounded-xl text-xs w-28 font-black cyber-input opacity-75">
+              <input type="date" id="quiz-date" class="p-2.5 rounded-xl text-xs font-bold cyber-input">
+              <button id="quiz-submit-btn" onclick="addQuiz()" class="bg-rose-600 hover:bg-rose-500 text-white px-5 py-2.5 rounded-xl text-xs font-black transition shadow">إضافة</button>
             </div>
 
-            <div id="quizzes-list" class="space-y-2">
-              <div class="text-center text-slate-400 py-4" id="quiz-loading-text">جاري التحميل...</div>
+            <div id="quizzes-list" class="space-y-3">
+              <div class="text-center text-slate-400 py-6 text-xs">جاري التحميل...</div>
             </div>
           </div>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+        <div class="glass-card p-6 rounded-3xl flex flex-col justify-between">
           <div>
-            <h3 id="schedule-card-title" class="font-bold text-lg mb-2 text-slate-800">📅 جدول الحصص الأسبوعي</h3>
-            <p id="schedule-card-desc" class="text-xs text-slate-500 mb-4">جدول الحصص المعتمد لفصل 6A متاح كملف رسمي.</p>
+            <h3 id="schedule-card-title" class="font-black text-lg mb-1 text-white">📅 جدول الحصص الأسبوعي</h3>
+            <p id="schedule-card-desc" class="text-xs text-slate-400 mb-5">الجدول الرسمي المعتمد لفصل 6A للعام الدراسي.</p>
           </div>
-          <div class="p-6 bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl text-center">
+          <div class="p-6 bg-slate-900/80 border border-indigo-500/30 rounded-2xl text-center space-y-2">
             <span class="text-4xl block mb-2">📑</span>
-            <span id="schedule-file-name" class="text-sm font-bold text-slate-700 block">جدول 6A - 2026/2027</span>
-            <span id="schedule-file-type" class="text-xs text-slate-400 block mb-3">صيغة PDF رسمية</span>
-            <button id="schedule-btn" onclick="alert('سيتم إضافة رابط الجدول قريباً!')" class="bg-slate-800 hover:bg-black text-white px-4 py-2 rounded-lg text-xs font-bold transition">
-              تحميل / فتح الجدول
+            <span id="schedule-file-name" class="text-sm font-black text-white block">جدول 6A - 2026/2027</span>
+            <span id="schedule-file-type" class="text-[11px] text-indigo-300 block pb-2">نسخة PDF عالية الجودة</span>
+            <button id="schedule-btn" onclick="alert('سيتم رفع ملف الجدول قريباً!')" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white py-2.5 rounded-xl text-xs font-black transition shadow-lg">
+              عرض / تحميل الجدول
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. Quotes Wall -->
+    <!-- 3. حائط جملة من كل واحد -->
     <section id="section-quotes" class="hidden space-y-6">
-      <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-6 rounded-2xl shadow-md">
-        <h2 id="quotes-banner-title" class="text-2xl font-black mb-1">🌟 حائط "جملة من كل واحد"</h2>
-        <p id="quotes-banner-desc" class="text-amber-100 text-sm">مساحة خاصة لكل عضو في الفصل ليترك ذكرى واحدة فقط خالدة!</p>
+      <div class="glass-card p-6 rounded-3xl bg-gradient-to-r from-amber-500/20 via-orange-600/20 to-rose-600/20 border-amber-500/30">
+        <h2 id="quotes-banner-title" class="text-2xl font-black text-amber-300 mb-1">🌟 حائط "جملة من كل واحد"</h2>
+        <p id="quotes-banner-desc" class="text-slate-300 text-xs md:text-sm">مساحة تاريخية لكل بطل في 6A ليترك كلمته التذكارية الخالدة!</p>
       </div>
 
-      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+      <div class="glass-card p-6 rounded-3xl space-y-3">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <input type="text" id="quote-author" placeholder="اسمك الكريم..." class="p-2.5 rounded-lg border text-sm">
-          <select id="quote-role" onchange="toggleQuotePasscode()" class="p-2.5 rounded-lg border text-sm bg-white">
-            <option value="طالب في 6A">طالب في 6A (بدون رمز)</option>
+          <input type="text" id="quote-author" placeholder="اسمك الكريم..." class="p-3 rounded-xl text-xs font-bold cyber-input">
+          <select id="quote-role" onchange="toggleQuotePasscode()" class="p-3 rounded-xl text-xs font-bold cyber-input">
+            <option value="طالب في 6A">🌱 طالب في 6A (بدون رمز)</option>
             <option value="مالك المنصة">👑 مالك المنصة (يتطلب رمزك)</option>
             <option value="إدارة المدرسة">🏛️ إدارة المدرسة (يتطلب رمز الإدارة)</option>
             <option value="معلم">👨‍🏫 معلم (يتطلب رمز المعلمين)</option>
           </select>
-          <input type="password" id="quote-pass" placeholder="الرمز السري للمنصب..." style="display: none;" class="p-2.5 rounded-lg border text-sm bg-amber-50 border-amber-300">
+          <input type="password" id="quote-pass" placeholder="الرمز السري للمنصب..." style="display: none;" class="p-3 rounded-xl text-xs font-black cyber-input border-amber-400">
         </div>
-        <textarea id="quote-text" rows="2" placeholder="اكتب جملتك التذكارية الوحيدة هنا..." class="w-full p-3 rounded-lg border text-sm"></textarea>
-        <button id="quote-submit-btn" onclick="addQuote()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 rounded-lg transition text-sm">
-          شارك جملتك على الحائط ✨
+        <textarea id="quote-text" rows="2" placeholder="اكتب جملتك التذكارية الوحيدة هنا..." class="w-full p-3.5 rounded-xl text-xs font-bold cyber-input"></textarea>
+        <button id="quote-submit-btn" onclick="addQuote()" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-lg">
+          ✨ تثبيت جملتك على الحائط الآن
         </button>
       </div>
 
       <div id="quotes-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="col-span-full text-center text-slate-400 py-6" id="quotes-loading-text">جاري التحميل...</div>
+        <div class="col-span-full text-center text-slate-400 py-8 glass-card rounded-3xl text-xs">جاري التحميل...</div>
       </div>
     </section>
 
-    <!-- 4. Profile & Badges -->
+    <!-- 4. بروفايل المالك والرتب التفاعلية -->
     <section id="section-profile" class="space-y-6 hidden">
+      <!-- بطاقة المالك الأسطورية -->
       <div class="relative profile-animated-card rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden border border-amber-400/50">
         <div class="card-orb w-64 h-64 bg-amber-500/25 top-[-20%] right-[-10%]"></div>
         <div class="card-orb w-72 h-72 bg-purple-600/35 bottom-[-30%] left-[-15%]"></div>
-        <div class="card-orb w-48 h-48 bg-blue-500/20 top-[40%] left-[35%]"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
           <div class="relative group">
@@ -345,438 +386,213 @@
 
           <div class="flex-1 space-y-2">
             <div class="inline-flex items-center gap-2 bg-amber-400/20 text-amber-300 px-3 py-1 rounded-full text-xs font-bold border border-amber-400/30">
-              <span>🌟 مؤسس ومبرمج المنصة الرسمية</span>
+              <span>🌟 مؤسس ومطور المنصة الرسمية</span>
             </div>
-            <h2 class="text-2xl md:text-4xl font-black tracking-wide text-white">
+            <h2 class="text-3xl md:text-4xl font-black tracking-wide text-white">
               زياد محمد فتوح <span class="text-amber-400">#1</span>
             </h2>
             <p class="text-slate-300 text-xs md:text-sm font-medium leading-relaxed max-w-xl">
-              المطور والمالك الحصري لمنصة 6A 2027 • صاحب الصلاحيات المطلقة • "نلعب لنتصدر، ونبني لنبهر العالم!" ⚽🔥
+              المالك الحصري لمنصة 6A 2027 • صاحب الصلاحيات المطلقة • "نلعب لنتصدر، ونبني لنبهر العالم!" ⚽🔥
             </p>
             
             <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
-              <span class="bg-purple-900/60 border border-purple-400/40 text-purple-200 text-[11px] font-bold px-3 py-1 rounded-lg backdrop-blur">
+              <span class="bg-purple-900/60 border border-purple-400/40 text-purple-200 text-[11px] font-bold px-3 py-1 rounded-xl">
                 🛡️ الرتبة: Platform Emperor
               </span>
-              <span class="bg-amber-900/60 border border-amber-400/40 text-amber-200 text-[11px] font-bold px-3 py-1 rounded-lg backdrop-blur">
+              <span class="bg-amber-900/60 border border-amber-400/40 text-amber-200 text-[11px] font-bold px-3 py-1 rounded-xl">
                 ⚡ الكود الأمني: #ZYAD-OWNER-01
               </span>
-              <span class="bg-emerald-900/60 border border-emerald-400/40 text-emerald-200 text-[11px] font-bold px-3 py-1 rounded-lg backdrop-blur">
-                🚀 حالة النظام: Ultra Active
+              <span class="bg-emerald-900/60 border border-emerald-400/40 text-emerald-200 text-[11px] font-bold px-3 py-1 rounded-xl">
+                🚀 حالة النظام: Ultra VIP
               </span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- دليل الرتب التفاعلي -->
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-        <h3 id="roles-title" class="text-base font-black text-slate-800 mb-3 flex items-center justify-between">
-          <span class="flex items-center gap-2">🎖️ الهيكل الرسمي للرتب وقوائم الأعضاء:</span>
-          <span class="text-xs text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg font-bold">اضغط على أي كارت لعرض الأسماء ▼</span>
-        </h3>
+      <!-- الهيكل الرسمي للرتب بالأسهم -->
+      <div class="glass-card p-6 rounded-3xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <h3 class="text-base md:text-lg font-black text-white flex items-center gap-2">
+            <span>🎖️</span>
+            <span>الهيكل الرسمي للرتب وأعضاء المنصة:</span>
+          </h3>
+          <span class="text-xs text-amber-300 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-xl font-bold">
+            اضغط على أي رتبة لفتح القائمة ▼
+          </span>
+        </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-          <div onclick="toggleRankList('rank-owner')" class="p-3.5 bg-purple-50 hover:bg-purple-100/70 rounded-xl border border-purple-200 transition cursor-pointer select-none">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 text-xs">
+          
+          <!-- 1. المالك -->
+          <div onclick="toggleRankList('rank-owner')" class="p-4 rounded-2xl bg-purple-950/40 hover:bg-purple-900/40 border border-purple-500/30 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
-                <span class="font-black text-purple-900 block text-sm mb-0.5">👑 مالك ومطور المنصة</span>
-                <span class="text-purple-700">صلاحيات النظام الكاملة</span>
+                <span class="font-black text-purple-300 block text-sm mb-0.5">👑 مالك ومطور المنصة</span>
+                <span class="text-slate-400 text-[11px]">صلاحيات النظام الكاملة</span>
               </div>
-              <span id="arrow-rank-owner" class="text-base font-black text-purple-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
+              <span id="arrow-rank-owner" class="text-sm font-black text-purple-300 bg-purple-500/20 px-2.5 py-1 rounded-lg">▼</span>
             </div>
-            <div id="list-rank-owner" class="hidden mt-3 pt-2.5 border-t border-purple-200 space-y-1">
-              <span class="block font-black text-purple-950 bg-white p-2 rounded-lg border border-purple-200 shadow-sm">👑 زياد محمد فتوح</span>
+            <div id="list-rank-owner" class="hidden mt-3 pt-3 border-t border-purple-500/30 space-y-1.5">
+              <span class="block font-black text-white bg-slate-900/90 p-2 rounded-xl border border-purple-500/30">👑 زياد محمد فتوح</span>
             </div>
           </div>
 
-          <div onclick="toggleRankList('rank-admin')" class="p-3.5 bg-red-50 hover:bg-red-100/70 rounded-xl border border-red-200 transition cursor-pointer select-none">
+          <!-- 2. إدارة المدرسة -->
+          <div onclick="toggleRankList('rank-admin')" class="p-4 rounded-2xl bg-rose-950/40 hover:bg-rose-900/40 border border-rose-500/30 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
-                <span class="font-black text-red-900 block text-sm mb-0.5">🏛️ إدارة المدرسة والناظر</span>
-                <span class="text-red-700">الإشراف الإداري والأكاديمي</span>
+                <span class="font-black text-rose-300 block text-sm mb-0.5">🏛️ إدارة المدرسة والناظر</span>
+                <span class="text-slate-400 text-[11px]">الإشراف الإداري والأكاديمي</span>
               </div>
-              <span id="arrow-rank-admin" class="text-base font-black text-red-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
+              <span id="arrow-rank-admin" class="text-sm font-black text-rose-300 bg-rose-500/20 px-2.5 py-1 rounded-lg">▼</span>
             </div>
-            <div id="list-rank-admin" class="hidden mt-3 pt-2.5 border-t border-red-200 space-y-1.5">
-              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">👩‍💼 مس رحاب (المديرة)</span>
-              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">👨‍💼 مستر سعد (الناظر)</span>
-              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">👩‍💼 مس إيمان (ناظر)</span>
-              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">🩺 مس نيرفانا الهليلي (أخصائي)</span>
-              <span class="block font-bold text-red-950 bg-white p-1.5 rounded-lg border border-red-200">🩺 مستر أحمد (أخصائي)</span>
+            <div id="list-rank-admin" class="hidden mt-3 pt-3 border-t border-rose-500/30 space-y-1.5">
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-rose-500/20">👩‍💼 مس رحاب (المديرة)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-rose-500/20">👨‍💼 مستر سعد (الناظر)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-rose-500/20">👩‍💼 مس إيمان (ناظر)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-rose-500/20">🩺 مس نيرفانا الهليلي (أخصائي)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-rose-500/20">🩺 مستر أحمد (أخصائي)</span>
             </div>
           </div>
 
-          <div onclick="toggleRankList('rank-teachers')" class="p-3.5 bg-blue-50 hover:bg-blue-100/70 rounded-xl border border-blue-200 transition cursor-pointer select-none">
+          <!-- 3. أعضاء هيئة التدريس -->
+          <div onclick="toggleRankList('rank-teachers')" class="p-4 rounded-2xl bg-blue-950/40 hover:bg-blue-900/40 border border-blue-500/30 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
-                <span class="font-black text-blue-900 block text-sm mb-0.5">👨‍🏫 أعضاء هيئة التدريس</span>
-                <span class="text-blue-700">معلمو الـ 8 مواد المعتمدة</span>
+                <span class="font-black text-blue-300 block text-sm mb-0.5">👨‍🏫 أعضاء هيئة التدريس</span>
+                <span class="text-slate-400 text-[11px]">معلمو الـ 8 مواد المعتمدة</span>
               </div>
-              <span id="arrow-rank-teachers" class="text-base font-black text-blue-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
+              <span id="arrow-rank-teachers" class="text-sm font-black text-blue-300 bg-blue-500/20 px-2.5 py-1 rounded-lg">▼</span>
             </div>
-            <div id="list-rank-teachers" class="hidden mt-3 pt-2.5 border-t border-blue-200 space-y-1.5">
-              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">🔬 مس نورهان (Science)</span>
-              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">📖 مس أسماء ياسر (English)</span>
-              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">📐 مس دينا (Math)</span>
-              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">💻 مس سماح (ICT)</span>
-              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">🗼 مس ياسمينا (French)</span>
-              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">🌍 مستر أسامة (الدراسات / سوشيال)</span>
-              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">📚 مس فاطمة رمضان (لغة عربية)</span>
-              <span class="block font-bold text-blue-950 bg-white p-1.5 rounded-lg border border-blue-200">🌙 مس فاطمة رمضان (تربية دينية)</span>
+            <div id="list-rank-teachers" class="hidden mt-3 pt-3 border-t border-blue-500/30 space-y-1.5">
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-blue-500/20">🔬 مس نورهان (Science)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-blue-500/20">📖 مس أسماء ياسر (English)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-blue-500/20">📐 مس دينا (Math)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-blue-500/20">💻 مس سماح (ICT)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-blue-500/20">🗼 مس ياسمينا (French)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-blue-500/20">🌍 مستر أسامة (الدراسات / سوشيال)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-blue-500/20">📚 مس فاطمة رمضان (لغة عربية)</span>
+              <span class="block font-bold text-slate-100 bg-slate-900/90 p-2 rounded-xl border border-blue-500/20">🌙 مس فاطمة رمضان (تربية دينية)</span>
             </div>
           </div>
 
-          <div onclick="toggleRankList('rank-top')" class="p-3.5 bg-amber-50 hover:bg-amber-100/70 rounded-xl border border-amber-200 transition cursor-pointer select-none">
+          <!-- 4. التوب (The Top) -->
+          <div onclick="toggleRankList('rank-top')" class="p-4 rounded-2xl bg-amber-950/40 hover:bg-amber-900/40 border border-amber-500/30 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
-                <span class="font-black text-amber-900 block text-sm mb-0.5">🏆 التوب (The Top)</span>
-                <span class="text-amber-700">صدارة الفصل وأعلى أداء</span>
+                <span class="font-black text-amber-300 block text-sm mb-0.5">🏆 التوب (The Top)</span>
+                <span class="text-slate-400 text-[11px]">صدارة الفصل وأعلى أداء</span>
               </div>
-              <span id="arrow-rank-top" class="text-base font-black text-amber-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
+              <span id="arrow-rank-top" class="text-sm font-black text-amber-300 bg-amber-500/20 px-2.5 py-1 rounded-lg">▼</span>
             </div>
-            <div id="list-rank-top" class="hidden mt-3 pt-2.5 border-t border-amber-200 space-y-1.5">
-              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 ديما</span>
-              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 كارما</span>
-              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 آدم</span>
-              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 علوش</span>
-              <span class="block font-black text-amber-950 bg-white p-1.5 rounded-lg border border-amber-200">🌟 آسر</span>
+            <div id="list-rank-top" class="hidden mt-3 pt-3 border-t border-amber-500/30 space-y-1.5">
+              <span class="block font-black text-amber-200 bg-slate-900/90 p-2 rounded-xl border border-amber-500/20">🌟 ديما</span>
+              <span class="block font-black text-amber-200 bg-slate-900/90 p-2 rounded-xl border border-amber-500/20">🌟 كارما</span>
+              <span class="block font-black text-amber-200 bg-slate-900/90 p-2 rounded-xl border border-amber-500/20">🌟 آدم</span>
+              <span class="block font-black text-amber-200 bg-slate-900/90 p-2 rounded-xl border border-amber-500/20">🌟 علوش</span>
+              <span class="block font-black text-amber-200 bg-slate-900/90 p-2 rounded-xl border border-amber-500/20">🌟 آسر</span>
             </div>
           </div>
 
-          <div onclick="toggleRankList('rank-gold')" class="p-3.5 bg-yellow-50 hover:bg-yellow-100/70 rounded-xl border border-yellow-200 transition cursor-pointer select-none">
+          <!-- 5. الرتبة الذهبية -->
+          <div onclick="toggleRankList('rank-gold')" class="p-4 rounded-2xl bg-yellow-950/40 hover:bg-yellow-900/40 border border-yellow-500/30 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
-                <span class="font-black text-yellow-900 block text-sm mb-0.5">🥇 الرتبة الذهبية</span>
-                <span class="text-yellow-700">نجوم التحديات والأنشطة</span>
+                <span class="font-black text-yellow-300 block text-sm mb-0.5">🥇 الرتبة الذهبية</span>
+                <span class="text-slate-400 text-[11px]">نجوم التحديات والأنشطة</span>
               </div>
-              <span id="arrow-rank-gold" class="text-base font-black text-yellow-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
+              <span id="arrow-rank-gold" class="text-sm font-black text-yellow-300 bg-yellow-500/20 px-2.5 py-1 rounded-lg">▼</span>
             </div>
-            <div id="list-rank-gold" class="hidden mt-3 pt-2.5 border-t border-yellow-200 space-y-1.5">
-              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ زين</span>
-              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ ملك</span>
-              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ أروى</span>
-              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ رؤى</span>
-              <span class="block font-bold text-yellow-950 bg-white p-1.5 rounded-lg border border-yellow-200">✨ أحمد عابد</span>
+            <div id="list-rank-gold" class="hidden mt-3 pt-3 border-t border-yellow-500/30 space-y-1.5">
+              <span class="block font-bold text-yellow-100 bg-slate-900/90 p-2 rounded-xl border border-yellow-500/20">✨ زين</span>
+              <span class="block font-bold text-yellow-100 bg-slate-900/90 p-2 rounded-xl border border-yellow-500/20">✨ ملك</span>
+              <span class="block font-bold text-yellow-100 bg-slate-900/90 p-2 rounded-xl border border-yellow-500/20">✨ أروى</span>
+              <span class="block font-bold text-yellow-100 bg-slate-900/90 p-2 rounded-xl border border-yellow-500/20">✨ رؤى</span>
+              <span class="block font-bold text-yellow-100 bg-slate-900/90 p-2 rounded-xl border border-yellow-500/20">✨ أحمد عابد</span>
             </div>
           </div>
 
-          <div onclick="toggleRankList('rank-silver')" class="p-3.5 bg-cyan-50 hover:bg-cyan-100/70 rounded-xl border border-cyan-200 transition cursor-pointer select-none">
+          <!-- 6. الرتبة الفضية -->
+          <div onclick="toggleRankList('rank-silver')" class="p-4 rounded-2xl bg-cyan-950/40 hover:bg-cyan-900/40 border border-cyan-500/30 transition cursor-pointer select-none">
             <div class="flex justify-between items-center">
               <div>
-                <span class="font-black text-cyan-900 block text-sm mb-0.5">🥈 الرتبة الفضية</span>
-                <span class="text-cyan-700">المشاركون المتميزون</span>
+                <span class="font-black text-cyan-300 block text-sm mb-0.5">🥈 الرتبة الفضية</span>
+                <span class="text-slate-400 text-[11px]">المشاركون المتميزون</span>
               </div>
-              <span id="arrow-rank-silver" class="text-base font-black text-cyan-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
+              <span id="arrow-rank-silver" class="text-sm font-black text-cyan-300 bg-cyan-500/20 px-2.5 py-1 rounded-lg">▼</span>
             </div>
-            <div id="list-rank-silver" class="hidden mt-3 pt-2.5 border-t border-cyan-200 space-y-1.5">
-              <span class="block font-bold text-cyan-950 bg-white p-1.5 rounded-lg border border-cyan-200">🥈 يوسف</span>
-              <span class="block font-bold text-cyan-950 bg-white p-1.5 rounded-lg border border-cyan-200">🥈 لوجينا</span>
-              <span class="block font-bold text-cyan-950 bg-white p-1.5 rounded-lg border border-cyan-200">🥈 مايا</span>
+            <div id="list-rank-silver" class="hidden mt-3 pt-3 border-t border-cyan-500/30 space-y-1.5">
+              <span class="block font-bold text-cyan-100 bg-slate-900/90 p-2 rounded-xl border border-cyan-500/20">🥈 يوسف</span>
+              <span class="block font-bold text-cyan-100 bg-slate-900/90 p-2 rounded-xl border border-cyan-500/20">🥈 لوجينا</span>
+              <span class="block font-bold text-cyan-100 bg-slate-900/90 p-2 rounded-xl border border-cyan-500/20">🥈 مايا</span>
             </div>
           </div>
 
-          <div onclick="toggleRankList('rank-students')" class="p-3.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition cursor-pointer select-none col-span-full sm:col-span-2 md:col-span-3">
+          <!-- 7. طلاب 6A الأعزاء -->
+          <div onclick="toggleRankList('rank-students')" class="p-4 rounded-2xl bg-emerald-950/30 hover:bg-emerald-900/30 border border-emerald-500/30 transition cursor-pointer select-none col-span-full">
             <div class="flex justify-between items-center">
               <div>
-                <span class="font-black text-slate-800 block text-sm mb-0.5">🌱 طلاب 6A الأعزاء</span>
-                <span class="text-slate-600">أبطال ونخبة دفعة 2027</span>
+                <span class="font-black text-emerald-300 block text-sm mb-0.5">🌱 طلاب 6A الأعزاء</span>
+                <span class="text-slate-400 text-[11px]">أبطال ونخبة دفعة 2027</span>
               </div>
-              <span id="arrow-rank-students" class="text-base font-black text-slate-600 px-2 py-1 bg-white rounded-lg shadow-sm">▼</span>
+              <span id="arrow-rank-students" class="text-sm font-black text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-lg">▼</span>
             </div>
-            <div id="list-rank-students" class="hidden mt-3 pt-2.5 border-t border-slate-200">
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                <span class="block font-black text-slate-800 bg-white p-2 rounded-lg border border-slate-200 text-center shadow-sm">🌸 ليان</span>
-                <span class="block font-black text-slate-800 bg-white p-2 rounded-lg border border-slate-200 text-center shadow-sm">🌸 عليا</span>
-                <span class="block font-black text-slate-800 bg-white p-2 rounded-lg border border-slate-200 text-center shadow-sm">🌸 روفان</span>
+            <div id="list-rank-students" class="hidden mt-3 pt-3 border-t border-emerald-500/30">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <span class="block font-black text-white bg-slate-900/90 p-2.5 rounded-xl border border-emerald-500/30 text-center">🌸 ليان</span>
+                <span class="block font-black text-white bg-slate-900/90 p-2.5 rounded-xl border border-emerald-500/30 text-center">🌸 عليا</span>
+                <span class="block font-black text-white bg-slate-900/90 p-2.5 rounded-xl border border-emerald-500/30 text-center">🌸 روفان</span>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- 5. Feedback -->
+    <!-- 5. منتدى الآراء والتحسينات -->
     <section id="section-feedback" class="hidden space-y-6">
-      <div class="bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
-        <div class="relative z-10">
-          <h2 id="feedback-heading" class="text-2xl font-black mb-1 flex items-center gap-2">
-            <span>📢 منتدى المنشورات والآراء التفاعلية</span>
-          </h2>
-          <p id="feedback-desc" class="text-indigo-100 text-sm">شارك أفكارك وتجاربك كمنشور، وصوّت على آراء زملائك إذا كانت مفيدة!</p>
-        </div>
+      <div class="glass-card p-6 rounded-3xl bg-gradient-to-r from-indigo-600/20 via-purple-600/20 to-pink-600/20 border-indigo-500/30">
+        <h2 id="feedback-heading" class="text-2xl font-black text-white mb-1">📢 منتدى المنشورات والآراء التفاعلية</h2>
+        <p id="feedback-desc" class="text-slate-300 text-xs md:text-sm">شارك أفكارك ومقترحاتك لتطوير الفصل، وصوّت على منشورات زملائك!</p>
       </div>
 
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow">
-            ✍️
-          </div>
-          <div>
-            <h3 class="font-black text-slate-800 text-sm">أنشئ منشوراً جديداً في المنتدى</h3>
-            <p class="text-slate-400 text-xs">اطرح اقتراحاً أو مشكلة وشاركها مع الجميع للتصويت عليها</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-          <input type="text" id="fb-user" placeholder="اسمك الكريم..." class="p-3 border rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition">
-          <select id="fb-type" class="p-3 border rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-bold">
-            <option value="اقتراح">💡 اقتراح فكرة جديدة (Feature Post)</option>
-            <option value="عيب">⚠️ بلاغ عن مشكلة فنية (Bug Report)</option>
-            <option value="رأي">💬 كلمة أو انطباع عام (General Post)</option>
+      <div class="glass-card p-6 rounded-3xl space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input type="text" id="fb-user" placeholder="اسمك الكريم..." class="p-3 rounded-xl text-xs font-bold cyber-input">
+          <select id="fb-type" class="p-3 rounded-xl text-xs font-bold cyber-input">
+            <option value="اقتراح">💡 اقتراح فكرة جديدة (Feature)</option>
+            <option value="عيب">⚠️ بلاغ عن مشكلة فنية (Bug)</option>
+            <option value="رأي">💬 كلمة أو انطباع عام (Post)</option>
           </select>
         </div>
 
-        <textarea id="fb-text" rows="3" placeholder="ما الذي يدور في ذهنك؟ اكتب المنشور هنا بالتفصيل..." class="w-full p-3.5 border rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition"></textarea>
+        <textarea id="fb-text" rows="3" placeholder="اكتب تفاصيل منشورك هنا..." class="w-full p-3.5 rounded-xl text-xs font-bold cyber-input"></textarea>
 
         <div class="flex justify-end">
-          <button id="fb-submit-btn" onclick="addFeedback()" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-black px-8 py-3 rounded-xl text-sm transition shadow-md flex items-center gap-2">
-            <span>📢 نشر البوست الآن</span>
+          <button id="fb-submit-btn" onclick="addFeedback()" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black px-8 py-3 rounded-xl text-xs transition shadow-lg">
+            📢 نشر البوست الآن
           </button>
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 text-xs">
-        <div class="flex items-center gap-2">
-          <span class="font-bold text-slate-600">فرز المنشورات:</span>
-          <button onclick="filterFeedback('all')" id="fb-filter-all" class="px-3 py-1.5 rounded-lg font-bold bg-indigo-600 text-white transition">جميع البوستات</button>
-          <button onclick="filterFeedback('اقتراح')" id="fb-filter-prop" class="px-3 py-1.5 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">💡 اقتراحات</button>
-          <button onclick="filterFeedback('عيب')" id="fb-filter-bug" class="px-3 py-1.5 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">⚠️ مشاكل</button>
-          <button onclick="filterFeedback('رأي')" id="fb-filter-op" class="px-3 py-1.5 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">💬 عام</button>
+      <div class="flex flex-wrap items-center justify-between gap-3 glass-card p-4 rounded-2xl text-xs">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="font-bold text-slate-400">تصفية:</span>
+          <button onclick="filterFeedback('all')" id="fb-filter-all" class="px-3.5 py-1.5 rounded-xl font-black bg-indigo-600 text-white transition">الكل</button>
+          <button onclick="filterFeedback('اقتراح')" id="fb-filter-prop" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">💡 اقتراحات</button>
+          <button onclick="filterFeedback('عيب')" id="fb-filter-bug" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">⚠️ مشاكل</button>
+          <button onclick="filterFeedback('رأي')" id="fb-filter-op" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">💬 عام</button>
         </div>
-        <span id="fb-count-badge" class="font-bold text-slate-400">جاري الحساب...</span>
+        <span id="fb-count-badge" class="font-bold text-indigo-400">جاري الحساب...</span>
       </div>
 
       <div id="feedback-list" class="space-y-4">
-        <div class="text-center text-slate-400 py-6" id="fb-loading-text">جاري تحميل المنشورات...</div>
+        <div class="text-center text-slate-400 py-8 glass-card rounded-3xl text-xs">جاري تحميل المنشورات...</div>
       </div>
     </section>
 
-    <!-- 6. قسم الألعاب المتكامل + التصويت الحقيقي (جدول polls) + الألغاز الصعبة -->
-    <section id="section-arcade" class="hidden space-y-6">
-      
-      <div class="bg-gradient-to-r from-emerald-600 via-indigo-600 to-purple-700 text-white p-6 rounded-3xl shadow-xl relative overflow-hidden">
-        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h2 class="text-2xl md:text-3xl font-black mb-1 flex items-center gap-2">
-              <span>🎮 ساحة الألعاب، الألغاز، والتصويت الحي</span>
-            </h2>
-            <p class="text-emerald-100 text-sm">تصويت حقيقي مشترك لـ 17 طالباً على جدول Polls، مع لعبة الألوان، الثعبان، إكس أو، وألغاز العباقرة!</p>
-          </div>
-          <span class="bg-white/20 border border-white/30 text-white text-xs font-black px-4 py-2 rounded-xl backdrop-blur">
-            17 Students Live ⚡
-          </span>
-        </div>
-      </div>
-
-      <!-- لوحة المالك والإدارة لنشر سؤال تصويت حقيقي في جدول polls -->
-      <div id="admin-poll-card" style="display: none;" class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-6 rounded-3xl shadow-lg border border-amber-400/40 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-          <span class="font-black text-amber-400 text-sm flex items-center gap-2">
-            <span>⚙️ لوحة المالك والإدارة: إنشاء ونشر سؤال تصويت حقيقي للفصل (0/17)</span>
-          </span>
-          <span class="text-[11px] bg-amber-400/20 text-amber-300 px-2.5 py-0.5 rounded-full font-bold">صلاحية المسؤول</span>
-        </div>
-
-        <div class="space-y-3 text-xs">
-          <input type="text" id="admin-poll-q" placeholder="اكتب سؤال التصويت هنا (مثال: إيه رأيكم نخلي مراجعة الساينس يوم الخميس؟)..." class="w-full p-3 rounded-xl border border-slate-700 bg-slate-950/80 text-white focus:ring-2 focus:ring-amber-400 outline-none text-sm">
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <input type="text" id="admin-poll-opt1" placeholder="الخيار الأول..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
-            <input type="text" id="admin-poll-opt2" placeholder="الخيار الثاني..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
-            <input type="text" id="admin-poll-opt3" placeholder="الخيار الثالث (اختياري)..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
-            <input type="text" id="admin-poll-opt4" placeholder="الخيار الرابع (اختياري)..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950/80 text-white outline-none">
-          </div>
-
-          <button id="admin-poll-publish-btn" onclick="publishRealServerPoll()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black py-2.5 rounded-xl text-sm transition shadow-md">
-            🚀 نشر السؤال وتصفير العدادات لكل الفصل (0 من 17 طالب)
-          </button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-        <!-- 1. التصويت الحقيقي المباشر (0 من 17 طالب) -->
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>📊 تصويت الفصل الرسمي (حي ومباشر ⚡)</span>
-              </span>
-              <button onclick="loadRealServerPoll()" class="text-xs bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-3 py-1 rounded-full font-black transition">
-                🔄 تحديث الأصوات
-              </button>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-4">
-              <h4 id="display-poll-q" class="text-sm font-black text-slate-800 leading-relaxed">
-                جاري تحميل السؤال...
-              </h4>
-            </div>
-
-            <div id="display-poll-options" class="space-y-3"></div>
-          </div>
-
-          <div class="pt-4 mt-4 border-t border-slate-100 flex justify-between items-center text-xs">
-            <span id="poll-total-votes" class="font-black text-indigo-600">الأصوات الفعلية: 0 من 17 طالب</span>
-            <span id="poll-user-status" class="font-bold text-slate-400">اضغط على خيارك للتصويت</span>
-          </div>
-        </div>
-
-        <!-- 2. قسم الألغاز الصعبة الحقيقية (Brain Riddles) -->
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>🧩 ألغاز العباقرة والتفكير المنطقي الصعب</span>
-              </span>
-              <span id="riddle-number-tag" class="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-black">لغز #1</span>
-            </div>
-
-            <div class="bg-gradient-to-br from-purple-50 via-slate-50 to-indigo-50 p-5 rounded-2xl border border-purple-100 mb-4">
-              <p id="riddle-question-text" class="text-sm font-black text-slate-800 leading-relaxed"></p>
-            </div>
-
-            <div class="space-y-2">
-              <div class="flex gap-2">
-                <input type="text" id="riddle-user-answer" placeholder="اكتب حل اللغز هنا..." class="flex-1 p-3 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-purple-600 outline-none font-bold">
-                <button onclick="verifyHardRiddle()" class="bg-purple-600 hover:bg-purple-700 text-white font-black px-5 rounded-xl text-xs transition shadow-md">
-                  تحقق ✨
-                </button>
-              </div>
-              <p id="riddle-feedback-text" class="text-xs font-bold min-h-[18px]"></p>
-            </div>
-          </div>
-
-          <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
-            <button onclick="showRiddleHint()" class="text-xs text-amber-600 hover:text-amber-700 font-bold flex items-center gap-1">
-              💡 إظهار تلميح ذكي
-            </button>
-            <button onclick="nextHardRiddle()" class="text-xs bg-slate-900 hover:bg-black text-white px-3.5 py-1.5 rounded-xl font-bold transition">
-              اللغز الصعب التالي ⏭️
-            </button>
-          </div>
-        </div>
-
-        <!-- 3. لعبة خدعة الألوان السريعة بدرجات كثيرة -->
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-center mb-2">
-              <h3 class="font-black text-slate-800 text-base flex items-center gap-1.5">🎨 تحدي سرعة الألوان (Color Rush)</h3>
-              <span id="color-score-badge" class="text-xs bg-purple-100 text-purple-900 px-3 py-1 rounded-full font-black">النقاط: 0</span>
-            </div>
-            
-            <p class="text-xs text-slate-500 mb-3">
-              اللعبة بتحددلك فوق تختار إيه: <span class="font-black text-indigo-600">(لون الخط الحقيقي)</span> أو <span class="font-black text-rose-600">(الكلمة المكتوبة)</span> بسرعة!
-            </p>
-
-            <div class="bg-slate-950 p-6 rounded-2xl text-center shadow-inner mb-4 relative overflow-hidden border border-slate-800">
-              <span id="color-rule-instruction" class="text-xs font-black text-amber-400 bg-white/10 px-3 py-1 rounded-full inline-block mb-3">اضغط ابدأ للتحدي!</span>
-              <div id="color-display-word" class="text-4xl md:text-5xl font-black tracking-wider transition-all duration-150 drop-shadow py-1">
-                مستعد؟
-              </div>
-              <div class="w-full bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
-                <div id="color-timer-bar" class="bg-emerald-400 h-full w-full transition-all linear"></div>
-              </div>
-            </div>
-
-            <div id="color-buttons-grid" class="grid grid-cols-2 gap-2.5">
-              <button onclick="startColorGame()" class="col-span-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black py-3 rounded-xl text-sm transition shadow">
-                ⚡ ابدأ تحدي الألوان السريع!
-              </button>
-            </div>
-          </div>
-
-          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
-            <span id="color-best-streak" class="font-bold">أعلى سكور: 0</span>
-            <span id="color-game-status" class="font-bold text-indigo-600">12 درجة لونية</span>
-          </div>
-        </div>
-
-        <!-- 4. لعبة الثعبان النيون -->
-        <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-xl border border-emerald-500/30 flex flex-col items-center justify-between">
-          <div class="w-full flex justify-between items-center mb-2">
-            <span class="font-black text-emerald-400 text-sm flex items-center gap-1.5">🐍 لعبة الثعبان النيون (Snake)</span>
-            <span id="snake-score-display" class="text-xs bg-emerald-950 text-emerald-300 px-3 py-1 rounded-full font-black border border-emerald-700/50">النقاط: 0</span>
-          </div>
-
-          <canvas id="snake-canvas" width="266" height="266" class="bg-slate-950 rounded-2xl border border-slate-800 shadow-inner my-2"></canvas>
-
-          <div class="flex flex-col items-center gap-1.5 my-2">
-            <button onclick="changeSnakeDir('UP')" class="w-12 h-9 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-xs transition shadow">▲</button>
-            <div class="flex gap-2">
-              <button onclick="changeSnakeDir('LEFT')" class="w-12 h-9 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-xs transition shadow">◀</button>
-              <button onclick="changeSnakeDir('DOWN')" class="w-12 h-9 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-xs transition shadow">▼</button>
-              <button onclick="changeSnakeDir('RIGHT')" class="w-12 h-9 bg-slate-800 hover:bg-emerald-600 rounded-lg font-black text-xs transition shadow">▶</button>
-            </div>
-          </div>
-
-          <button onclick="startSnakeGame()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs transition shadow-lg">
-            ▶️ ابدأ لعبة الثعبان
-          </button>
-        </div>
-
-        <!-- 5. لعبة إكس أو ضد الذكاء الاصطناعي -->
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="font-black text-slate-800 text-base flex items-center gap-2">
-                <span>🤖 إكس أو ضد الكمبيوتر (X vs AI)</span>
-              </h3>
-              <span id="ttt-status" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold">
-                أنت <span class="text-blue-600 font-black">X</span>
-              </span>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2.5 max-w-[240px] mx-auto mb-4">
-              <div onclick="makeMoveVsAI(0)" id="cell-0" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(1)" id="cell-1" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(2)" id="cell-2" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(3)" id="cell-3" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(4)" id="cell-4" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(5)" id="cell-5" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(6)" id="cell-6" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(7)" id="cell-7" class="game-cell"></div>
-              <div onclick="makeMoveVsAI(8)" id="cell-8" class="game-cell"></div>
-            </div>
-          </div>
-
-          <div class="flex justify-between items-center pt-3 border-t border-slate-100">
-            <span class="text-xs text-slate-500 font-bold" id="ttt-score">فوزك: 0 | الكمبيوتر: 0</span>
-            <button onclick="resetGameVsAI()" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl transition shadow">
-              🔄 جولة جديدة
-            </button>
-          </div>
-        </div>
-
-        <!-- 6. مسابقة العباقرة (20 سؤال غير مكرر إطلاقاً) -->
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <h3 class="font-black text-slate-800 text-base flex items-center gap-1.5">🧠 مسابقة المعلومات (بدون تكرار)</h3>
-              <span id="trivia-points" class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-black">النقاط: 0</span>
-            </div>
-
-            <div class="space-y-3">
-              <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs md:text-sm font-black text-slate-800 leading-relaxed" id="dynamic-trivia-q">
-                جاري سحب سؤال جديد...
-              </div>
-
-              <div id="dynamic-trivia-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
-            </div>
-          </div>
-
-          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
-            <span id="dynamic-trivia-feedback" class="text-xs font-bold text-slate-500">20 سؤال متجدد!</span>
-            <button onclick="loadNextRandomTrivia()" class="text-xs bg-slate-900 hover:bg-black text-white font-bold px-3.5 py-1.5 rounded-xl transition">
-              سؤال آخر ⏭️
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
   </main>
 
   <script>
@@ -794,630 +610,7 @@
     let allFeedbackData = [];
     let currentFeedbackFilter = 'all';
 
-    // =============================================================
-    // 1. نظام التصويت الحقيقي المزدوج (يعمل على جدول polls + الاحتياطي)
-    //    بحد أقصى 17 طالباً ويبدأ من 0 أصوات تماماً
-    // =============================================================
-    const MAX_STUDENTS = 17;
-    let activePollRowId = null;
-    let usingPollsTable = true;
-    let activePollData = {
-      question: "ما هي المادة التي تحتاج إلى وقت أطول للمراجعة هذا الأسبوع؟",
-      options: [
-        { id: 1, text: "Science", votes: 0 },
-        { id: 2, text: "Math", votes: 0 },
-        { id: 3, text: "English", votes: 0 },
-        { id: 4, text: "ICT", votes: 0 }
-      ]
-    };
-
-    async function loadRealServerPoll() {
-      try {
-        // أولاً نحاول القراءة من جدول polls الجديد
-        const { data: pollsData, error: pollsErr } = await client
-          .from('polls')
-          .select('*')
-          .order('id', { ascending: false })
-          .limit(1);
-
-        if (!pollsErr) {
-          usingPollsTable = true;
-          if (pollsData && pollsData.length > 0) {
-            activePollRowId = pollsData[0].id;
-            activePollData = {
-              question: pollsData[0].question,
-              options: pollsData[0].options
-            };
-          } else {
-            const { data: inserted } = await client
-              .from('polls')
-              .insert([{ question: activePollData.question, options: activePollData.options }])
-              .select();
-            if (inserted && inserted.length > 0) activePollRowId = inserted[0].id;
-          }
-          renderRealPollUI();
-          return;
-        }
-
-        // إذا لم يكن جدول polls جاهزاً، يعمل تلقائياً على جدول feedback بدون أي تعليق
-        usingPollsTable = false;
-        const { data: fbData, error: fbErr } = await client
-          .from('feedback')
-          .select('*')
-          .eq('type', '__POLL__')
-          .order('id', { ascending: false })
-          .limit(1);
-
-        if (!fbErr && fbData && fbData.length > 0) {
-          activePollRowId = fbData[0].id;
-          activePollData = JSON.parse(fbData[0].message);
-        } else if (!fbErr) {
-          const { data: insFb } = await client
-            .from('feedback')
-            .insert([{ user_name: 'SYSTEM_POLL', type: '__POLL__', message: JSON.stringify(activePollData) }])
-            .select();
-          if (insFb && insFb.length > 0) activePollRowId = insFb[0].id;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-      renderRealPollUI();
-    }
-
-    function renderRealPollUI() {
-      document.getElementById('display-poll-q').textContent = activePollData.question;
-      const optContainer = document.getElementById('display-poll-options');
-      const totalVotesElem = document.getElementById('poll-total-votes');
-
-      const options = activePollData.options || [];
-      const totalVotes = options.reduce((sum, o) => sum + (o.votes || 0), 0);
-      totalVotesElem.textContent = `الأصوات الفعلية: ${totalVotes} من ${MAX_STUDENTS} طالب`;
-
-      const colors = ['bg-blue-600', 'bg-purple-600', 'bg-amber-500', 'bg-emerald-600'];
-
-      optContainer.innerHTML = options.map((opt, idx) => {
-        const votes = opt.votes || 0;
-        const pct = totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0;
-        const color = colors[idx % colors.length];
-
-        return `
-          <div onclick="voteOnRealServerPoll(${opt.id})" class="cursor-pointer group p-3 rounded-2xl border border-slate-100 hover:border-indigo-400 hover:bg-slate-50 transition shadow-sm">
-            <div class="flex justify-between items-center text-xs font-black text-slate-800 mb-1.5">
-              <span>${opt.text}</span>
-              <span class="text-indigo-600">${pct}% (${votes} صوت)</span>
-            </div>
-            <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-              <div class="${color} h-full rounded-full transition-all duration-500" style="width: ${pct}%"></div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    async function voteOnRealServerPoll(optId) {
-      const totalCurrent = (activePollData.options || []).reduce((sum, o) => sum + (o.votes || 0), 0);
-      if (totalCurrent >= MAX_STUDENTS) {
-        alert('⚠️ اكتمل تصويت جميع طلاب الفصل (17 من 17 طالب)!');
-        return;
-      }
-
-      const voteKey = `voted_real_poll_${activePollRowId || 'default'}`;
-      if (localStorage.getItem(voteKey)) {
-        alert('⚠️ لقد قمت بالتصويت في هذا السؤال بالفعل! لكل طالب صوت واحد فقط.');
-        return;
-      }
-
-      activePollData.options = activePollData.options.map(o => {
-        if (o.id === optId) return { ...o, votes: (o.votes || 0) + 1 };
-        return o;
-      });
-
-      localStorage.setItem(voteKey, 'true');
-      document.getElementById('poll-user-status').textContent = '✅ تم تسجيل صوتك رسمياً!';
-      renderRealPollUI();
-
-      if (activePollRowId) {
-        if (usingPollsTable) {
-          await client.from('polls').update({ options: activePollData.options }).eq('id', activePollRowId);
-        } else {
-          await client.from('feedback').update({ message: JSON.stringify(activePollData) }).eq('id', activePollRowId);
-        }
-      }
-    }
-
-    async function publishRealServerPoll() {
-      if (!isPowerUser()) {
-        alert('صلاحية مخصصة لمالك المنصة وإدارة المدرسة فقط!');
-        return;
-      }
-
-      const q = document.getElementById('admin-poll-q').value.trim();
-      const o1 = document.getElementById('admin-poll-opt1').value.trim();
-      const o2 = document.getElementById('admin-poll-opt2').value.trim();
-      const o3 = document.getElementById('admin-poll-opt3').value.trim();
-      const o4 = document.getElementById('admin-poll-opt4').value.trim();
-
-      if (!q || !o1 || !o2) {
-        alert('يرجى كتابة السؤال مع خيارين على الأقل!');
-        return;
-      }
-
-      const btn = document.getElementById('admin-poll-publish-btn');
-      btn.disabled = true;
-      btn.textContent = 'جاري النشر وتصفير العدادات...';
-
-      const newPollObj = {
-        question: q,
-        options: [
-          { id: 1, text: o1, votes: 0 },
-          { id: 2, text: o2, votes: 0 }
-        ]
-      };
-      if (o3) newPollObj.options.push({ id: 3, text: o3, votes: 0 });
-      if (o4) newPollObj.options.push({ id: 4, text: o4, votes: 0 });
-
-      if (usingPollsTable) {
-        const { data, error } = await client
-          .from('polls')
-          .insert([{ question: newPollObj.question, options: newPollObj.options }])
-          .select();
-        if (!error && data && data.length > 0) {
-          activePollRowId = data[0].id;
-          activePollData = newPollObj;
-        }
-      } else {
-        const { data, error } = await client
-          .from('feedback')
-          .insert([{ user_name: currentUser ? currentUser.name : 'Admin', type: '__POLL__', message: JSON.stringify(newPollObj) }])
-          .select();
-        if (!error && data && data.length > 0) {
-          activePollRowId = data[0].id;
-          activePollData = newPollObj;
-        }
-      }
-
-      btn.disabled = false;
-      btn.textContent = '🚀 نشر السؤال وتصفير العدادات لكل الفصل (0 من 17 طالب)';
-
-      document.getElementById('admin-poll-q').value = '';
-      document.getElementById('admin-poll-opt1').value = '';
-      document.getElementById('admin-poll-opt2').value = '';
-      document.getElementById('admin-poll-opt3').value = '';
-      document.getElementById('admin-poll-opt4').value = '';
-
-      renderRealPollUI();
-      alert('🎉 تم نشر السؤال الجديد وتصفير العداد (0 من 17 طالب) بنجاح!');
-    }
-
-    // =============================================================
-    // 2. بنك الألغاز الصعبة الحقيقية
-    // =============================================================
-    const hardRiddles = [
-      {
-        id: 1,
-        question: "رجل يقف أمام لوحة لشخص، فقال: 'لا إخوة لي ولا أخوات، ولكن والد هذا الرجل هو ابن والدي'. من يكون الشخص الذي في اللوحة؟",
-        answers: ["ابنه", "ابن", "ابني", "ولده"],
-        hint: "عبارة 'ابن والدي' وأنت وحيد تعني أنت نفسك! إذن والد الرجل هو أنت."
-      },
-      {
-        id: 2,
-        question: "قطار كهربائي يسير من الشمال إلى الجنوب بسرعة 120 كم/س، والرياح تهب بقوة من الشرق إلى الغرب، ففي أي اتجاه يتجه دخان القطار؟",
-        answers: ["لا يوجد", "مافيش", "مفيش", "لا دخان", "كهربائي", "بدون دخان"],
-        hint: "اقرأ أول كلمتين في اللغز جيداً!"
-      },
-      {
-        id: 3,
-        question: "إذا كانت 5 قطط تستغرق 5 دقائق للإمساك بـ 5 فئران، فكم دقيقة تستغرق 100 قطة للإمساك بـ 100 فأر في نفس الوقت؟",
-        answers: ["5", "خمس", "خمسة", "5 دقائق"],
-        hint: "كل قطة مستقلة تمسك فأراً واحداً في 5 دقائق!"
-      },
-      {
-        id: 4,
-        question: "أخوان يسكنان في نفس الشارع، كلما زاد الأول نقص الثاني، وإذا اجتمعا في منتصف السنة يتساويان تماماً، فمن هما؟",
-        answers: ["الليل والنهار", "ليل ونهار", "النهار والليل"],
-        hint: "يتعاقبان كل يوم منذ خلق الله الأرض!"
-      },
-      {
-        id: 5,
-        question: "ما هو العدد الذي إذا ضربته في نفسه، ثم أضفت إليه 5، أصبح الناتج 30؟",
-        answers: ["5", "خمسة", "خمسه"],
-        hint: "اطرح 5 من 30 أولاً ثم خذ الجذر التربيعي!"
-      },
-      {
-        id: 6,
-        question: "شيء تشتريه بمالك، ولكنك لا تستطيع إدخاله إلى بيتك أبداً، فما هو؟",
-        answers: ["السيارة", "سيارة", "العربية", "عربية", "مركب", "قبر"],
-        hint: "تركب فيه وتتنقل به في الشوارع!"
-      },
-      {
-        id: 7,
-        question: "عائلة مكونة من 6 بنات وأخ لكل منهن، فكم عدد أفراد الإخوة جميعاً؟",
-        answers: ["7", "سبعة", "سبعه"],
-        hint: "الأخ الواحد هو أخ لجميع البنات الست!"
-      }
-    ];
-
-    let currentRiddleIndex = 0;
-
-    function renderCurrentRiddle() {
-      const r = hardRiddles[currentRiddleIndex];
-      document.getElementById('riddle-number-tag').textContent = `لغز العباقرة #${r.id} من ${hardRiddles.length}`;
-      document.getElementById('riddle-question-text').textContent = r.question;
-      document.getElementById('riddle-user-answer').value = '';
-      document.getElementById('riddle-feedback-text').textContent = '';
-    }
-
-    function verifyHardRiddle() {
-      const input = document.getElementById('riddle-user-answer').value.trim().toLowerCase();
-      const fb = document.getElementById('riddle-feedback-text');
-      const r = hardRiddles[currentRiddleIndex];
-
-      if (!input) {
-        fb.className = "text-xs font-bold text-amber-600";
-        fb.textContent = "اكتب إجابتك أولاً!";
-        return;
-      }
-
-      const isCorrect = r.answers.some(ans => input.includes(ans.toLowerCase()));
-      if (isCorrect) {
-        fb.className = "text-xs font-black text-emerald-600";
-        fb.textContent = "🎉 عبقري! إجابة صحيحة 100%!";
-      } else {
-        fb.className = "text-xs font-black text-rose-500";
-        fb.textContent = "❌ إجابة خاطئة، فكر بعمق أو اضغط على التلميح!";
-      }
-    }
-
-    function showRiddleHint() {
-      const r = hardRiddles[currentRiddleIndex];
-      alert(`💡 تلميح اللغز:\n${r.hint}`);
-    }
-
-    function nextHardRiddle() {
-      currentRiddleIndex = (currentRiddleIndex + 1) % hardRiddles.length;
-      renderCurrentRiddle();
-    }
-
-    // =============================================================
-    // 3. لعبة خدعة الألوان السريعة
-    // =============================================================
-    const colorPalette = [
-      { name: "أحمر ناري", hex: "#ef4444" },
-      { name: "أزرق ملكي", hex: "#3b82f6" },
-      { name: "أخضر زمردي", hex: "#10b981" },
-      { name: "أصفر ذهبي", hex: "#eab308" },
-      { name: "بنفسجي نيون", hex: "#a855f7" },
-      { name: "برتقالي ساطع", hex: "#f97316" },
-      { name: "وردي فوشيا", hex: "#ec4899" },
-      { name: "تركواز سماوي", hex: "#06b6d4" },
-      { name: "أخضر ليموني", hex: "#84cc16" },
-      { name: "أبيض ناصع", hex: "#f8fafc" },
-      { name: "رمادي فضي", hex: "#94a3b8" },
-      { name: "كحلي ليلي", hex: "#6366f1" }
-    ];
-
-    let colorScore = 0;
-    let colorBest = 0;
-    let colorTimer = null;
-    let colorTargetAnswer = "";
-
-    function startColorGame() {
-      colorScore = 0;
-      document.getElementById('color-score-badge').textContent = `النقاط: 0`;
-      nextColorRound();
-    }
-
-    function nextColorRound() {
-      clearTimeout(colorTimer);
-      const wordObj = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-      let inkObj = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-
-      while (inkObj.name === wordObj.name) {
-        inkObj = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-      }
-
-      const askForInkColor = Math.random() > 0.35;
-      const ruleElem = document.getElementById('color-rule-instruction');
-
-      if (askForInkColor) {
-        colorTargetAnswer = inkObj.name;
-        ruleElem.textContent = "🎯 المطلوب: اختر (لون الخط الحقيقي) وليس الكلمة!";
-        ruleElem.className = "text-xs font-black text-emerald-300 bg-emerald-950/90 border border-emerald-500/40 px-3 py-1 rounded-full inline-block mb-3";
-      } else {
-        colorTargetAnswer = wordObj.name;
-        ruleElem.textContent = "🎯 المطلوب: اختر (الكلمة المكتوبة) وتجاهل اللون!";
-        ruleElem.className = "text-xs font-black text-amber-300 bg-amber-950/90 border border-amber-500/40 px-3 py-1 rounded-full inline-block mb-3";
-      }
-
-      const wordElem = document.getElementById('color-display-word');
-      wordElem.textContent = wordObj.name;
-      wordElem.style.color = inkObj.hex;
-
-      let options = [wordObj.name, inkObj.name];
-      while (options.length < 4) {
-        let randName = colorPalette[Math.floor(Math.random() * colorPalette.length)].name;
-        if (!options.includes(randName)) options.push(randName);
-      }
-      options.sort(() => Math.random() - 0.5);
-
-      const grid = document.getElementById('color-buttons-grid');
-      grid.innerHTML = options.map(opt => `
-        <button onclick="handleColorChoice('${opt}')" class="p-3 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl font-black text-xs md:text-sm border border-slate-200 transition shadow-sm">
-          ${opt}
-        </button>
-      `).join('');
-
-      const bar = document.getElementById('color-timer-bar');
-      bar.style.width = '100%';
-      setTimeout(() => { bar.style.width = '0%'; }, 50);
-
-      colorTimer = setTimeout(() => {
-        endColorGame('انتهى الوقت! ⏳ السرعة مطلوبة.');
-      }, 2700);
-    }
-
-    function handleColorChoice(choice) {
-      if (choice === colorTargetAnswer) {
-        colorScore++;
-        if (colorScore > colorBest) {
-          colorBest = colorScore;
-          document.getElementById('color-best-streak').textContent = `أعلى سكور: ${colorBest}`;
-        }
-        document.getElementById('color-score-badge').textContent = `النقاط: ${colorScore}`;
-        nextColorRound();
-      } else {
-        endColorGame(`خطأ! ❌ الإجابة الصحيحة كانت: (${colorTargetAnswer})`);
-      }
-    }
-
-    function endColorGame(msg) {
-      clearTimeout(colorTimer);
-      alert(`${msg}\nنقاطك في هذه الجولة: ${colorScore}`);
-      document.getElementById('color-display-word').textContent = "اضغط ابدأ!";
-      document.getElementById('color-display-word').style.color = "#ffffff";
-      document.getElementById('color-buttons-grid').innerHTML = `
-        <button onclick="startColorGame()" class="col-span-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black py-3 rounded-xl text-sm transition shadow">
-          ⚡ العب جولة جديدة
-        </button>
-      `;
-    }
-
-    // =============================================================
-    // 4. لعبة الثعبان النيون (Snake)
-    // =============================================================
-    let sCanvas, sCtx;
-    let snakeInterval = null;
-    let snake = [{x: 126, y: 126}];
-    let snakeDir = 'RIGHT';
-    let food = {x: 70, y: 70};
-    let snakeScore = 0;
-    const sBox = 14;
-
-    function initSnakeEngine() {
-      sCanvas = document.getElementById('snake-canvas');
-      if (!sCanvas) return;
-      sCtx = sCanvas.getContext('2d');
-    }
-
-    function startSnakeGame() {
-      clearInterval(snakeInterval);
-      snake = [{x: 126, y: 126}, {x: 112, y: 126}];
-      snakeDir = 'RIGHT';
-      snakeScore = 0;
-      document.getElementById('snake-score-display').textContent = `النقاط: 0`;
-      spawnFood();
-      snakeInterval = setInterval(gameLoopSnake, 115);
-    }
-
-    function spawnFood() {
-      food = {
-        x: Math.floor(Math.random() * (266 / sBox)) * sBox,
-        y: Math.floor(Math.random() * (266 / sBox)) * sBox
-      };
-    }
-
-    function changeSnakeDir(dir) {
-      if (dir === 'UP' && snakeDir !== 'DOWN') snakeDir = 'UP';
-      if (dir === 'DOWN' && snakeDir !== 'UP') snakeDir = 'DOWN';
-      if (dir === 'LEFT' && snakeDir !== 'RIGHT') snakeDir = 'LEFT';
-      if (dir === 'RIGHT' && snakeDir !== 'LEFT') snakeDir = 'RIGHT';
-    }
-
-    function gameLoopSnake() {
-      let headX = snake[0].x;
-      let headY = snake[0].y;
-
-      if (snakeDir === 'UP') headY -= sBox;
-      if (snakeDir === 'DOWN') headY += sBox;
-      if (snakeDir === 'LEFT') headX -= sBox;
-      if (snakeDir === 'RIGHT') headX += sBox;
-
-      if (headX < 0 || headX >= 266 || headY < 0 || headY >= 266) {
-        clearInterval(snakeInterval);
-        alert(`💥 انتهت اللعبة! نقاطك: ${snakeScore}`);
-        return;
-      }
-
-      for (let i = 0; i < snake.length; i++) {
-        if (headX === snake[i].x && headY === snake[i].y) {
-          clearInterval(snakeInterval);
-          alert(`💥 اصطدمت بنفسك! نقاطك: ${snakeScore}`);
-          return;
-        }
-      }
-
-      const newHead = {x: headX, y: headY};
-
-      if (headX === food.x && headY === food.y) {
-        snakeScore += 10;
-        document.getElementById('snake-score-display').textContent = `النقاط: ${snakeScore}`;
-        spawnFood();
-      } else {
-        snake.pop();
-      }
-
-      snake.unshift(newHead);
-
-      sCtx.fillStyle = '#020617';
-      sCtx.fillRect(0, 0, 266, 266);
-
-      sCtx.fillStyle = '#fbbf24';
-      sCtx.shadowBlur = 10;
-      sCtx.shadowColor = '#fbbf24';
-      sCtx.fillRect(food.x, food.y, sBox - 1, sBox - 1);
-
-      snake.forEach((part, index) => {
-        sCtx.fillStyle = index === 0 ? '#34d399' : '#10b981';
-        sCtx.shadowBlur = 8;
-        sCtx.shadowColor = '#34d399';
-        sCtx.fillRect(part.x, part.y, sBox - 1, sBox - 1);
-      });
-    }
-
-    // =============================================================
-    // 5. لعبة إكس أو ضد الكمبيوتر الذكي
-    // =============================================================
-    let aiBoard = ['', '', '', '', '', '', '', '', ''];
-    let aiActive = true;
-    let aiScoreUser = 0;
-    let aiScoreBot = 0;
-
-    function makeMoveVsAI(idx) {
-      if (aiBoard[idx] !== '' || !aiActive) return;
-
-      aiBoard[idx] = 'X';
-      const cell = document.getElementById(`cell-${idx}`);
-      cell.textContent = 'X';
-      cell.classList.add('text-blue-600');
-
-      if (checkAiWin('X')) {
-        document.getElementById('ttt-status').innerHTML = '🎉 <span class="font-black text-emerald-600">فزت على الكمبيوتر!</span>';
-        aiScoreUser++;
-        updateAiScore();
-        aiActive = false;
-        return;
-      }
-
-      if (aiBoard.every(c => c !== '')) {
-        document.getElementById('ttt-status').textContent = '🤝 تعادل!';
-        aiActive = false;
-        return;
-      }
-
-      aiActive = false;
-      setTimeout(() => {
-        botMove();
-        aiActive = true;
-      }, 350);
-    }
-
-    function botMove() {
-      let emptyIdxs = [];
-      aiBoard.forEach((v, i) => { if (v === '') emptyIdxs.push(i); });
-      if (emptyIdxs.length === 0) return;
-
-      let pick = emptyIdxs[Math.floor(Math.random() * emptyIdxs.length)];
-      aiBoard[pick] = 'O';
-      const cell = document.getElementById(`cell-${pick}`);
-      cell.textContent = 'O';
-      cell.classList.add('text-rose-600');
-
-      if (checkAiWin('O')) {
-        document.getElementById('ttt-status').innerHTML = '🤖 <span class="font-black text-rose-600">فاز الكمبيوتر!</span>';
-        aiScoreBot++;
-        updateAiScore();
-        aiActive = false;
-        return;
-      }
-      document.getElementById('ttt-status').innerHTML = 'دورك (<span class="text-blue-600 font-black">X</span>)';
-    }
-
-    function checkAiWin(sym) {
-      const wins = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        [0, 4, 8], [2, 4, 6]
-      ];
-      return wins.some(([a, b, c]) => aiBoard[a] === sym && aiBoard[b] === sym && aiBoard[c] === sym);
-    }
-
-    function updateAiScore() {
-      document.getElementById('ttt-score').textContent = `فوزك: ${aiScoreUser} | الكمبيوتر: ${aiScoreBot}`;
-    }
-
-    function resetGameVsAI() {
-      aiBoard = ['', '', '', '', '', '', '', '', ''];
-      aiActive = true;
-      for (let i = 0; i < 9; i++) {
-        const cell = document.getElementById(`cell-${i}`);
-        cell.textContent = '';
-        cell.className = 'game-cell';
-      }
-      document.getElementById('ttt-status').innerHTML = 'أنت <span class="text-blue-600 font-black">X</span>';
-    }
-
-    // =============================================================
-    // 6. مسابقة العباقرة (بدون أي تكرار)
-    // =============================================================
-    const triviaPool = [
-      { q: "ما هو الكوكب الأكثر سخونة في المجموعة الشمسية؟", opts: ["عطارد", "الزهرة", "المريخ", "المشتري"], ans: 1 },
-      { q: "ما هو الشيء الذي يملك عيناً واحدة ولكنه لا يرى؟", opts: ["الإبرة", "الخفاش", "التمثال", "القمر"], ans: 0 },
-      { q: "كم عدد فقرات عنق الزرافة؟", opts: ["7 فقرات", "14 فقرة", "21 فقرة", "28 فقرة"], ans: 0 },
-      { q: "ما هو أسرع كائن بحري في العالم؟", opts: ["سمكة الشراع", "الدلفين", "القرش الأبيض", "الحوت"], ans: 0 },
-      { q: "ما هو الغاز الأكثر وفرة في الغلاف الجوي للأرض؟", opts: ["الأكسجين", "النيتروجين", "الهيدروجين", "الكربون"], ans: 1 },
-      { q: "إذا ضربت جميع الأرقام الموجودة في لوحة مفاتيح الهاتف (0-9)، فما الناتج؟", opts: ["0", "362880", "100", "999"], ans: 0 },
-      { q: "ما هي عاصمة أستراليا الرسمية؟", opts: ["سيدني", "ملبورن", "كانبرا", "بيرث"], ans: 2 },
-      { q: "ما هو المعدن الوحيد الذي يكون في حالة سائلة عند درجة حرارة الغرفة؟", opts: ["الحديد", "الزئبق", "النحاس", "الفضة"], ans: 1 },
-      { q: "كم عدد قلوب الأخطبوط؟", opts: ["قلب واحد", "قلبان", "3 قلوب", "4 قلوب"], ans: 2 },
-      { q: "ما هي أصغر دولة في العالم من حيث المساحة؟", opts: ["موناكو", "الفاتيكان", "مالطا", "البحرين"], ans: 1 },
-      { q: "من هو مخترع المصباح الكهربائي؟", opts: ["توماس إديسون", "نيوتن", "أينشتاين", "جراهام بيل"], ans: 0 },
-      { q: "ما هو أطول نهر في العالم؟", opts: ["نهر النيل", "نهر الأمازون", "نهر الفرات", "نهر الدانوب"], ans: 0 },
-      { q: "كم عدد أسنان الإنسان البالغ الكاملة؟", opts: ["28", "30", "32", "36"], ans: 2 },
-      { q: "ما هو الحيوان الذي لا يصدر أي صوت نهائياً؟", opts: ["الزرافة", "السلحفاة", "النعامة", "الدب"], ans: 0 },
-      { q: "ما هو أصلب معدن طبيعي على وجه الأرض؟", opts: ["الذهب", "الفولاذ", "الألماس", "التيتانيوم"], ans: 2 },
-      { q: "في أي قارة تقع دولة البرازيل؟", opts: ["أمريكا الشمالية", "أمريكا الجنوبية", "أوروبا", "أفريقيا"], ans: 1 }
-    ];
-
-    let unusedTrivia = [...triviaPool];
-    let dynamicTriviaScore = 0;
-
-    function loadNextRandomTrivia() {
-      if (unusedTrivia.length === 0) {
-        unusedTrivia = [...triviaPool];
-      }
-
-      const randIndex = Math.floor(Math.random() * unusedTrivia.length);
-      const selected = unusedTrivia.splice(randIndex, 1)[0];
-
-      document.getElementById('dynamic-trivia-q').textContent = `سؤال: ${selected.q}`;
-      const optsBox = document.getElementById('dynamic-trivia-options');
-      
-      optsBox.innerHTML = selected.opts.map((opt, i) => `
-        <button onclick="checkDynamicAnswer(${i}, ${selected.ans}, '${selected.opts[selected.ans]}')" class="p-2.5 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300 rounded-xl border border-slate-200 text-xs font-bold transition text-right">
-          ${i + 1}. ${opt}
-        </button>
-      `).join('');
-
-      document.getElementById('dynamic-trivia-feedback').textContent = `متبقي ${unusedTrivia.length} سؤال مختلف`;
-    }
-
-    function checkDynamicAnswer(chosen, correct, correctText) {
-      const fb = document.getElementById('dynamic-trivia-feedback');
-      if (chosen === correct) {
-        dynamicTriviaScore++;
-        fb.className = "text-xs font-black text-emerald-600";
-        fb.textContent = "✅ عبقري! إجابة صحيحة!";
-      } else {
-        fb.className = "text-xs font-black text-rose-500";
-        fb.textContent = `❌ خطأ! الصحيح: ${correctText}`;
-      }
-      document.getElementById('trivia-points').textContent = `النقاط: ${dynamicTriviaScore}`;
-      setTimeout(loadNextRandomTrivia, 1400);
-    }
-
-    // =============================================================
-    // المحرك العام لباقي المنصة
-    // =============================================================
+    // خلفية النجوم والجزيئات المضيئة
     function initDynamicBackground() {
       const canvas = document.getElementById('bg-canvas');
       const ctx = canvas.getContext('2d');
@@ -1430,14 +623,14 @@
       });
 
       const particles = [];
-      const colors = ['#818cf8', '#c084fc', '#f59e0b', '#38bdf8', '#a855f7'];
-      for (let i = 0; i < 60; i++) {
+      const colors = ['#6366f1', '#a855f7', '#fbbf24', '#38bdf8'];
+      for (let i = 0; i < 45; i++) {
         particles.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          r: Math.random() * 3.5 + 1.2,
-          dx: (Math.random() - 0.5) * 1.8,
-          dy: (Math.random() - 0.5) * 1.8,
+          r: Math.random() * 2.2 + 0.8,
+          dx: (Math.random() - 0.5) * 0.8,
+          dy: (Math.random() - 0.5) * 0.8,
           color: colors[Math.floor(Math.random() * colors.length)]
         });
       }
@@ -1448,7 +641,7 @@
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
           ctx.fillStyle = p.color;
-          ctx.shadowBlur = 18;
+          ctx.shadowBlur = 12;
           ctx.shadowColor = p.color;
           ctx.fill();
 
@@ -1479,12 +672,7 @@
 
     window.onload = () => {
       initDynamicBackground();
-      initSnakeEngine();
-      renderCurrentRiddle();
-      loadNextRandomTrivia();
-      setArabicUI();
       loadHomework();
-      loadRealServerPoll();
     };
 
     function openLoginModal() {
@@ -1530,17 +718,13 @@
       document.getElementById('hw-input-card').style.display = 'none';
       document.getElementById('quiz-input-card').style.display = 'none';
       document.getElementById('owner-welcome-bar').style.display = 'none';
-      document.getElementById('admin-poll-card').style.display = 'none';
       
       document.body.classList.remove('royal-mode');
-      document.getElementById('main-header').className = "bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg transition-all duration-500";
-
       document.getElementById('passcode-input').value = '';
       document.getElementById('hw-title').value = '';
       document.getElementById('quiz-title').value = '';
       document.getElementById('hw-filter').value = 'all';
 
-      setArabicUI();
       refreshAllViews();
     }
 
@@ -1549,7 +733,6 @@
       if (!document.getElementById('section-quizzes').classList.contains('hidden')) loadQuizzes();
       if (!document.getElementById('section-quotes').classList.contains('hidden')) loadQuotes();
       if (!document.getElementById('section-feedback').classList.contains('hidden')) loadFeedback();
-      if (!document.getElementById('section-arcade').classList.contains('hidden')) loadRealServerPoll();
     }
 
     function isPowerUser() {
@@ -1564,159 +747,49 @@
       const badge = document.getElementById('logged-badge');
       badgeBox.style.display = 'flex';
 
-      const hwCard = document.getElementById('hw-input-card');
-      const quizCard = document.getElementById('quiz-input-card');
-      const adminPollCard = document.getElementById('admin-poll-card');
-      hwCard.style.display = 'block';
-      quizCard.style.display = 'flex';
-
-      if (isPowerUser()) {
-        adminPollCard.style.display = 'block';
-      } else {
-        adminPollCard.style.display = 'none';
-      }
+      document.getElementById('hw-input-card').style.display = 'block';
+      document.getElementById('quiz-input-card').style.display = 'flex';
+      document.getElementById('hw-form-heading').textContent = `📚 إضافة واجب جديد (${currentUser.extra})`;
 
       if (currentUser.roleType === 'owner') {
-        badge.className = "text-xs bg-amber-400 text-slate-950 font-black px-3 py-1.5 rounded-xl shadow-lg border border-amber-300";
-        badge.textContent = `👑 مالك المنصة: ${currentUser.name}`;
+        badge.className = "text-xs bg-amber-400 text-slate-950 font-black px-3.5 py-1.5 rounded-xl shadow-lg";
+        badge.textContent = `👑 المالك: ${currentUser.name}`;
         document.getElementById('hw-subject').value = "عام";
         document.getElementById('quiz-subject').value = "عام";
         
         document.body.classList.add('royal-mode');
         document.getElementById('owner-welcome-bar').style.display = 'flex';
       } else if (currentUser.roleType === 'admin') {
-        badge.className = "text-xs bg-red-600 text-white font-bold px-3 py-1.5 rounded-xl shadow";
+        badge.className = "text-xs bg-rose-600 text-white font-bold px-3.5 py-1.5 rounded-xl shadow";
         badge.textContent = `🏛️ ${currentUser.name}`;
         document.getElementById('hw-subject').value = "عام";
         document.getElementById('quiz-subject').value = "إدارة";
         document.body.classList.remove('royal-mode');
         document.getElementById('owner-welcome-bar').style.display = 'none';
       } else {
-        badge.className = "text-xs bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-xl shadow";
-        badge.textContent = currentUser.lang === 'en' ? `Teacher: ${currentUser.name} (${currentUser.extra})` : `المعلم: ${currentUser.name} (${currentUser.extra})`;
+        badge.className = "text-xs bg-emerald-600 text-white font-bold px-3.5 py-1.5 rounded-xl shadow";
+        badge.textContent = `👨‍🏫 ${currentUser.name} (${currentUser.extra})`;
         document.getElementById('hw-subject').value = currentUser.extra;
         document.getElementById('quiz-subject').value = currentUser.extra;
         document.body.classList.remove('royal-mode');
         document.getElementById('owner-welcome-bar').style.display = 'none';
       }
-
-      if (currentUser.lang === 'en') {
-        setEnglishUI();
-      } else {
-        setArabicUI();
-      }
-    }
-
-    function setEnglishUI() {
-      const root = document.getElementById('html-root');
-      root.setAttribute('lang', 'en');
-      root.setAttribute('dir', 'ltr');
-
-      document.getElementById('site-title').textContent = "6A Official Platform 2027";
-      document.getElementById('badge-official').textContent = "Official 6A Edition";
-      document.getElementById('site-subtitle').textContent = "The Official Unified Platform • Teachers • Students • Administration";
-      document.getElementById('main-login-btn').textContent = "🔒 Login Portal";
-      document.getElementById('logout-btn').textContent = "Logout";
-
-      document.getElementById('tab-homework').innerHTML = "📚 Homework";
-      document.getElementById('tab-quizzes').innerHTML = "📝 Quizzes & Schedule";
-      document.getElementById('tab-quotes').innerHTML = "💬 Quotes Wall";
-      document.getElementById('tab-profile').innerHTML = "👑 Owner Profile & Ranks";
-      document.getElementById('tab-feedback').innerHTML = "💡 Feedback";
-      document.getElementById('tab-arcade').innerHTML = "🎮 Games & Live Polls";
-
-      document.getElementById('hw-list-heading').textContent = "Class Assignments:";
-      document.getElementById('hw-form-heading').textContent = `📚 Add Homework (${currentUser ? currentUser.extra : ''})`;
-      document.getElementById('hw-title').placeholder = "Homework Title / Details";
-      document.getElementById('hw-submit-btn').textContent = "+ Publish Homework";
-
-      document.getElementById('quiz-section-heading').innerHTML = "🚨 Upcoming Quizzes & Tests";
-      document.getElementById('quiz-title').placeholder = "Quiz topic";
-      document.getElementById('quiz-submit-btn').textContent = "Add Quiz";
-
-      document.getElementById('schedule-card-title').textContent = "📅 Weekly Schedule";
-      document.getElementById('schedule-card-desc').textContent = "Official timetable for Class 6A.";
-      document.getElementById('schedule-file-name').textContent = "6A Timetable (2026/2027)";
-      document.getElementById('schedule-file-type').textContent = "Official PDF Document";
-      document.getElementById('schedule-btn').textContent = "View Schedule";
-
-      document.getElementById('quotes-banner-title').textContent = "🌟 Class Quotes Wall";
-      document.getElementById('quotes-banner-desc').textContent = "A shared space for every student and teacher to leave a memory!";
-      document.getElementById('quote-author').placeholder = "Your name...";
-      document.getElementById('quote-text').placeholder = "Write your memorable quote or word here...";
-      document.getElementById('quote-submit-btn').textContent = "Post Quote to Wall ✨";
-
-      document.getElementById('feedback-heading').textContent = "📢 Interactive Posts & Feedback";
-      document.getElementById('feedback-desc').textContent = "Share your ideas as posts and vote on whether they are helpful!";
-      document.getElementById('fb-user').placeholder = "Your name...";
-      document.getElementById('fb-text').placeholder = "What is on your mind? Write details here...";
-      document.getElementById('fb-submit-btn').innerHTML = "<span>📢 Post Now</span>";
-    }
-
-    function setArabicUI() {
-      const root = document.getElementById('html-root');
-      root.setAttribute('lang', 'ar');
-      root.setAttribute('dir', 'rtl');
-
-      document.getElementById('site-title').textContent = "منصة 6A 2027 الرسمية";
-      document.getElementById('badge-official').textContent = "النسخة الرسمية 6A";
-      document.getElementById('site-subtitle').textContent = "المنصة الرسمية الموحدة للفصل • المعلمون • الطلاب • الإدارة";
-      document.getElementById('main-login-btn').textContent = "🔒 بوابة الدخول";
-      document.getElementById('logout-btn').textContent = "خروج";
-
-      document.getElementById('tab-homework').innerHTML = "📚 الواجبات";
-      document.getElementById('tab-quizzes').innerHTML = "📝 الكويزات والجدول";
-      document.getElementById('tab-quotes').innerHTML = "💬 جملة من كل واحد";
-      document.getElementById('tab-profile').innerHTML = "👑 بروفايل المالك والرتب";
-      document.getElementById('tab-feedback').innerHTML = "💡 الآراء والتحسينات";
-      document.getElementById('tab-arcade').innerHTML = "🎮 الألعاب والتصويت";
-
-      document.getElementById('hw-list-heading').textContent = "قائمة واجبات الفصل:";
-      document.getElementById('hw-form-heading').textContent = currentUser ? `📚 إضافة واجب مدرسي (${currentUser.extra || ''})` : "";
-      document.getElementById('hw-title').placeholder = "عنوان وتفاصيل الواجب...";
-      document.getElementById('hw-submit-btn').textContent = "+ نشر الواجب";
-
-      document.getElementById('quiz-section-heading').innerHTML = "🚨 جدول الكويزات والاختبارات القصيرة";
-      document.getElementById('quiz-title').placeholder = "موضوع الكويز";
-      document.getElementById('quiz-submit-btn').textContent = "إضافة";
-
-      document.getElementById('schedule-card-title').textContent = "📅 جدول الحصص الأسبوعي";
-      document.getElementById('schedule-card-desc').textContent = "جدول الحصص المعتمد لفصل 6A متاح كملف رسمي.";
-      document.getElementById('schedule-file-name').textContent = "جدول 6A - 2026/2027";
-      document.getElementById('schedule-file-type').textContent = "صيغة PDF رسمية";
-      document.getElementById('schedule-btn').textContent = "تحميل / فتح الجدول";
-
-      document.getElementById('quotes-banner-title').textContent = "🌟 حائط \"جملة من كل واحد\"";
-      document.getElementById('quotes-banner-desc').textContent = "مساحة خاصة لكل عضو في الفصل ليترك ذكرى واحدة فقط خالدة!";
-      document.getElementById('quote-author').placeholder = "اسمك الكريم...";
-      document.getElementById('quote-text').placeholder = "اكتب جملتك التذكارية الوحيدة هنا...";
-      document.getElementById('quote-submit-btn').textContent = "شارك جملتك على الحائط ✨";
-
-      document.getElementById('feedback-heading').textContent = "📢 منتدى المنشورات والآراء التفاعلية";
-      document.getElementById('feedback-desc').textContent = "شارك أفكارك وتجاربك كمنشور، وصوّت على آراء زملائك إذا كانت مفيدة!";
-      document.getElementById('fb-user').placeholder = "اسمك الكريم...";
-      document.getElementById('fb-text').placeholder = "ما الذي يدور في ذهنك؟ اكتب المنشور هنا بالتفصيل...";
-      document.getElementById('fb-submit-btn').innerHTML = "<span>📢 نشر البوست الآن</span>";
     }
 
     function switchTab(tabName) {
-      const tabs = ['homework', 'quizzes', 'quotes', 'profile', 'feedback', 'arcade'];
+      const tabs = ['homework', 'quizzes', 'quotes', 'profile', 'feedback'];
       tabs.forEach(t => {
         document.getElementById(`section-${t}`).classList.add('hidden');
         document.getElementById(`tab-${t}`).classList.remove('active');
-        document.getElementById(`tab-${t}`).classList.add('bg-blue-800/40', 'text-blue-100');
       });
 
       document.getElementById(`section-${tabName}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`tab-${tabName}`);
-      activeBtn.classList.add('active');
-      activeBtn.classList.remove('bg-blue-800/40', 'text-blue-100');
+      document.getElementById(`tab-${tabName}`).classList.add('active');
 
       if (tabName === 'homework') loadHomework();
       if (tabName === 'quotes') loadQuotes();
       if (tabName === 'quizzes') loadQuizzes();
       if (tabName === 'feedback') loadFeedback();
-      if (tabName === 'arcade') loadRealServerPoll();
     }
 
     // 1. الواجبات
@@ -1730,32 +803,31 @@
       }
 
       const { data, error } = await query;
-      const isEn = currentUser && currentUser.lang === 'en';
 
       if (error) {
-        container.innerHTML = `<div class="col-span-full text-center text-red-500 py-6">خطأ في التحميل: ${error.message}</div>`;
+        container.innerHTML = `<div class="col-span-full text-center text-rose-400 py-8 glass-card rounded-3xl">خطأ في التحميل: ${error.message}</div>`;
         return;
       }
 
       if (!data || data.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'No assignments posted for this subject.' : 'لا توجد واجبات مسجلة لهذه المادة حالياً.'}</div>`;
+        container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-10 glass-card rounded-3xl text-xs">لا توجد واجبات مسجلة لهذه المادة حالياً ✨</div>`;
         return;
       }
 
       const allowDelete = isPowerUser();
 
       container.innerHTML = data.map(hw => `
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-start gap-3">
+        <div class="glass-card p-5 rounded-3xl flex justify-between items-start gap-3">
           <div class="flex-1">
-            <div class="flex justify-between items-start mb-2">
-              <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-md">${hw.subject}</span>
-              <span class="text-xs text-red-500 font-bold">${isEn ? 'Due: ' : 'تسليم: '}${hw.due_date || (isEn ? 'N/A' : 'غير محدد')}</span>
+            <div class="flex justify-between items-center mb-2.5">
+              <span class="bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-xs font-black px-3 py-1 rounded-xl">${hw.subject}</span>
+              <span class="text-xs text-amber-400 font-bold">⏳ تسليم: ${hw.due_date || 'غير محدد'}</span>
             </div>
-            <h3 class="font-bold text-slate-800 text-base mb-1">${hw.title}</h3>
-            ${hw.created_by ? `<div class="text-[11px] text-slate-400 mt-2 border-t pt-1">بواسطة: ${hw.created_by}</div>` : ''}
+            <h3 class="font-bold text-white text-sm md:text-base leading-relaxed mb-2">${hw.title}</h3>
+            ${hw.created_by ? `<div class="text-[11px] text-slate-400 border-t border-slate-800 pt-2">بواسطة: ${hw.created_by}</div>` : ''}
           </div>
           ${allowDelete ? `
-            <button onclick="deleteItem('homework', ${hw.id})" title="حذف الواجب" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+            <button onclick="deleteItem('homework', ${hw.id})" title="حذف الواجب" class="p-2 text-rose-400 hover:bg-rose-500/20 rounded-xl transition">
               🗑️
             </button>
           ` : ''}
@@ -1769,64 +841,57 @@
       const dueDate = document.getElementById('hw-due').value;
       const subject = document.getElementById('hw-subject').value || (currentUser.extra || 'عام');
 
-      if (!title) return alert(currentUser.lang === 'en' ? 'Please enter assignment details' : 'يرجى كتابة تفاصيل الواجب');
+      if (!title) return alert('يرجى كتابة تفاصيل الواجب');
 
       const submitBtn = document.getElementById('hw-submit-btn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'جاري النشر...';
 
-      const { data, error } = await client.from('homework').insert([{
+      const { error } = await client.from('homework').insert([{
         title: title,
         subject: subject,
         due_date: dueDate || null,
-        created_by: currentUser.name || 'Platform Admin'
+        created_by: currentUser.name || 'Admin'
       }]);
 
       submitBtn.disabled = false;
-      submitBtn.textContent = currentUser.lang === 'en' ? '+ Publish Homework' : '+ نشر الواجب';
+      submitBtn.textContent = '+ نشر الواجب الآن';
 
-      if (error) {
-        alert('حدث خطأ أثناء حفظ الواجب: ' + error.message);
-        return;
-      }
+      if (error) return alert('حدث خطأ: ' + error.message);
 
       document.getElementById('hw-title').value = '';
       document.getElementById('hw-due').value = '';
-      
       document.getElementById('hw-filter').value = subject;
       await loadHomework();
-      
-      alert(currentUser.lang === 'en' ? 'Assignment published successfully!' : 'تم نشر الواجب بنجاح!');
     }
 
     // 2. الكويزات
     async function loadQuizzes() {
       const container = document.getElementById('quizzes-list');
       const { data, error } = await client.from('quizzes').select('*').order('quiz_date', { ascending: true });
-      const isEn = currentUser && currentUser.lang === 'en';
 
       if (error) {
-        container.innerHTML = `<div class="text-center text-red-400 py-4 text-sm">خطأ في التحميل: ${error.message}</div>`;
+        container.innerHTML = `<div class="text-center text-rose-400 py-4 text-xs">خطأ: ${error.message}</div>`;
         return;
       }
 
       if (!data || data.length === 0) {
-        container.innerHTML = `<div class="text-center text-slate-400 py-4 text-sm">${isEn ? 'No quizzes scheduled 🎉' : 'لا توجد كويزات مسجلة حالياً 🎉'}</div>`;
+        container.innerHTML = `<div class="text-center text-slate-400 py-6 text-xs">لا توجد كويزات مسجلة حالياً 🎉</div>`;
         return;
       }
 
       const allowDelete = isPowerUser();
 
       container.innerHTML = data.map(qz => `
-        <div class="flex justify-between items-center p-3 bg-red-50 rounded-xl border border-red-100">
+        <div class="flex justify-between items-center p-4 bg-slate-900/80 rounded-2xl border border-rose-500/30">
           <div class="flex-1">
-            <span class="font-bold text-slate-800 text-sm block">${qz.title} (${qz.subject})</span>
-            <span class="text-xs text-red-600 font-semibold">${isEn ? 'Date: ' : 'الميعاد: '}${qz.quiz_date}</span>
+            <span class="font-black text-white text-sm block mb-1">${qz.title} <span class="text-rose-400">(${qz.subject})</span></span>
+            <span class="text-xs text-amber-300 font-bold">📅 الميعاد: ${qz.quiz_date}</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="bg-red-200 text-red-800 text-xs px-2 py-1 rounded font-bold">${isEn ? 'Quiz' : 'كويز'}</span>
+            <span class="bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs px-3 py-1 rounded-xl font-black">كويز</span>
             ${allowDelete ? `
-              <button onclick="deleteItem('quizzes', ${qz.id})" title="حذف الكويز" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-lg transition text-base">
+              <button onclick="deleteItem('quizzes', ${qz.id})" class="p-1.5 text-rose-400 hover:bg-rose-500/20 rounded-xl transition">
                 🗑️
               </button>
             ` : ''}
@@ -1841,24 +906,20 @@
       const date = document.getElementById('quiz-date').value;
       const subject = document.getElementById('quiz-subject').value || (currentUser.extra || 'عام');
 
-      if (!title || !date) return alert(currentUser.lang === 'en' ? 'Please fill all quiz fields' : 'يرجى ملء جميع بيانات الكويز');
+      if (!title || !date) return alert('يرجى ملء جميع بيانات الكويز');
 
       const { error } = await client.from('quizzes').insert([{
         title: title,
         subject: subject,
         quiz_date: date,
-        created_by: currentUser.name || 'Platform Admin'
+        created_by: currentUser.name || 'Admin'
       }]);
 
-      if (error) {
-        alert('حدث خطأ أثناء حفظ الكويز: ' + error.message);
-        return;
-      }
+      if (error) return alert('حدث خطأ: ' + error.message);
 
       document.getElementById('quiz-title').value = '';
       document.getElementById('quiz-date').value = '';
       loadQuizzes();
-      alert(currentUser.lang === 'en' ? 'Quiz added successfully!' : 'تمت إضافة الكويز بنجاح!');
     }
 
     // 3. جملة من كل واحد
@@ -1876,29 +937,28 @@
     async function loadQuotes() {
       const container = document.getElementById('quotes-list');
       const { data, error } = await client.from('quotes').select('*').order('id', { ascending: false });
-      const isEn = currentUser && currentUser.lang === 'en';
 
       if (error) {
-        container.innerHTML = `<div class="col-span-full text-center text-red-500 py-6">خطأ في التحميل: ${error.message}</div>`;
+        container.innerHTML = `<div class="col-span-full text-center text-rose-400 py-6">خطأ: ${error.message}</div>`;
         return;
       }
 
       if (!data || data.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-6">${isEn ? 'Be the first to post a quote!' : 'كن أول من يترك جملة تذكارية!'}</div>`;
+        container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8 glass-card rounded-3xl text-xs">كن أول من يترك جملة تذكارية خالدة! ✨</div>`;
         return;
       }
 
       const allowDelete = isPowerUser();
 
       container.innerHTML = data.map(q => `
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden flex flex-col justify-between">
-          <p class="text-slate-700 text-sm font-semibold mb-3 relative z-10 leading-relaxed">“${q.quote_text}”</p>
-          <div class="flex justify-between items-center text-xs border-t pt-2 text-slate-500">
-            <span class="font-bold text-slate-800">${q.author_name}</span>
+        <div class="glass-card p-5 rounded-3xl flex flex-col justify-between space-y-3">
+          <p class="text-white text-sm font-bold leading-relaxed">“${q.quote_text}”</p>
+          <div class="flex justify-between items-center text-xs border-t border-slate-800 pt-3">
+            <span class="font-black text-amber-400">${q.author_name}</span>
             <div class="flex items-center gap-2">
-              <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">${q.role}</span>
+              <span class="bg-amber-500/20 border border-amber-500/40 text-amber-300 px-2.5 py-0.5 rounded-lg font-bold">${q.role}</span>
               ${allowDelete ? `
-                <button onclick="deleteItem('quotes', ${q.id})" title="حذف الجملة" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+                <button onclick="deleteItem('quotes', ${q.id})" class="p-1 text-rose-400 hover:bg-rose-500/20 rounded-lg transition">
                   🗑️
                 </button>
               ` : ''}
@@ -1916,19 +976,13 @@
 
       if (!author || !text) return alert('يرجى كتابة اسمك وجملتك أولاً');
 
-      if (role === 'مالك المنصة' && enteredPass !== PASSWORDS.owner) {
-        return alert('⛔ رمز مالك المنصة غير صحيح! لا يمكن النشر بهذه الصفة.');
-      }
-      if (role === 'إدارة المدرسة' && enteredPass !== PASSWORDS.admin) {
-        return alert('⛔ رمز إدارة المدرسة غير صحيح!');
-      }
-      if (role === 'معلم' && enteredPass !== PASSWORDS.teacher) {
-        return alert('⛔ رمز المعلمين غير صحيح!');
-      }
+      if (role === 'مالك المنصة' && enteredPass !== PASSWORDS.owner) return alert('⛔ رمز مالك المنصة غير صحيح!');
+      if (role === 'إدارة المدرسة' && enteredPass !== PASSWORDS.admin) return alert('⛔ رمز إدارة المدرسة غير صحيح!');
+      if (role === 'معلم' && enteredPass !== PASSWORDS.teacher) return alert('⛔ رمز المعلمين غير صحيح!');
 
       const hasPosted = localStorage.getItem('has_posted_quote_account');
       if (hasPosted && role === 'طالب في 6A') {
-        return alert('⚠️ لقد قمت بمشاركة جملتك التذكارية بالفعل! مسموح بجملة واحدة فقط لكل عضو.');
+        return alert('⚠️ مسموح بجملة تذكارية واحدة فقط لكل طالب!');
       }
 
       const { error } = await client.from('quotes').insert([{
@@ -1937,28 +991,22 @@
         quote_text: text
       }]);
 
-      if (error) {
-        return alert('حدث خطأ أثناء نشر الجملة: ' + error.message);
-      }
+      if (error) return alert('حدث خطأ: ' + error.message);
 
-      if (role === 'طالب في 6A') {
-        localStorage.setItem('has_posted_quote_account', 'true');
-      }
+      if (role === 'طالب في 6A') localStorage.setItem('has_posted_quote_account', 'true');
 
       document.getElementById('quote-text').value = '';
       document.getElementById('quote-pass').value = '';
       loadQuotes();
-      alert('✨ تم نشر جملتك التذكارية بنجاح!');
     }
 
-    // 4. نظام المنشورات والآراء
+    // 4. منتدى المنشورات والآراء
     async function loadFeedback() {
       const container = document.getElementById('feedback-list');
       const { data, error } = await client.from('feedback').select('*').neq('type', '__POLL__').order('id', { ascending: false });
-      const isEn = currentUser && currentUser.lang === 'en';
 
       if (error) {
-        container.innerHTML = `<div class="text-center text-red-400 py-6 text-sm">خطأ في التحميل: ${error.message}</div>`;
+        container.innerHTML = `<div class="text-center text-rose-400 py-6 text-xs">خطأ: ${error.message}</div>`;
         return;
       }
 
@@ -1968,7 +1016,6 @@
 
     function filterFeedback(type) {
       currentFeedbackFilter = type;
-      
       const buttons = {
         'all': 'fb-filter-all',
         'اقتراح': 'fb-filter-prop',
@@ -1979,9 +1026,9 @@
       Object.keys(buttons).forEach(k => {
         const btn = document.getElementById(buttons[k]);
         if (k === type) {
-          btn.className = "px-3 py-1.5 rounded-lg font-bold bg-indigo-600 text-white transition";
+          btn.className = "px-3.5 py-1.5 rounded-xl font-black bg-indigo-600 text-white transition";
         } else {
-          btn.className = "px-3 py-1.5 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
+          btn.className = "px-3.5 py-1.5 rounded-xl font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
         }
       });
 
@@ -1991,83 +1038,71 @@
     function renderFeedbackList() {
       const container = document.getElementById('feedback-list');
       const countBadge = document.getElementById('fb-count-badge');
-      const isEn = currentUser && currentUser.lang === 'en';
 
       let filtered = allFeedbackData;
       if (currentFeedbackFilter !== 'all') {
         filtered = allFeedbackData.filter(f => f.type === currentFeedbackFilter);
       }
 
-      countBadge.textContent = `إجمالي المنشورات: ${filtered.length}`;
+      countBadge.textContent = `إجمالي البوستات: ${filtered.length}`;
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="text-center text-slate-400 py-10 text-sm bg-white rounded-2xl border border-slate-200">${isEn ? 'No posts yet. Be the first to publish!' : 'لا توجد منشورات حتى الآن. كن أول من ينشر بوست!'}</div>`;
+        container.innerHTML = `<div class="text-center text-slate-400 py-10 text-xs glass-card rounded-3xl">لا توجد منشورات حتى الآن. كن أول من يشارك!</div>`;
         return;
       }
 
       const allowDelete = isPowerUser();
 
       container.innerHTML = filtered.map(f => {
-        let typeBadge = "";
-        let avatarBg = "from-purple-500 to-indigo-600";
-
+        let typeBadge = `<span class="bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2.5 py-0.5 rounded-lg font-bold text-[11px]">💬 عام</span>`;
         if (f.type === 'عيب') {
-          typeBadge = `<span class="bg-red-100 text-red-700 border border-red-200 px-2.5 py-1 rounded-md font-black text-xs flex items-center gap-1">⚠️ مشكلة / Bug</span>`;
-          avatarBg = "from-red-500 to-rose-600";
+          typeBadge = `<span class="bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2.5 py-0.5 rounded-lg font-bold text-[11px]">⚠️ مشكلة</span>`;
         } else if (f.type === 'اقتراح') {
-          typeBadge = `<span class="bg-blue-100 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-md font-black text-xs flex items-center gap-1">💡 فكرة وتطوير</span>`;
-          avatarBg = "from-blue-500 to-cyan-600";
-        } else {
-          typeBadge = `<span class="bg-purple-100 text-purple-700 border border-purple-200 px-2.5 py-1 rounded-md font-black text-xs flex items-center gap-1">💬 عام / Post</span>`;
-          avatarBg = "from-purple-500 to-indigo-600";
+          typeBadge = `<span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-0.5 rounded-lg font-bold text-[11px]">💡 اقتراح</span>`;
         }
 
         const helpfulVotes = parseInt(localStorage.getItem(`fb_helpful_${f.id}`) || '0');
         const unhelpfulVotes = parseInt(localStorage.getItem(`fb_unhelpful_${f.id}`) || '0');
 
         return `
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition hover:shadow-md space-y-4">
-            <div class="flex justify-between items-start gap-2">
+          <div class="glass-card p-5 rounded-3xl space-y-3">
+            <div class="flex justify-between items-start">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr ${avatarBg} text-white font-black flex items-center justify-center text-sm shadow">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-black flex items-center justify-center text-sm shadow">
                   ${f.user_name.charAt(0)}
                 </div>
                 <div>
                   <div class="flex items-center gap-2">
-                    <span class="font-black text-slate-800 text-sm">${f.user_name}</span>
+                    <span class="font-black text-white text-sm">${f.user_name}</span>
                     ${typeBadge}
                   </div>
-                  <span class="text-[11px] text-slate-400">منشور في منصة 6A • منشور عام</span>
+                  <span class="text-[11px] text-slate-400">منشور عام • 6A</span>
                 </div>
               </div>
 
               ${allowDelete ? `
-                <button onclick="deleteItem('feedback', ${f.id})" title="حذف المنشور (صلاحية الإدارة)" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition text-base">
+                <button onclick="deleteItem('feedback', ${f.id})" class="p-1.5 text-rose-400 hover:bg-rose-500/20 rounded-xl transition">
                   🗑️
                 </button>
               ` : ''}
             </div>
             
-            <div class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50/70 p-4 rounded-xl border border-slate-100">
+            <div class="text-xs md:text-sm text-slate-200 leading-relaxed font-semibold bg-slate-900/70 p-4 rounded-2xl border border-slate-800">
               ${f.message}
             </div>
 
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
+            <div class="flex items-center justify-between pt-2 border-t border-slate-800/80 text-xs">
               <div class="flex items-center gap-2">
-                <span class="font-bold text-slate-500">هل هذا المنشور مفيد؟</span>
-                
-                <button onclick="voteFeedback(${f.id}, 'helpful')" class="px-3 py-1.5 rounded-lg font-bold border transition flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100">
+                <button onclick="voteFeedback(${f.id}, 'helpful')" class="px-3 py-1.5 rounded-xl font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/20 transition flex items-center gap-1.5">
                   <span>👍 مفيد</span>
-                  <span id="vote-helpful-${f.id}" class="bg-white px-1.5 py-0.5 rounded text-[11px] font-black">${helpfulVotes}</span>
+                  <span id="vote-helpful-${f.id}" class="font-black">${helpfulVotes}</span>
                 </button>
-
-                <button onclick="voteFeedback(${f.id}, 'unhelpful')" class="px-3 py-1.5 rounded-lg font-bold border transition flex items-center gap-1.5 bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100">
+                <button onclick="voteFeedback(${f.id}, 'unhelpful')" class="px-3 py-1.5 rounded-xl font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 transition flex items-center gap-1.5">
                   <span>👎 غير مفيد</span>
-                  <span id="vote-unhelpful-${f.id}" class="bg-white px-1.5 py-0.5 rounded text-[11px] font-black">${unhelpfulVotes}</span>
+                  <span id="vote-unhelpful-${f.id}" class="font-black">${unhelpfulVotes}</span>
                 </button>
               </div>
-
-              <span class="text-[11px] text-slate-400 font-semibold">بوست رقم #${f.id}</span>
+              <span class="text-[11px] text-slate-500 font-bold">#${f.id}</span>
             </div>
           </div>
         `;
@@ -2076,38 +1111,30 @@
 
     function voteFeedback(id, type) {
       const userVoteKey = `voted_fb_${id}`;
-      const existingVote = localStorage.getItem(userVoteKey);
-
-      if (existingVote) {
-        alert('لقد قمت بالتصويت على هذا المنشور بالفعل!');
-        return;
-      }
+      if (localStorage.getItem(userVoteKey)) return alert('لقد قمت بالتصويت على هذا المنشور بالفعل!');
 
       if (type === 'helpful') {
         const count = parseInt(localStorage.getItem(`fb_helpful_${id}`) || '0') + 1;
         localStorage.setItem(`fb_helpful_${id}`, count);
-        const elem = document.getElementById(`vote-helpful-${id}`);
-        if (elem) elem.textContent = count;
+        document.getElementById(`vote-helpful-${id}`).textContent = count;
       } else {
         const count = parseInt(localStorage.getItem(`fb_unhelpful_${id}`) || '0') + 1;
         localStorage.setItem(`fb_unhelpful_${id}`, count);
-        const elem = document.getElementById(`vote-unhelpful-${id}`);
-        if (elem) elem.textContent = count;
+        document.getElementById(`vote-unhelpful-${id}`).textContent = count;
       }
-
       localStorage.setItem(userVoteKey, type);
     }
 
     async function addFeedback() {
-      const user = document.getElementById('fb-user').value.trim() || 'عضو في الفصل';
+      const user = document.getElementById('fb-user').value.trim() || 'عضو في 6A';
       const type = document.getElementById('fb-type').value;
       const text = document.getElementById('fb-text').value.trim();
 
-      if (!text) return alert(currentUser && currentUser.lang === 'en' ? 'Please enter post details' : 'يرجى كتابة تفاصيل المنشور أولاً');
+      if (!text) return alert('يرجى كتابة تفاصيل المنشور أولاً');
 
       const submitBtn = document.getElementById('fb-submit-btn');
       submitBtn.disabled = true;
-      submitBtn.innerHTML = "<span>جاري النشر...</span>";
+      submitBtn.textContent = "جاري النشر...";
 
       const { error } = await client.from('feedback').insert([{
         user_name: user,
@@ -2116,32 +1143,21 @@
       }]);
 
       submitBtn.disabled = false;
-      submitBtn.innerHTML = "<span>📢 نشر البوست الآن</span>";
+      submitBtn.textContent = "📢 نشر البوست الآن";
 
-      if (error) {
-        return alert('حدث خطأ أثناء نشر البوست: ' + error.message);
-      }
+      if (error) return alert('حدث خطأ: ' + error.message);
 
       document.getElementById('fb-text').value = '';
       loadFeedback();
-      alert(currentUser && currentUser.lang === 'en' ? 'Post published successfully!' : 'تم نشر البوست بنجاح في المنتدى!');
     }
 
-    // دالة الحذف العامة المحمية
+    // دالة الحذف للمالك والإدارة فقط
     async function deleteItem(table, id) {
-      if (!isPowerUser()) {
-        alert('⛔ عذراً! صلاحية الحذف محصورة بمالك المنصة وإدارة المدرسة فقط.');
-        return;
-      }
-
-      if (!confirm('هل أنت متأكد من رغبتك في حذف هذا العنصر نهائياً بصفتك مسؤولاً؟')) return;
+      if (!isPowerUser()) return alert('⛔ صلاحية الحذف محصورة بمالك المنصة وإدارة المدرسة فقط.');
+      if (!confirm('هل أنت متأكد من حذف هذا العنصر نهائياً؟')) return;
 
       const { error } = await client.from(table).delete().eq('id', id);
-
-      if (error) {
-        alert('حدث خطأ أثناء الحذف: ' + error.message);
-        return;
-      }
+      if (error) return alert('حدث خطأ أثناء الحذف: ' + error.message);
 
       if (table === 'homework') loadHomework();
       if (table === 'quizzes') loadQuizzes();
